@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="MarcelPhotoshop:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="marcelps.war">
+      <element id="artifact" artifact-name="MarcelPhotoshop:war exploded" />
+    </root>
+  </artifact>
+</component>
