@@ -1,4 +1,4 @@
-package database;
+package data.database;
 
 
 import models.GalleryImage;

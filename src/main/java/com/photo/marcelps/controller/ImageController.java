@@ -1,7 +1,7 @@
 package com.photo.marcelps.controller;
 
-import database.IGalleryContext;
-import database.MySQLGalleryContext;
+import data.database.IGalleryContext;
+import data.database.MySQLGalleryContext;
 import models.GalleryImage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
