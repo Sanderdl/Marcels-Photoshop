@@ -38,14 +38,18 @@ public class LoginController {
     @ResponseBody
     public ModelAndView getLoginData(@RequestParam("username") String loginName,  @RequestParam("password") String password) {
 
-        User customer = new Customer(1, loginName);
+
         try{
             repo.UserLogin();
+            //User customer = new Customer(1, loginName);
         }
         catch(LoginException ex){
+            // TODO: add error message to model data....somehow
 
         }
-
         return null;
     }
+
+    // passing data to tempdata
+    // http://stackoverflow.com/questions/31167613/access-current-model-in-spring-mvc
 }
