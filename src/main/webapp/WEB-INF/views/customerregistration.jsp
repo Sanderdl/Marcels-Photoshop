@@ -51,7 +51,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" action="/registration/register/">
                         <fieldset>
                             <legend>Registration</legend>
                             <div class="form-group">
@@ -103,6 +103,7 @@
                             </div>
                         </fieldset>
                     </form>
+            <p><c:out value="${message}"/></p>
         </div>
     </div>
 </div>
