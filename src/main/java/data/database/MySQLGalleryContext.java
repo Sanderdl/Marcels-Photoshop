@@ -3,9 +3,13 @@ package data.database;
 
 import models.GalleryImage;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by sande on 02/03/2017.
@@ -56,7 +60,7 @@ public class MySQLGalleryContext implements IGalleryContext {
                 gi = new GalleryImage(id, naam, image);
             }
         }catch (Exception ex){
-
+            Logger.getLogger(MySQLGalleryContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }finally {
             MySQLDatabase.dbConnection.closeConnection(con, stm, rs);
         }

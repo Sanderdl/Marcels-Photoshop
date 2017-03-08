@@ -17,7 +17,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Brand</a>
+            <a class="navbar-brand" href="/gallery/random/">Home</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
@@ -44,42 +44,46 @@
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Link</a></li>
+                <li><a href="/login/page/">Login</a></li>
             </ul>
         </div>
     </div>
 </nav>
-<form action="/gallery/random//">
-    <div class="col-md-6 col-md-offset-3">
-        <form class="form-horizontal">
-            <fieldset>
-                <legend>Login</legend>
-                <div class="form-group">
-                    <label for="inputEmail" class="col-lg-2 control-label">Email</label>
-                    <div class="col-lg-10">
-                        <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+<div class="col-md-6 col-md-offset-3">
+    <form class="form-horizontal">
+        <fieldset>
+            <legend>Login</legend>
+            <div class="form-group">
+                <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+                <div class="col-lg-10">
+                    <input name="email" type="text" class="form-control" id="inputEmail" placeholder="Email">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+                <div class="col-lg-10">
+                    <input name="password" type="password" class="form-control" id="inputPassword"
+                           placeholder="Password">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Remember Me
+                        </label>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="inputPassword" class="col-lg-2 control-label">Password</label>
-                    <div class="col-lg-10">
-                        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"> Remember Me
-                            </label>
-                        </div>
-                    </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button type="reset" class="btn btn-default">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-                <div class="form-group">
-                    <div class="col-lg-10 col-lg-offset-2">
-                        <button type="reset" class="btn btn-default">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    Nog geen account? <a href="/registration/page/">Registreren</a>
                 </div>
-            </fieldset>
-        </form>
-    </div>
-</form>
+            </div>
+        </fieldset>
+    </form>
+</div>
 </body>
 </html>
