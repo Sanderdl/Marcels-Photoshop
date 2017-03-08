@@ -40,7 +40,7 @@ public class LoginController {
 
 
         try{
-            repo.UserLogin();
+            repo.UserLogin(loginName, password);
             //User customer = new Customer(1, loginName);
         }
         catch(LoginException ex){

@@ -14,11 +14,13 @@ public class LoginRepo {
         this.context = new MySQLLoginContext();
     }
 
-    public void UserLogin() throws LoginException{
-
-    }
-
-    public void AdminLogin() throws LoginException{
+    public void UserLogin(String loginName, String password) throws LoginException{
+        try{
+            context.UserLogin(loginName, password);
+        }
+        catch(LoginException ex){
+            throw ex;
+        }
 
     }
 

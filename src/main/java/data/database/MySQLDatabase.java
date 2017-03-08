@@ -19,7 +19,7 @@ public class MySQLDatabase {
         }
     }
 
-    public Connection getConnection() throws SQLException, IOException {
+    public Connection getConnection() throws SQLException {
 
         try {
             Connection conn = DriverManager.getConnection(connectionString, user, password);
