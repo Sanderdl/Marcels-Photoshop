@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Test</h1>
-<c:redirect url="/gallery/random/"/>
+<c:redirect url="/registration/page/"/>
 
 </body>
 </html>

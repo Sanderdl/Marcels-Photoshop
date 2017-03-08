@@ -7,7 +7,7 @@
 </head>
 <body>
 <h1>Test</h1>
-<c:redirect url="/login/page/"/>
+<c:redirect url="/registration/page/"/>
 
 </body>
 </html>
