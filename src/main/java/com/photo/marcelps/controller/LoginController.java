@@ -3,10 +3,12 @@ package com.photo.marcelps.controller;
 import logic.LoginRepo;
 import models.Customer;
 import models.User;
+import models.exceptions.LoginException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -27,8 +29,23 @@ public class LoginController {
         return model;
     }
 
-    @RequestMapping(value = "/submit/", method = RequestMethod.GET)
-    public void getLoginData(@RequestParam String loginName) {
+//    @RequestMapping(value = "/submit/", method = RequestMethod.GET)
+//    public void getLoginData(@RequestParam String loginName) {
+//        User customer = new Customer(1, loginName);
+//    }
+
+    @RequestMapping(value = "/submit/", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView getLoginData(@RequestParam("username") String loginName,  @RequestParam("password") String password) {
+
         User customer = new Customer(1, loginName);
+        try{
+            repo.UserLogin();
+        }
+        catch(LoginException ex){
+
+        }
+
+        return null;
     }
 }

@@ -2,6 +2,7 @@ package logic;
 
 import data.database.MySQLLoginContext;
 import data.database.interfaces.ILoginContext;
+import models.exceptions.LoginException;
 
 /**
  * Created by Adriaan on 08-Mar-17.
@@ -13,15 +14,11 @@ public class LoginRepo {
         this.context = new MySQLLoginContext();
     }
 
-    public void PhotographerLogin(){
+    public void UserLogin() throws LoginException{
 
     }
 
-    public void UserLogin(){
-
-    }
-
-    public void AdminLogin(){
+    public void AdminLogin() throws LoginException{
 
     }
 
