@@ -1,69 +1,70 @@
-html,body{
-	width: 100%;
-	margin: 0 auto;
+html, body {
+    width: 100%;
+    margin: 0 auto;
 }
 
-#mainbar{
-	margin-bottom: 10px;
-	position: relative;
-	background-color: #f2f2f2;
+#mainbar {
+    margin-bottom: 10px;
+    position: relative;
+    background-color: #f2f2f2;
 }
 
-#nav{
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	width: 90%;
-	margin-bottom: 20px;
-	left: 5%;
-}
-#logo{
-	height: inherit;
-	width: 20%;
-	float: left;
+#nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 90%;
+    margin-bottom: 20px;
+    left: 5%;
 }
 
-#buttons{
-	height:inherit;
-	width: 20%;
+#logo {
+    height: inherit;
+    width: 20%;
+    float: left;
 }
 
-#site-search{
-	height: inherit;
-	width: 50%;
-	float: left;
-	margin-top: 15px;
-	border-bottom: #ff0009;
+#buttons {
+    height: inherit;
+    width: 20%;
 }
 
-#buttons{
-	width: 20%;
-	float: left;
-	text-align: right;
+#site-search {
+    height: inherit;
+    width: 50%;
+    float: left;
+    margin-top: 15px;
+    border-bottom: #ff0009;
 }
 
-#photos{
-	width: 90%;
-	margin: 0 auto;
+#buttons {
+    width: 20%;
+    float: left;
+    text-align: right;
 }
 
-.wide{
-	width:100%;
+#photos {
+    width: 90%;
+    margin: 0 auto;
 }
 
-.btn{
-	height: 35px;
+.wide {
+    width: 100%;
 }
 
-.dbtn{
-	height: 75px;
+.btn {
+    height: 35px;
 }
 
-.shadow-m{
-	box-shadow: 0px 5px 5px #888888;
+.dbtn {
+    height: 75px;
 }
 
-.text-box{
-	border-style: solid;
-	border-bottom: #ff0009;
+.shadow-m {
+    box-shadow: 0px 5px 5px #888888;
+}
+
+.text-box {
+    border-style: solid;
+    border-bottom: #ff0009;
 }
