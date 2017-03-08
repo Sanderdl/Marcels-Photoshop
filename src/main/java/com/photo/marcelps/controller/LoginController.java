@@ -1,5 +1,6 @@
 package com.photo.marcelps.controller;
 
+import logic.LoginRepo;
 import models.Customer;
 import models.User;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
+    private LoginRepo repo = new LoginRepo();
 
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
     public ModelAndView getData() {
