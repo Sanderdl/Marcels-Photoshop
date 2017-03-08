@@ -16,7 +16,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Brand</a>
+            <a class="navbar-brand" href="/gallery/random/">Home</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -51,32 +51,31 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <form action="/gallery/random//">
                     <form class="form-horizontal">
                         <fieldset>
                             <legend>Registration</legend>
                             <div class="form-group">
-                                <label for="userName" class="col-lg-2 control-label">Username</label>
+                                <label for="inputName" class="col-lg-2 control-label">Username</label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="userName" placeholder="Username">
+                                    <input name="inputUsername" type="text" class="form-control" id="username" placeholder="Username">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputPassword" class="col-lg-2 control-label">Password</label>
                                 <div class="col-lg-10">
-                                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                                    <input name="inputPassword" type="password" class="form-control" id="inputPassword" placeholder="Password">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputName" class="col-lg-2 control-label">Name</label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="inputName" placeholder="Name">
+                                    <input name ="inputName" type="text" class="form-control" id="inputName" placeholder="Name">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail" class="col-lg-2 control-label">Email</label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+                                    <input name="inputEmail" type="text" class="form-control" id="inputEmail" placeholder="Email">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -104,7 +103,6 @@
                             </div>
                         </fieldset>
                     </form>
-            </form>
         </div>
     </div>
 </div>
