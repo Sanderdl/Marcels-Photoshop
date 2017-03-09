@@ -1,11 +1,13 @@
 package com.photo.marcelps.controller;
 
 import logic.RegisterRepo;
+import models.Registration;
 import models.exceptions.InvalidRegisterException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -23,22 +25,20 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
-    public ModelAndView getData() {
-
-        ModelAndView model = new ModelAndView("customerregistration");
-        return model;
+    public String setupPage( Model model) {
+        Registration registration = new Registration();
+        model.addAttribute("newAccount", registration);
+        return "customerregistration";
     }
 
-    @RequestMapping(value = "/register/", method = RequestMethod.GET)
-    public ModelAndView registerUser(@RequestParam ("inputUsername") String username,
-                                     @RequestParam ("inputEmail") String email,
-                                     @RequestParam("inputPassword") String password) {
+    @RequestMapping(value = "/register/", method = RequestMethod.POST)
+    public ModelAndView registerUser(@ModelAttribute("newAccount") Registration registration) {
         String message = null;
 
         try {
-            repo.validateUsername(username);
-            repo.validateEmail(email);
-            repo.validatePassword(password);
+            repo.validateUsername(registration.getUserName());
+            repo.validateEmail(registration.getEmail());
+            repo.validatePassword(registration.getPassword());
         }catch (InvalidRegisterException ex){
             message = ex.getMessage();
         }
@@ -47,5 +47,7 @@ public class RegistrationController {
         model.addObject("message" , message);
         return model;
     }
+
+
 
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -51,19 +52,20 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-                    <form class="form-horizontal" action="/registration/register/">
+                    <form:form class="form-horizontal" method="post" action="/registration/register/" commandName="newAccount">
                         <fieldset>
                             <legend>Registration</legend>
+
                             <div class="form-group">
-                                <label for="inputName" class="col-lg-2 control-label">Username</label>
+                                <label class="col-lg-2 control-label">Username</label>
                                 <div class="col-lg-10">
-                                    <input name="inputUsername" type="text" class="form-control" id="username" placeholder="Username">
+                                    <form:input path="userName" type="text" class="form-control" id="username" placeholder="Username"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputPassword" class="col-lg-2 control-label">Password</label>
                                 <div class="col-lg-10">
-                                    <input name="inputPassword" type="password" class="form-control" id="inputPassword" placeholder="Password">
+                                    <form:input path="password" name="inputPassword" type="password" class="form-control" id="inputPassword" placeholder="Password"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -75,7 +77,7 @@
                             <div class="form-group">
                                 <label for="inputEmail" class="col-lg-2 control-label">Email</label>
                                 <div class="col-lg-10">
-                                    <input name="inputEmail" type="text" class="form-control" id="inputEmail" placeholder="Email">
+                                    <form:input path="email" name="inputEmail" type="text" class="form-control" id="inputEmail" placeholder="Email"/>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -102,7 +104,7 @@
                                 </div>
                             </div>
                         </fieldset>
-                    </form>
+                    </form:form>
             <p><c:out value="${message}"/></p>
         </div>
     </div>
