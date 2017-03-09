@@ -6,8 +6,7 @@ import models.GalleryImage;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -67,8 +66,8 @@ public class MySQLGalleryContext implements IGalleryContext {
         return gi;
     }
 
-    public List<Integer> allImages(){
-        List<Integer> list = new ArrayList<Integer>();
+    public HashSet<Integer> allImages(){
+        HashSet<Integer> list = new HashSet<>();
         try{
             con = MySQLDatabase.dbConnection.getConnection();
             stm = con.prepareStatement("SELECT id FROM photo");

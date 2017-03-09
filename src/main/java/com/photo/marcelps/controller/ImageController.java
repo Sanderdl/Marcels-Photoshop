@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
+import java.util.HashSet;
 
 /**
  * Created by sande on 02/03/2017.
@@ -28,7 +27,7 @@ public class ImageController {
     }
 
     @RequestMapping(value = "/image", method = RequestMethod.GET)
-    public void showImage(@RequestParam("id") Integer itemId, HttpServletResponse response, HttpServletRequest request)
+    public void showImage(@RequestParam("id") Integer itemId, HttpServletResponse response)
             throws ServletException, IOException {
 
 
@@ -44,7 +43,7 @@ public class ImageController {
     @RequestMapping(value = "/random/", method = RequestMethod.GET)
     public ModelAndView getData() {
 
-        List<Integer> list = gc.allImages();
+        HashSet<Integer> list = gc.allImages();
 
         //return back to index.jsp
         ModelAndView model = new ModelAndView("index");
