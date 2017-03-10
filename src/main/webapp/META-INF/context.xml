@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Resource
+        name="jdbc/photoDB"
+        auth="Container"
+        type="javax.sql.DataSource"
+        maxTotal="100"
+        maxIdle="30"
+        maxWaitMillis="10000"
+        driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://web401.your-webhost.nl:3306/qb401179_Teken"
+        username="qb401179_sander"
+        password="1234"
+/>

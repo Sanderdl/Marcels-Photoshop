@@ -57,7 +57,6 @@
         </div>
     </div>
 </nav>
-
     <section id="photos" class="justified-gallery shadow-m">
         <c:if test="${not empty lists}">
             <c:forEach var="listValue" items="${lists}">

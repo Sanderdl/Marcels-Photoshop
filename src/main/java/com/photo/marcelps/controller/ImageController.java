@@ -30,12 +30,10 @@ public class ImageController {
     public void showImage(@RequestParam("id") Integer itemId, HttpServletResponse response)
             throws ServletException, IOException {
 
-
         GalleryImage gi = gc.getImageById(itemId);
 
         response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
         response.getOutputStream().write(gi.getImage());
-
 
         response.getOutputStream().close();
     }

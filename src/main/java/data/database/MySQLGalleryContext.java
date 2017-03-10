@@ -6,6 +6,7 @@ import models.GalleryImage;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,9 +15,6 @@ import java.util.logging.Logger;
  * Created by sande on 02/03/2017.
  */
 public class MySQLGalleryContext implements IGalleryContext {
-    private Connection con;
-    private PreparedStatement stm;
-    private ResultSet rs;
 
     public MySQLGalleryContext() {
     }
@@ -38,51 +36,101 @@ public class MySQLGalleryContext implements IGalleryContext {
 //        }
 //    }
 
-
-
-
-
     public GalleryImage getImageById(int id) {
         GalleryImage gi = null;
 
+        Connection conn = null;
+        PreparedStatement stm = null;
+
         try{
-            con = MySQLDatabase.dbConnection.getConnection();
-            stm = con.prepareStatement("SELECT * FROM photo WHERE id = ?");
+            conn = MySQLDatabase.dbConnection.getConnection();
+            stm = conn.prepareStatement("SELECT * FROM photo WHERE id = ?");
             stm.setInt(1, id);
 
-            rs = stm.executeQuery();
+            ResultSet rs = stm.executeQuery();
 
-            while (rs.next()){
+            if (rs.next()){
                 String naam = rs.getString("naam");
                 byte[] image = rs.getBytes("image");
 
                 gi = new GalleryImage(id, naam, image);
             }
+
+            stm.close();
+            stm = null;
+
+            conn.close();
+            conn = null;
         }catch (Exception ex){
             Logger.getLogger(MySQLGalleryContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }finally {
-            MySQLDatabase.dbConnection.closeConnection(con, stm, rs);
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException sqlex) {
+                    // ignore, as we can't do anything about it here
+                }
+
+                stm = null;
+            }
+
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException sqlex) {
+                    // ignore, as we can't do anything about it here
+                }
+
+                conn = null;
+            }
         }
         return gi;
     }
 
     public HashSet<Integer> allImages(){
         HashSet<Integer> list = new HashSet<>();
-        try{
-            con = MySQLDatabase.dbConnection.getConnection();
-            stm = con.prepareStatement("SELECT id FROM photo");
 
-            rs = stm.executeQuery();
+        Connection conn = null;
+        PreparedStatement stm = null;
+
+        try{
+            conn = MySQLDatabase.dbConnection.getConnection();
+            stm = conn.prepareStatement("SELECT id FROM photo");
+
+            ResultSet rs = stm.executeQuery();
 
             while (rs.next()){
                 int id = rs.getInt("id");
 
                 list.add(id);
             }
+            stm.close();
+            stm = null;
+
+            conn.close();
+            conn = null;
         }catch (Exception ex){
 
         }finally {
-            MySQLDatabase.dbConnection.closeConnection(con, stm, rs);
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException sqlex) {
+                    // ignore, as we can't do anything about it here
+                }
+
+                stm = null;
+            }
+
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException sqlex) {
+                    // ignore, as we can't do anything about it here
+                }
+
+                conn = null;
+            }
         }
         return list;
     }
