@@ -31,7 +31,7 @@ public class MySQLUserContext implements IUserContext {
         } catch ( SQLException ex) {
             Logger.getLogger(MySQLGalleryContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } finally {
-            MySQLDatabase.dbConnection.closeConnection(con, stm, rs);
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
     }
 

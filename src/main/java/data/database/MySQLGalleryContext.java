@@ -16,26 +16,6 @@ import java.util.logging.Logger;
  */
 public class MySQLGalleryContext implements IGalleryContext {
 
-    public MySQLGalleryContext() {
-    }
-
-//    private void openConnection(){
-//        rs = null;
-//        stm = null;
-//        con = null;
-//
-//        try {
-//            con = DriverManager.getConnection("jdbc:mysql://web401.your-webhost.nl:3306/qb401179_Teken" ,
-//            "qb401179_sander","1234");
-//
-//        } catch (SQLException ex) {
-//            // handle any errors
-//            System.out.println("SQLException: " + ex.getMessage());
-//            System.out.println("SQLState: " + ex.getSQLState());
-//            System.out.println("VendorError: " + ex.getErrorCode());
-//        }
-//    }
-
     public GalleryImage getImageById(int id) {
         GalleryImage gi = null;
 
@@ -56,33 +36,9 @@ public class MySQLGalleryContext implements IGalleryContext {
                 gi = new GalleryImage(id, naam, image);
             }
 
-            stm.close();
-            stm = null;
-
-            conn.close();
-            conn = null;
-        }catch (Exception ex){
+            MySQLDatabase.dbConnection.closeConnection(conn,stm);
+        }catch (SQLException ex){
             Logger.getLogger(MySQLGalleryContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-        }finally {
-            if (stm != null) {
-                try {
-                    stm.close();
-                } catch (SQLException sqlex) {
-                    // ignore, as we can't do anything about it here
-                }
-
-                stm = null;
-            }
-
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException sqlex) {
-                    // ignore, as we can't do anything about it here
-                }
-
-                conn = null;
-            }
         }
         return gi;
     }
@@ -104,33 +60,9 @@ public class MySQLGalleryContext implements IGalleryContext {
 
                 list.add(id);
             }
-            stm.close();
-            stm = null;
-
-            conn.close();
-            conn = null;
-        }catch (Exception ex){
-
-        }finally {
-            if (stm != null) {
-                try {
-                    stm.close();
-                } catch (SQLException sqlex) {
-                    // ignore, as we can't do anything about it here
-                }
-
-                stm = null;
-            }
-
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (SQLException sqlex) {
-                    // ignore, as we can't do anything about it here
-                }
-
-                conn = null;
-            }
+            MySQLDatabase.dbConnection.closeConnection(conn,stm);
+        }catch (SQLException ex){
+            Logger.getLogger(MySQLGalleryContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
         return list;
     }
