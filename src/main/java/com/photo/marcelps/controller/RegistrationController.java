@@ -39,6 +39,7 @@ public class RegistrationController {
             repo.validateUsername(registration.getUserName());
             repo.validateEmail(registration.getEmail());
             repo.validatePassword(registration.getPassword());
+            repo.validateUsername(registration.getName());
         }catch (InvalidRegisterException ex){
             message = ex.getMessage();
         }
