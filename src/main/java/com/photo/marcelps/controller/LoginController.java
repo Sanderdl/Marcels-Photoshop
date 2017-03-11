@@ -34,20 +34,27 @@ public class LoginController {
 //        User customer = new Customer(1, loginName);
 //    }
 
-    @RequestMapping(value = "/submit/", method = RequestMethod.POST)
-    @ResponseBody
-    public ModelAndView getLoginData(@RequestParam("username") String loginName,  @RequestParam("password") String password) {
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public @ResponseBody String processAJAXRequest(
+            @RequestParam("email") String email,
+            @RequestParam("password") String password	) {
 
+        String response = "";
+        // Process the request
+        // Prepare the response string
 
+        // Check Email & Password
+        if(password.length()<8){
+            return response = "Password needs to be atleast 8 characters";
+        }
         try{
             repo.UserLogin();
-            //User customer = new Customer(1, loginName);
+            response = "Inloggen gelukt";
         }
         catch(LoginException ex){
-            // TODO: add error message to model data....somehow
-
+            response = "Helaas, er is iets misgegaan met het inloggen";
         }
-        return null;
+        return response;
     }
 
     // passing data to tempdata

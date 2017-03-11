@@ -51,8 +51,8 @@
 </nav>
 <div class="container">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <form class="form-horizontal">
+        <div class="col-md-5 col-md-offset-3">
+            <form name="myForm" class="form-horizontal" id="sampleForm" action="/login/profile">
                 <fieldset>
                     <legend>Login</legend>
                     <div class="form-group">
@@ -90,4 +90,33 @@
     </div>
 </div>
 </body>
+<script src="<c:url value="/resources/js/jquery-3.1.1.min.js"/>"></script>
+<script src="<c:url value="/resources/js/bootstrap.js"/>"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#sampleForm').submit(
+            function (event) {
+                var email = $('#inputEmail').val();
+                var password = $('#inputPassword').val();
+                var data = 'email='
+                    + encodeURIComponent(email)
+                    + '&password='
+                    + encodeURIComponent(password);
+                $.ajax({
+                    url: $("#sampleForm").attr("action"),
+                    data: data,
+                    type: "GET",
+
+                    success: function (response) {
+                        alert(response);
+                    },
+                    error: function (xhr, status, error) {
+                        alert(xhr.responseText);
+                    }
+                });
+                return false;
+            });
+    });
+</script>
 </html>
