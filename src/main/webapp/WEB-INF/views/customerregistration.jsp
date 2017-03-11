@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -54,45 +55,42 @@
                     <form class="form-horizontal">
                         <fieldset>
                             <legend>Registration</legend>
+
                             <div class="form-group">
-                                <label for="inputName" class="col-lg-2 control-label">Username</label>
+                                <label class="col-lg-2 control-label">Username</label>
                                 <div class="col-lg-10">
-                                    <input name="inputUsername" type="text" class="form-control" id="username" placeholder="Username">
+                                    <form:input path="userName" type="text" class="form-control" id="username" placeholder="Username"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputPassword" class="col-lg-2 control-label">Password</label>
                                 <div class="col-lg-10">
-                                    <input name="inputPassword" type="password" class="form-control" id="inputPassword" placeholder="Password">
+                                    <form:input path="password" name="inputPassword" type="password" class="form-control" id="inputPassword" placeholder="Password"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputName" class="col-lg-2 control-label">Name</label>
                                 <div class="col-lg-10">
-                                    <input name ="inputName" type="text" class="form-control" id="inputName" placeholder="Name">
+                                    <form:input path="name" name ="inputName" type="text" class="form-control" id="inputName" placeholder="Name"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputEmail" class="col-lg-2 control-label">Email</label>
                                 <div class="col-lg-10">
-                                    <input name="inputEmail" type="text" class="form-control" id="inputEmail" placeholder="Email">
+                                    <form:input path="email" name="inputEmail" type="text" class="form-control" id="inputEmail" placeholder="Email"/>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-2 control-label">Account type</label>
                                 <div class="col-lg-10">
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                                            Photographer
-                                        </label>
-                                    </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                                            Client
-                                        </label>
-                                    </div>
+                                    <label class="radio">
+                                        <form:radiobutton path="role" value="customer" />
+                                        Customer
+                                    </label>
+                                    <label class="radio">
+                                        <form:radiobutton path="role" value="photographer" />
+                                        Photographer
+                                    </label>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -102,7 +100,10 @@
                                 </div>
                             </div>
                         </fieldset>
-                    </form>
+                    </form:form>
+            <div class="alert alert-danger">
+                <c:out value="${message}"/>
+            </div>
         </div>
     </div>
 </div>

@@ -11,6 +11,7 @@
 <head>
     <title>Marcel's Photo Shop</title>
     <link rel="stylesheet" href="<c:url value="/resources/css/justifiedGallery.min.css"/>"/>
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
 </head>
 <body>
@@ -56,7 +57,6 @@
         </div>
     </div>
 </nav>
-<div class="col-md-6 col-md-offset-3">
     <section id="photos" class="justified-gallery shadow-m">
         <c:if test="${not empty lists}">
             <c:forEach var="listValue" items="${lists}">
@@ -67,7 +67,6 @@
 
         </c:if>
     </section>
-</div>
 </body>
 <script src="<c:url value="/resources/js/jquery-3.1.1.min.js"/>"></script>
 <script src="<c:url value="/resources/js/jquery.justifiedGallery.min.js"/>"></script>

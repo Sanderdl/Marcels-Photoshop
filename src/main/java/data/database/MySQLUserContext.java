@@ -1,6 +1,5 @@
 package data.database;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,10 +28,10 @@ public class MySQLUserContext implements IUserContext {
             stm.setString(5, status);
             stm.setString(6, role);
             stm.executeUpdate();
-        } catch (IOException | SQLException ex) {
+        } catch ( SQLException ex) {
             Logger.getLogger(MySQLGalleryContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } finally {
-            MySQLDatabase.dbConnection.closeConnection(con, stm, rs);
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
     }
 
