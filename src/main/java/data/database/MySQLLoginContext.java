@@ -2,6 +2,7 @@ package data.database;
 
 import data.database.interfaces.ILoginContext;
 import models.Customer;
+import models.Photographer;
 import models.exceptions.LoginException;
 
 import java.io.IOException;
@@ -34,20 +35,23 @@ public class MySQLLoginContext implements ILoginContext {
 
             rs = stm.executeQuery();
             if(rs.isBeforeFirst()){
-                if(rs.getString("ROLE") == "Client"){
-                    // Is a client
-                    generateClient(rs);
-                }
-                else if(rs.getString("ROLE") == "Photographer"){
-                    generatePhotographer(rs);
-                }
-                else if(rs.getString("ROLE") == "Admin"){
-                    generateAdmin(rs);
+                if(rs.getString("STATUS") != "verified"){
+                    String role = rs.getString("ROLE");
+                    if( role == "Client" ||  role == "Photographer"){
+                        // Is a client
+                        generateClient(rs, role);
+                    }
+//                    else if(rs.getString("ROLE") == "Photographer"){
+//                        generatePhotographer(rs);
+//                    }
+                    else if(role == "Admin"){
+                        generateAdmin(rs);
+                    }
                 }
                 rs.close();
                 MySQLDatabase.dbConnection.closeConnection(con, stm);
                 // No user found
-                throw new LoginException("No user found with these credentials");
+                throw new LoginException("No verified, unblocked user found with these credentials");
             }
         }
         catch( SQLException ex ){
@@ -57,19 +61,49 @@ public class MySQLLoginContext implements ILoginContext {
         }
     }
 
-    private void generateClient(ResultSet rs) throws SQLException{
-
+    private void generateClient(ResultSet rs, String role) throws SQLException{
+        // NOTE: there is currently no difference between Clients and photographers in this phase
+        // if a more specific implementation is required, all generate methods must be refactored
+        int id = -1;
+        String uName = "";
+        String name = "";
+        String eMail = "";
         while(rs.next()){
             // id, uName, pass, name, email, status, role
-
+            // currently overly verbose to keep method straightforward
+            id = rs.getInt("AccountID");
+            uName = rs.getString("Username");
+            name = rs.getString("Name");
+            eMail = rs.getString("Email");
         }
-        //Customer c = new Customer(1,"name", "", "")
-
+        switch (role){
+            case "Client":
+                Customer c = new Customer(id, uName, name, eMail);
+                break;
+            case "Photographer":
+                Photographer p = new Photographer(1, uName, name, eMail);
+                break;
+            default:
+                break;
+        }
     }
 
-    private void generatePhotographer(ResultSet rs){
+//    private void generatePhotographer(ResultSet rs, String role) throws SQLException{
+//        int id = -1;
+//        String uName = "";
+//        String name = "";
+//        String eMail = "";
+//        while(rs.next()){
+//            // id, uName, pass, name, email, status, role
+//            // currently overly verbose to keep method straightforward
+//            id = rs.getInt("AccountID");
+//            uName = rs.getString("Username");
+//            name = rs.getString("Name");
+//            eMail = rs.getString("Email");
+//        }
+//        Photographer p = new Photographer(1, uName, name, eMail);
+//    }
 
-    }
 
     private void generateAdmin(ResultSet rs){
         throw new UnsupportedOperationException("Not implemented yet");
