@@ -6,18 +6,18 @@ package models;
 public abstract class User {
 
     private int id;
-    private String name;
     private String userName;
+    private String name;
     private String email;
 
     private enum UserTypes {
         CUSTOMER, PHOTOGRAPHER;
     }
 
-    public User(int id, String name, String userName, String email){
+    public User(int id, String userName, String name, String email){
         this.id = id;
-        this.name = name;
         this.userName = userName;
+        this.name = name;
         this.email = email;
     }
 
@@ -53,12 +53,12 @@ public abstract class User {
         this.email = email;
     }
 
-    public static User createNewUser(int id, String name, String userName, String email, String role) {
+    public static User createNewUser(int id, String userName, String name, String email, String role) {
         User user = null;
         if (role.toUpperCase().equals(UserTypes.CUSTOMER.toString())) {
-            user = new Customer(id, name, userName, email);
+            user = new Customer(id, userName, name, email);
         } else if (role.toUpperCase().equals(UserTypes.PHOTOGRAPHER.toString())) {
-            user = new Photographer(id, name, userName, email);
+            user = new Photographer(id, userName, name, email);
         }
 
         return user;

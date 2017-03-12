@@ -5,7 +5,7 @@ package models;
  */
 public class Customer extends User {
 
-    public Customer(int ID, String name, String userName, String email){
-        super(ID, name, userName, email);
+    public Customer(int ID, String userName, String name, String email){
+        super(ID, userName, name, email);
     }
 }

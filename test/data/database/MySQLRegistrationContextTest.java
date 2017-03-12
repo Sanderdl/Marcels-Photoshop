@@ -17,7 +17,7 @@ public class MySQLRegistrationContextTest {
 
     @Before
     public void setup() {
-        userContext = new MemoryRegistrationContext();
+        userContext = new TestRegistrationContext();
     }
 
     @Test
@@ -27,18 +27,18 @@ public class MySQLRegistrationContextTest {
 
     @Test(expected = SQLException.class)
     public void registerDuplicateUserTest() throws SQLException {
-        userContext.registerUser("Fred", "FredFred1", "Fred Frans", "fred@fred.nl", "active", "admin");
-        userContext.registerUser("Fred", "FredFred1", "Fred Frans", "fred@fred.nl", "active", "admin");
+        userContext.registerUser("Fred", "FredFred1", "Fred Frans", "fred@fred.nl", "active", "customer");
+        userContext.registerUser("Fred", "FredFred1", "Fred Frans", "fred@fred.nl", "active", "customer");
     }
 
 
 }
 
-class MemoryRegistrationContext implements IRegistrationContext {
+class TestRegistrationContext implements IRegistrationContext {
 
     private final List<User> users;
 
-    public MemoryRegistrationContext() {
+    public TestRegistrationContext() {
         this.users = new ArrayList<>();
     }
 

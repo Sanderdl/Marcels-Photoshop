@@ -28,6 +28,8 @@ public class LoginRepo {
         }
     }
 
+
+    //<editor-fold desc="Login sanity check">
     private boolean verifyPassword(String password) throws LoginException {
         // Any other constraints for unencrypted passwords should be included here.
         if (password.length() >= 8 && password.length() <= 50) {
@@ -43,5 +45,6 @@ public class LoginRepo {
         }
         throw new LoginException("The length of the entered username must be between 3 and 50 characters");
     }
+    //</editor-fold>
 
 }
