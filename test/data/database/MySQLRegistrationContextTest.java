@@ -11,13 +11,13 @@ import java.util.List;
 /**
  * Created by lucreinink on 08/03/2017.
  */
-public class MySQLUserContextTest {
+public class MySQLRegistrationContextTest {
 
-    private IUserContext userContext;
+    private IRegistrationContext userContext;
 
     @Before
     public void setup() {
-        userContext = new MemoryUserContext();
+        userContext = new MemoryRegistrationContext();
     }
 
     @Test
@@ -34,11 +34,11 @@ public class MySQLUserContextTest {
 
 }
 
-class MemoryUserContext implements IUserContext {
+class MemoryRegistrationContext implements IRegistrationContext {
 
     private final List<User> users;
 
-    public MemoryUserContext() {
+    public MemoryRegistrationContext() {
         this.users = new ArrayList<>();
     }
 

@@ -14,6 +14,9 @@ public class LoginRepo {
         this.context = new MySQLLoginContext();
     }
 
+    // For testing.....maybe.
+    public LoginRepo(ILoginContext context){this.context = context;};
+
     public void UserLogin(String loginName, String password) throws LoginException {
         try {
             if (verifyLoginName(loginName) && verifyPassword(password)) {

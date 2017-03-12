@@ -40,6 +40,8 @@ public class MySQLLoginContext implements ILoginContext {
                 else if(rs.getString("ROLE") == "Admin"){
                     generateAdmin(rs);
                 }
+                rs.close();
+                MySQLDatabase.dbConnection.closeConnection(con, stm);
                 // No user found
                 throw new LoginException("No user found with these credentials");
             }
@@ -59,7 +61,7 @@ public class MySQLLoginContext implements ILoginContext {
     }
 
     private void generateAdmin(ResultSet rs){
-
+        throw new UnsupportedOperationException("Not implemented yet");
     }
 
 }

@@ -1,5 +1,7 @@
 package logic;
 
+import data.database.IRegistrationContext;
+import data.database.MySQLRegistrationContext;
 import models.exceptions.InvalidRegisterException;
 
 import java.util.regex.Matcher;
@@ -9,8 +11,18 @@ import java.util.regex.Pattern;
  * Created by sande on 08/03/2017.
  */
 public class RegisterRepo {
+    private IRegistrationContext context;
     private Pattern pattern;
     private Matcher matcher;
+
+    public RegisterRepo(){
+        this.context = new MySQLRegistrationContext();
+    }
+
+    // for testing
+    public RegisterRepo(IRegistrationContext context){
+        this.context = context;
+    }
 
     private final String EMAIL_PATTERN = "^(.+)@(.+)$";
     private final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$";

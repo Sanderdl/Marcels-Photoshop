@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 /**
  * Created by lucreinink on 06/03/2017.
  */
-public class MySQLUserContext implements IUserContext {
+public class MySQLRegistrationContext implements IRegistrationContext {
 
     private Connection con;
     private PreparedStatement stm;
