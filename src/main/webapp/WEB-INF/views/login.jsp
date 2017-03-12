@@ -56,9 +56,9 @@
                 <fieldset>
                     <legend>Login</legend>
                     <div class="form-group">
-                        <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+                        <label for="inputUsername" class="col-lg-2 control-label">Username</label>
                         <div class="col-lg-10">
-                            <input name="email" type="text" class="form-control" id="inputEmail" placeholder="Email">
+                            <input name="username" type="text" class="form-control" id="inputUsername" placeholder="username">
                         </div>
                     </div>
                     <div class="form-group">
@@ -97,10 +97,10 @@
     $(document).ready(function () {
         $('#sampleForm').submit(
             function (event) {
-                var email = $('#inputEmail').val();
+                var username = $('#inputUsername').val();
                 var password = $('#inputPassword').val();
-                var data = 'email='
-                    + encodeURIComponent(email)
+                var data = 'username='
+                    + encodeURIComponent(username)
                     + '&password='
                     + encodeURIComponent(password);
                 $.ajax({
@@ -109,6 +109,9 @@
                     type: "GET",
 
                     success: function (response) {
+                        // Escaping special characters
+                        // http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
+                        response.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
                         alert(response);
                     },
                     error: function (xhr, status, error) {

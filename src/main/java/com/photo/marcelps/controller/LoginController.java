@@ -36,23 +36,19 @@ public class LoginController {
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public @ResponseBody String processAJAXRequest(
-            @RequestParam("email") String email,
+            @RequestParam("username") String username,
             @RequestParam("password") String password	) {
 
-        String response = "";
-        // Process the request
         // Prepare the response string
+        String response = "Success";
 
-        // Check Email & Password
-        if(password.length()<8){
-            return response = "Password needs to be atleast 8 characters";
-        }
+        // Process the request
         try{
-            repo.UserLogin();
-            response = "Inloggen gelukt";
+            repo.UserLogin(username, password);
         }
         catch(LoginException ex){
-            response = "Helaas, er is iets misgegaan met het inloggen";
+            // An error occurred, updating response.
+            response = ex.getMessage();
         }
         return response;
     }
