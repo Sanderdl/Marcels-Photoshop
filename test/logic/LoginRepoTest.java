@@ -110,7 +110,7 @@ public class LoginRepoTest {
             }
             else if(map.containsKey(username) && map.get(username) == password){
                 // Success, return some user
-                return new Customer(1, "Name", "Username", "mail@mail.com");
+                return new Customer(1, "Name", "Username", "mail@mail.com", User.UserStatus.verified);
             }
             // Wrong password, in this test, do nothing
             return null;
