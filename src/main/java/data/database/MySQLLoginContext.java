@@ -60,7 +60,7 @@ public class MySQLLoginContext implements ILoginContext {
 
         }
         // no user found, somehow we end up here......
-        throw new LoginException("No verified, unblocked user found with these credentials");
+        throw new LoginException("No verified / unblocked user found with these credentials");
     }
 
     private void generateClient(ResultSet rs, String role) throws SQLException{
