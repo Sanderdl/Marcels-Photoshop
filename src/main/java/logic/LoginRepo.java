@@ -2,6 +2,7 @@ package logic;
 
 import data.database.MySQLLoginContext;
 import data.database.interfaces.ILoginContext;
+import models.User;
 import models.exceptions.LoginException;
 
 /**
@@ -17,15 +18,16 @@ public class LoginRepo {
     // For testing.....maybe.
     public LoginRepo(ILoginContext context){this.context = context;};
 
-    public void UserLogin(String loginName, String password) throws LoginException {
+    public User UserLogin(String loginName, String password) throws LoginException {
         try {
             if (verifyLoginName(loginName) && verifyPassword(password)) {
-                context.UserLogin(loginName, password);
+                return context.UserLogin(loginName, password);
             }
         }
         catch (LoginException ex) {
             throw ex;
         }
+        throw new LoginException("You broke everything. Well done.");
     }
 
 

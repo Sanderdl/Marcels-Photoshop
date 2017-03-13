@@ -3,6 +3,7 @@ package data.database;
 import data.database.interfaces.ILoginContext;
 import models.Customer;
 import models.Photographer;
+import models.User;
 import models.exceptions.LoginException;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class MySQLLoginContext implements ILoginContext {
     private ResultSet rs;
     private static final Logger LOGGER = Logger.getLogger(MySQLLoginContext.class.getName());
 
-    public void UserLogin(String username, String password) throws LoginException{
+    public User UserLogin(String username, String password) throws LoginException{
         try{
             // Call encrypting method
             // password = EncryptStuffPlz(password);
@@ -35,26 +36,24 @@ public class MySQLLoginContext implements ILoginContext {
 
             rs = stm.executeQuery();
             if(rs.next()){
-                boolean foundUser = false;
+                User foundUser = null;
                 if(rs.getString("Status").equals("verified")){
                     String role = rs.getString("Role");
                     if( role.equals("Customer") ||  role.equals("Photographer")){
                         // Is a client
-                        generateClient(rs, role);
-                       foundUser = true;
+                       foundUser = generateUser(rs, role);
+
                     }
-//                    else if(rs.getString("ROLE") == "Photographer"){
-//                        generatePhotographer(rs);
-//                    }
                     else if(role.equals("Admin")){
-                        generateAdmin(rs);
-                        foundUser = true;
+                        foundUser = generateAdmin(rs);
+
                     }
                 }
                 rs.close();
                 MySQLDatabase.dbConnection.closeConnection(con, stm);
                 // No user found
-                if (!foundUser) throw new LoginException("No verified, unblocked user found with these credentials");
+                if (foundUser == null) throw new LoginException("No verified, unblocked user found with these credentials");
+                return foundUser;
             }
             else
             {
@@ -68,7 +67,7 @@ public class MySQLLoginContext implements ILoginContext {
         }
     }
 
-    private void generateClient(ResultSet rs, String role) throws SQLException{
+    private User generateUser(ResultSet rs, String role) throws SQLException{
         // NOTE: there is currently no difference between Clients and photographers in this phase
         // if a more specific implementation is required, all generate methods must be refactored
         int id = -1;
@@ -86,12 +85,12 @@ public class MySQLLoginContext implements ILoginContext {
         switch (role){
             case "Client":
                 Customer c = new Customer(id, uName, name, eMail);
-                break;
+                return c;
             case "Photographer":
                 Photographer p = new Photographer(1, uName, name, eMail);
-                break;
+                return p;
             default:
-                break;
+                return null;
         }
     }
 
@@ -112,7 +111,7 @@ public class MySQLLoginContext implements ILoginContext {
 //    }
 
 
-    private void generateAdmin(ResultSet rs){
+    private User generateAdmin(ResultSet rs){
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
