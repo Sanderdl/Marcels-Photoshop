@@ -37,16 +37,14 @@ public class MySQLLoginContext implements ILoginContext {
             rs = stm.executeQuery();
             if(rs.next()){
                 User foundUser = null;
-                if(rs.getString("Status").equals("verified")){
-                    String role = rs.getString("Role");
-                    if( role.equals("Customer") ||  role.equals("Photographer")){
-                        // Is a client
-                       foundUser = generateUser(rs, role);
+                if (rs.getString("Status").equals(User.UserStatus.verified.toString())) {
 
-                    }
-                    else if(role.equals("Admin")){
+                    User.UserRoles role = User.UserRoles.valueOf(rs.getString("Role"));
+                    if (role == User.UserRoles.Customer || role == User.UserRoles.Photographer) {
+                        // Is a customer
+                        foundUser = generateUser(rs, role);
+                    } else if (role == User.UserRoles.Admin) {
                         foundUser = generateAdmin(rs);
-
                     }
                 }
                 rs.close();
@@ -67,8 +65,8 @@ public class MySQLLoginContext implements ILoginContext {
         }
     }
 
-    private User generateUser(ResultSet rs, String role) throws SQLException{
-        // NOTE: there is currently no difference between Clients and photographers in this phase
+    private User generateUser(ResultSet rs, User.UserRoles role) throws SQLException{
+        // NOTE: there is currently no difference between customers and photographers in this phase
         // if a more specific implementation is required, all generate methods must be refactored
         int id = -1;
         String uName = "";
@@ -83,10 +81,10 @@ public class MySQLLoginContext implements ILoginContext {
         eMail = rs.getString("Email");
         status = User.UserStatus.valueOf(rs.getString("Status"));
         switch (role){
-            case "Client":
+            case Customer:
                 Customer c = new Customer(id, uName, name, eMail, status);
                 return c;
-            case "Photographer":
+            case Photographer:
                 Photographer p = new Photographer(1, uName, name, eMail, status);
                 return p;
             default:
