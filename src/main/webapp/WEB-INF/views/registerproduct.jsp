@@ -62,12 +62,12 @@
                         <label for="inputPicturetitle" class="col-lg-2 control-label">Title</label>
                         <div class="col-lg-10">
                             <form:input path="title" name="inputPicturetitle" type="text" class="form-control"
-                                        id="inputPicturetitle" placeholder="Picture Name"/>
+                                        id="inputPicturetitle" placeholder="Picture Title"/>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="inputPrijs" class="col-lg-2 control-label">Prijs</label>
+                        <label for="inputPrijs" class="col-lg-2 control-label">Price</label>
                         <div class="col-lg-10">
                             <div class="input-group">
                                 <span class="input-group-addon">€</span>
@@ -90,7 +90,8 @@
 
 
                             <h4>Choose an album</h4>
-                            <form:select class="form-control" path="album">
+                            <form:select class="form-control" path="album" value="">
+                                <option disabled selected value> Select an option </option>
                                 <form:options items="${albums}"/>
                             </form:select>
                         </div>
