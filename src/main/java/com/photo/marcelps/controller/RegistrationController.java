@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 /**
@@ -32,8 +32,8 @@ public class RegistrationController {
     }
 
     @RequestMapping(value = "/register/", method = RequestMethod.POST)
-    public ModelAndView registerUser(@ModelAttribute("newAccount") Registration registration) {
-        String message = null;
+    public String registerUser(@ModelAttribute("newAccount") Registration registration,  RedirectAttributes attr) {
+        String message;
 
         try {
             repo.validateUsername(registration.getUserName());
@@ -42,11 +42,10 @@ public class RegistrationController {
             repo.validateUsername(registration.getName());
         }catch (InvalidRegisterException ex){
             message = ex.getMessage();
+            attr.addFlashAttribute("message", message);
+            return "redirect:/registration/page/";
         }
-
-        ModelAndView model = new ModelAndView("customerregistration");
-        model.addObject("message" , message);
-        return model;
+        return "redirect:/login/page/";
     }
 
 
