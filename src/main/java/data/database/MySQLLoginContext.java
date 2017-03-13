@@ -38,9 +38,9 @@ public class MySQLLoginContext implements ILoginContext {
                 rs.next();
                 if(rs.getString("Status") == "verified"){
                     String role = rs.getString("Role");
-                    if( role == "Client" ||  role == "Photographer"){
-                        // Is a client
-                        generateClient(rs, role);
+                    if( role == "Customer" ||  role == "Photographer"){
+                        // Is a Customer
+                        generateCustomer(rs, role);
                     }
 //                    else if(rs.getString("ROLE") == "Photographer"){
 //                        generatePhotographer(rs);
@@ -64,8 +64,8 @@ public class MySQLLoginContext implements ILoginContext {
         throw new LoginException("No verified / unblocked user found with these credentials");
     }
 
-    private void generateClient(ResultSet rs, String role) throws SQLException{
-        // NOTE: there is currently no difference between Clients and photographers in this phase
+    private void generateCustomer(ResultSet rs, String role) throws SQLException{
+        // NOTE: there is currently no difference between Customers and photographers in this phase
         // if a more specific implementation is required, all generate methods must be refactored
         int id = -1;
         String uName = "";
@@ -80,7 +80,7 @@ public class MySQLLoginContext implements ILoginContext {
             eMail = rs.getString("Email");
         }
         switch (role){
-            case "Client":
+            case "Customer":
                 Customer c = new Customer(id, uName, name, eMail);
                 break;
             case "Photographer":
