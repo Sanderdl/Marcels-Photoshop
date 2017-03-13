@@ -52,7 +52,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-5 col-md-offset-3">
-                    <form class="form-horizontal">
+                    <form:form class="form-horizontal" action="/registration/register/" commandName="newAccount">
                         <fieldset>
                             <legend>Registration</legend>
 

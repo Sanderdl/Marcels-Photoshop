@@ -2,13 +2,14 @@ package com.photo.marcelps.controller;
 
 import logic.LoginRepo;
 import models.Customer;
+import models.Login;
+import models.Registration;
 import models.User;
+import models.exceptions.InvalidRegisterException;
 import models.exceptions.LoginException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -23,36 +24,24 @@ public class LoginController {
     private LoginRepo repo = new LoginRepo();
 
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
-    public ModelAndView getData() {
+    public String setupPage(Model model) {
+        Login login = new Login();
+        model.addAttribute("newLogin", login);
+        return "login";
+    }
+
+    @RequestMapping(value = "/submit/", method = RequestMethod.POST)
+    public ModelAndView registerUser(@ModelAttribute("newAccount") Login login) {
+        String message = null;
+
+        try {
+            repo.UserLogin(login.getUsername(), login.getPassword());
+        } catch (LoginException ex) {
+            message = ex.getMessage();
+        }
 
         ModelAndView model = new ModelAndView("login");
+        model.addObject("message", message);
         return model;
     }
-
-//    @RequestMapping(value = "/submit/", method = RequestMethod.GET)
-//    public void getLoginData(@RequestParam String loginName) {
-//        User customer = new Customer(1, loginName);
-//    }
-
-    @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public @ResponseBody String processAJAXRequest(
-            @RequestParam("username") String username,
-            @RequestParam("password") String password	) {
-
-        // Prepare the response string
-        String response = "Success";
-
-        // Process the request
-        try{
-            repo.UserLogin(username, password);
-        }
-        catch(LoginException ex){
-            // An error occurred, updating response.
-            response = ex.getMessage();
-        }
-        return response;
-    }
-
-    // passing data to tempdata
-    // http://stackoverflow.com/questions/31167613/access-current-model-in-spring-mvc
 }
