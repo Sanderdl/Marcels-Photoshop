@@ -59,19 +59,6 @@ public abstract class User implements Serializable {
         this.email = email;
     }
 
-
-
-    public static User createNewUser(int id, String userName, String name, String email, String role) {
-        User user = null;
-        if (role.toUpperCase().equals(UserRoles.Customer.toString())) {
-            user = new Customer(id, userName, name, email, UserStatus.verified);
-        } else if (role.toUpperCase().equals(UserRoles.Photographer.toString())) {
-            user = new Photographer(id, userName, name, email, UserStatus.not_verified);
-        }
-
-        return user;
-    }
-
     public enum UserRoles {
         Customer, Photographer, Admin, ERROR
     }
