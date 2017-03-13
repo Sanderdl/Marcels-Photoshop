@@ -20,7 +20,8 @@ public class MySQLRegistrationContext implements IRegistrationContext {
 
         try{
             con = MySQLDatabase.dbConnection.getConnection();
-            stm = con.prepareStatement("INSERT INTO ACCOUNT(?, ?, ?, ?, ?, ?)");
+            stm = con.prepareStatement("INSERT INTO Account(username, password, name, email, status, role) " +
+                    "values(?, ?, ?, ?, ?, ?)");
             stm.setString(1, userName);
             stm.setString(2, password);
             stm.setString(3, name);

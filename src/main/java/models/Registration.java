@@ -11,6 +11,18 @@ public class Registration {
     private String email;
     private String role;
 
+    public Registration(String userName, String password, String name, String email, String role) {
+        this.userName = userName;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.role = role;
+    }
+
+    public Registration() {
+
+    }
+
     public String getUserName() {
         return userName;
     }

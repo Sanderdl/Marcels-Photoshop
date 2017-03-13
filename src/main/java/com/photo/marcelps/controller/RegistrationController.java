@@ -1,5 +1,6 @@
 package com.photo.marcelps.controller;
 
+import data.database.MySQLRegistrationContext;
 import logic.RegisterRepo;
 import models.Registration;
 import models.exceptions.InvalidRegisterException;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.sql.SQLException;
 
 
 /**
@@ -21,7 +24,7 @@ public class RegistrationController {
     private RegisterRepo repo;
 
     public RegistrationController(){
-        repo = new RegisterRepo();
+        repo = new RegisterRepo(new MySQLRegistrationContext());
     }
 
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
@@ -36,11 +39,8 @@ public class RegistrationController {
         String message;
 
         try {
-            repo.validateUsername(registration.getUserName());
-            repo.validateEmail(registration.getEmail());
-            repo.validatePassword(registration.getPassword());
-            repo.validateUsername(registration.getName());
-        }catch (InvalidRegisterException ex){
+            repo.registerUser(registration);
+        }catch (InvalidRegisterException | SQLException ex){
             message = ex.getMessage();
             attr.addFlashAttribute("message", message);
             return "redirect:/registration/page/";
