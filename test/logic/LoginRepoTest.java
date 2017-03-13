@@ -103,14 +103,14 @@ public class LoginRepoTest {
         }
 
         @Override
-        public User UserLogin(String username, String password) throws LoginException {
+        public User userLogin(String username, String password) throws LoginException {
             if(!map.containsKey(username)){
                 // Must fail
                 throw new LoginException("");
             }
             else if(map.containsKey(username) && map.get(username) == password){
                 // Success, return some user
-                return new Customer(1, "Name", "Username", "mail@mail.com");
+                return new Customer(1, "Name", "Username", "mail@mail.com", User.UserStatus.verified);
             }
             // Wrong password, in this test, do nothing
             return null;

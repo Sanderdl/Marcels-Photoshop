@@ -21,7 +21,7 @@ public class LoginRepo {
     public User UserLogin(String loginName, String password) throws LoginException {
         try {
             if (verifyLoginName(loginName) && verifyPassword(password)) {
-                return context.UserLogin(loginName, password);
+                return context.userLogin(loginName, password);
             }
         }
         catch (LoginException ex) {

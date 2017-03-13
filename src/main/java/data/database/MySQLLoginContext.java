@@ -1,6 +1,7 @@
 package data.database;
 
 import data.database.interfaces.ILoginContext;
+import models.Admin;
 import models.Customer;
 import models.Photographer;
 import models.User;
@@ -24,7 +25,7 @@ public class MySQLLoginContext implements ILoginContext {
     private ResultSet rs;
     private static final Logger LOGGER = Logger.getLogger(MySQLLoginContext.class.getName());
 
-    public User UserLogin(String username, String password) throws LoginException{
+    public User userLogin(String username, String password) throws LoginException{
         try{
             // Call encrypting method
             // password = EncryptStuffPlz(password);
@@ -37,17 +38,16 @@ public class MySQLLoginContext implements ILoginContext {
             rs = stm.executeQuery();
             if(rs.next()){
                 User foundUser = null;
-                if(rs.getString("Status").equals("verified")){
-                    String role = rs.getString("Role");
-                    if( role.equals("Customer") ||  role.equals("Photographer")){
-                        // Is a client
-                       foundUser = generateUser(rs, role);
+                if (rs.getString("Status").equals(User.UserStatus.verified.toString())) {
 
+                    User.UserRoles role = User.UserRoles.valueOf(rs.getString("Role"));
+                    if (role == User.UserRoles.Customer || role == User.UserRoles.Photographer || role == User.UserRoles.Admin) {
+                        // Is a customer
+                        foundUser = generateUser(rs, role);
                     }
-                    else if(role.equals("Admin")){
-                        foundUser = generateAdmin(rs);
-
-                    }
+                    //else if (role == User.UserRoles.Admin) {
+                    //    foundUser = generateAdmin(rs);
+                    //}
                 }
                 rs.close();
                 MySQLDatabase.dbConnection.closeConnection(con, stm);
@@ -67,28 +67,31 @@ public class MySQLLoginContext implements ILoginContext {
         }
     }
 
-    private User generateUser(ResultSet rs, String role) throws SQLException{
-        // NOTE: there is currently no difference between Clients and photographers in this phase
+    private User generateUser(ResultSet rs, User.UserRoles role) throws SQLException{
+        // NOTE: there is currently no difference between customers and photographers in this phase
         // if a more specific implementation is required, all generate methods must be refactored
         int id = -1;
         String uName = "";
         String name = "";
         String eMail = "";
-        while(rs.next()){
-            // id, uName, pass, name, email, status, role
-            // currently overly verbose to keep method straightforward
-            id = rs.getInt("AccountID");
-            uName = rs.getString("Username");
-            name = rs.getString("Name");
-            eMail = rs.getString("Email");
-        }
+        User.UserStatus status = User.UserStatus.ERROR;
+        // id, uName, pass, name, email, status, role
+        // currently overly verbose to keep method straightforward
+        id = rs.getInt("AccountID");
+        uName = rs.getString("Username");
+        name = rs.getString("Name");
+        eMail = rs.getString("Email");
+        status = User.UserStatus.valueOf(rs.getString("Status"));
         switch (role){
-            case "Client":
-                Customer c = new Customer(id, uName, name, eMail);
+            case Customer:
+                Customer c = new Customer(id, uName, name, eMail, status);
                 return c;
-            case "Photographer":
-                Photographer p = new Photographer(1, uName, name, eMail);
+            case Photographer:
+                Photographer p = new Photographer(1, uName, name, eMail, status);
                 return p;
+            case Admin:
+                Admin a = new Admin(1, uName, name, eMail, status);
+                return a;
             default:
                 return null;
         }
