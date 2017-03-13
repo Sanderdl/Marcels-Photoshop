@@ -74,20 +74,20 @@ public class MySQLLoginContext implements ILoginContext {
         String uName = "";
         String name = "";
         String eMail = "";
-        while(rs.next()){
-            // id, uName, pass, name, email, status, role
-            // currently overly verbose to keep method straightforward
-            id = rs.getInt("AccountID");
-            uName = rs.getString("Username");
-            name = rs.getString("Name");
-            eMail = rs.getString("Email");
-        }
+        User.UserStatus status = User.UserStatus.ERROR;
+        // id, uName, pass, name, email, status, role
+        // currently overly verbose to keep method straightforward
+        id = rs.getInt("AccountID");
+        uName = rs.getString("Username");
+        name = rs.getString("Name");
+        eMail = rs.getString("Email");
+        status = User.UserStatus.valueOf(rs.getString("Status"));
         switch (role){
             case "Client":
-                Customer c = new Customer(id, uName, name, eMail);
+                Customer c = new Customer(id, uName, name, eMail, status);
                 return c;
             case "Photographer":
-                Photographer p = new Photographer(1, uName, name, eMail);
+                Photographer p = new Photographer(1, uName, name, eMail, status);
                 return p;
             default:
                 return null;

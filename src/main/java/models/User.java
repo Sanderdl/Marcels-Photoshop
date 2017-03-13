@@ -11,16 +11,20 @@ public abstract class User implements Serializable {
     private String userName;
     private String name;
     private String email;
+    private UserStatus status;
 
-    private enum UserTypes {
-        CUSTOMER, PHOTOGRAPHER;
+    public enum UserStatus{
+        verified, not_verified, blocked, deleted, ERROR
     }
 
-    public User(int id, String userName, String name, String email){
+
+
+    public User(int id, String userName, String name, String email, UserStatus status){
         this.id = id;
         this.userName = userName;
         this.name = name;
         this.email = email;
+        this.status = status;
     }
 
     public int getId() {
@@ -55,14 +59,20 @@ public abstract class User implements Serializable {
         this.email = email;
     }
 
+
+
     public static User createNewUser(int id, String userName, String name, String email, String role) {
         User user = null;
         if (role.toUpperCase().equals(UserTypes.CUSTOMER.toString())) {
-            user = new Customer(id, userName, name, email);
+            user = new Customer(id, userName, name, email, UserStatus.verified);
         } else if (role.toUpperCase().equals(UserTypes.PHOTOGRAPHER.toString())) {
-            user = new Photographer(id, userName, name, email);
+            user = new Photographer(id, userName, name, email, UserStatus.not_verified);
         }
 
         return user;
+    }
+
+    private enum UserTypes {
+        CUSTOMER, PHOTOGRAPHER
     }
 }
