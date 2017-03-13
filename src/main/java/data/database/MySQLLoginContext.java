@@ -24,7 +24,7 @@ public class MySQLLoginContext implements ILoginContext {
     private ResultSet rs;
     private static final Logger LOGGER = Logger.getLogger(MySQLLoginContext.class.getName());
 
-    public User UserLogin(String username, String password) throws LoginException{
+    public User userLogin(String username, String password) throws LoginException{
         try{
             // Call encrypting method
             // password = EncryptStuffPlz(password);

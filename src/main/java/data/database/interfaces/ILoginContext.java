@@ -7,5 +7,5 @@ import models.exceptions.LoginException;
  * Created by Adriaan on 08-Mar-17.
  */
 public interface ILoginContext {
-    User UserLogin(String username, String password) throws LoginException;
+    User userLogin(String username, String password) throws LoginException;
 }
