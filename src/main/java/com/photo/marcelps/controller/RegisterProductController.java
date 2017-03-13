@@ -24,10 +24,10 @@ public class RegisterProductController {
     public String setupPage(Model model) {
         ProductRegistration user = new ProductRegistration();
         model.addAttribute("productregistration", user);
-        ArrayList products = new ArrayList<String>();
-        products.add("Mok");
-        products.add("Shirt");
+        String[] products = new String []{"Mok", "Shirt"};
         model.addAttribute("availableProducts", products);
+        String[] albums = new String []{"Natuur", "School"};
+        model.addAttribute("albums", albums);
         return "registerproduct";
     }
 

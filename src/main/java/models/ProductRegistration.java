@@ -9,6 +9,7 @@ public class ProductRegistration {
     private Double price;
     private String picture;
     private String[] products;
+    private String album;
 
     public String getTitle() {
         return title;
@@ -40,5 +41,13 @@ public class ProductRegistration {
 
     public void setProducts(String[] products) {
         this.products = products;
+    }
+
+    public String getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(String album) {
+        this.album = album;
     }
 }

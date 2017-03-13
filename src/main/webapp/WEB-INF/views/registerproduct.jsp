@@ -70,35 +70,45 @@
                         <label for="inputPrijs" class="col-lg-2 control-label">Prijs</label>
                         <div class="col-lg-10">
                             <div class="input-group">
-                                <span class="input-group-addon">$</span>
-                                    <%--<form:input path="price" type="number" value="0,00" min="0" step="0.01" data-number-to-fixed="2"--%>
-                                    <%--data-number-stepfactor="100" class="form-control currency" id="inputPrijs"/>--%>
+                                <span class="input-group-addon">€</span>
+                                <form:input path="price" value="0,00" min="0"
+                                            data-number-stepfactor="100" class="form-control currency" id="inputPrijs"/>
                             </div>
                         </div>
                     </div>
-
-
-                    <h4>Choose a picture</h4>
-                    <div class="input-group">
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-2">
+                            <h4>Choose a picture</h4>
+                            <div class="input-group">
                         <span class="input-group-btn">
                             <span class="btn btn-primary btn-file">
                                 Browse&hellip; <form:input path="picture" type="file"/>
                             </span>
                         </span>
-                        <input type="text" class="form-control" readonly>
+                                <input type="text" class="form-control" readonly>
+                            </div>
+
+
+                            <h4>Choose an album</h4>
+                            <form:select class="form-control" path="album">
+                                <form:options items="${albums}"/>
+                            </form:select>
+                        </div>
                     </div>
+
                     <div class="form-group">
-                        <div class="col-lg-10">
+                        <div class="col-lg-10 col-lg-offset-2">
                             <h4>On what product do you want your picture to be placed?</h4>
-                            <c:forEach var="listValue" items="${availableProducts}">
-                                <label class="checkbox">
-                                    <form:checkbox path="product" value="${listValue}"/>${listValue}
-                                </label>
-                            </c:forEach>
+                                <%--<c:forEach var="listValue" items="${availableProducts}">--%>
+                                <%--<label class="checkbox">--%>
+                                <%--<form:checkbox path="product" value="${listValue}"/>${listValue}--%>
+                                <%--</label>--%>
+                                <%--</c:forEach>--%>
+                            <form:checkboxes items="${availableProducts}" path="products"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-lg-10 col-lg-offset-3">
+                        <div class="col-lg-10 col-lg-offset-4">
                             <button type="reset" class="btn btn-default">Cancel</button>
                             <button type="submit" class="btn btn-primary">Upload</button>
                         </div>
