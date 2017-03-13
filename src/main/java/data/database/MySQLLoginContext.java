@@ -25,8 +25,9 @@ public class MySQLLoginContext implements ILoginContext {
     private ResultSet rs;
     private static final Logger LOGGER = Logger.getLogger(MySQLLoginContext.class.getName());
 
-    public User userLogin(String username, String password) throws LoginException{
-        try{
+    public User userLogin(String username, String password) throws LoginException {
+        try
+        {
             // Call encrypting method
             // password = EncryptStuffPlz(password);
 
@@ -36,14 +37,17 @@ public class MySQLLoginContext implements ILoginContext {
             stm.setString(2, password);
 
             rs = stm.executeQuery();
-            if(rs.next()){
+            if (rs.next())
+            {
                 User foundUser = null;
-                if (rs.getString("Status").equals(User.UserStatus.verified.toString())) {
+                if (rs.getString("Status").equals(User.UserStatus.verified.toString()))
+                {
 
                     User.UserRoles role = User.UserRoles.valueOf(rs.getString("Role"));
-                    if (role == User.UserRoles.Customer || role == User.UserRoles.Photographer || role == User.UserRoles.Admin) {
+                    if (role == User.UserRoles.Customer || role == User.UserRoles.Photographer || role == User.UserRoles.Admin)
+                    {
                         // Is a customer
-                        foundUser = generateUser(rs, role);
+                        foundUser = User.generateUser(rs, role);
                     }
                     //else if (role == User.UserRoles.Admin) {
                     //    foundUser = generateAdmin(rs);
@@ -52,7 +56,8 @@ public class MySQLLoginContext implements ILoginContext {
                 rs.close();
                 MySQLDatabase.dbConnection.closeConnection(con, stm);
                 // No user found
-                if (foundUser == null) throw new LoginException("No verified or unblocked user found with these credentials");
+                if (foundUser == null)
+                    throw new LoginException("No verified or unblocked user found with these credentials");
                 return foundUser;
             }
             else
@@ -60,40 +65,11 @@ public class MySQLLoginContext implements ILoginContext {
                 throw new LoginException("No verified or unblocked user found with these credentials");
             }
         }
-        catch( SQLException ex ){
+        catch (SQLException ex)
+        {
             LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
             throw new LoginException("Error while connecting to the database");
 
-        }
-    }
-
-    private User generateUser(ResultSet rs, User.UserRoles role) throws SQLException{
-        // NOTE: there is currently no difference between customers and photographers in this phase
-        // if a more specific implementation is required, all generate methods must be refactored
-        int id = -1;
-        String uName = "";
-        String name = "";
-        String eMail = "";
-        User.UserStatus status = User.UserStatus.ERROR;
-        // id, uName, pass, name, email, status, role
-        // currently overly verbose to keep method straightforward
-        id = rs.getInt("AccountID");
-        uName = rs.getString("Username");
-        name = rs.getString("Name");
-        eMail = rs.getString("Email");
-        status = User.UserStatus.valueOf(rs.getString("Status"));
-        switch (role){
-            case Customer:
-                Customer c = new Customer(id, uName, name, eMail, status);
-                return c;
-            case Photographer:
-                Photographer p = new Photographer(1, uName, name, eMail, status);
-                return p;
-            case Admin:
-                Admin a = new Admin(1, uName, name, eMail, status);
-                return a;
-            default:
-                return null;
         }
     }
 
@@ -114,7 +90,7 @@ public class MySQLLoginContext implements ILoginContext {
 //    }
 
 
-    private User generateAdmin(ResultSet rs){
+    private User generateAdmin(ResultSet rs) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
