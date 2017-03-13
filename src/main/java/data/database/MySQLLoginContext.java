@@ -54,11 +54,11 @@ public class MySQLLoginContext implements ILoginContext {
                 rs.close();
                 MySQLDatabase.dbConnection.closeConnection(con, stm);
                 // No user found
-                if (!foundUser) throw new LoginException("No verified, unblocked user found with these credentials");
+                if (!foundUser) throw new LoginException("No verified or unblocked user found with these credentials");
             }
             else
             {
-                throw new LoginException("No verified, unblocked user found with these credentials");
+                throw new LoginException("No verified or unblocked user found with these credentials");
             }
         }
         catch( SQLException ex ){
