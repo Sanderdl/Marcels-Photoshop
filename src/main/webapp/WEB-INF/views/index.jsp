@@ -52,8 +52,17 @@
                 <button type="submit" class="btn btn-default">Submit</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <c:out value="${sessionScope.User.userName}"/>
-                <li><a href="/login/page/">Login</a></li>
+
+                <c:choose>
+                    <c:when test="${not empty sessionScope.User}">
+                        <li><a href="#"><c:out value="${sessionScope.User.userName}"/></a></li>
+                        <li><a href="/login/page/">Logout</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="/login/page/">Login</a></li>
+                    </c:otherwise>
+                </c:choose>
+
             </ul>
         </div>
     </div>
