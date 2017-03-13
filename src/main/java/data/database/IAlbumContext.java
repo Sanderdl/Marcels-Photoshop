@@ -1,7 +1,11 @@
 package data.database;
 
+import models.Album;
 import models.GalleryImage;
+import models.Photographer;
 
+import java.sql.SQLException;
+import java.util.Collection;
 import java.util.HashSet;
 
 /**
@@ -10,4 +14,5 @@ import java.util.HashSet;
 public interface IAlbumContext {
     GalleryImage getImageById(int id);
     HashSet<Integer> allImages();
+    Collection<Album> getAllAlbumsByUser(Photographer owner) throws SQLException;
 }

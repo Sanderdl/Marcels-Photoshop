@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -35,7 +34,7 @@ public class LoginController {
         String message = null;
         try {
             User u = repo.UserLogin(login.getUsername(), login.getPassword());
-            if(u != null){
+            if (u != null) {
                 session.setAttribute("User", u);
                 System.out.println(u.getName());
                 return "redirect:/gallery/random/";

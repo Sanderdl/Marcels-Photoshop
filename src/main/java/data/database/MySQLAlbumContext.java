@@ -1,12 +1,16 @@
 package data.database;
 
 
+import models.Album;
 import models.GalleryImage;
+import models.Photographer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +19,10 @@ import java.util.logging.Logger;
  * Created by sande on 02/03/2017.
  */
 public class MySQLAlbumContext implements IAlbumContext {
+
+    private Connection con;
+    private PreparedStatement stm;
+    private ResultSet rs;
 
     public GalleryImage getImageById(int id) {
         GalleryImage gi = null;
@@ -43,27 +51,51 @@ public class MySQLAlbumContext implements IAlbumContext {
         return gi;
     }
 
-    public HashSet<Integer> allImages(){
+    public HashSet<Integer> allImages() {
         HashSet<Integer> list = new HashSet<>();
 
         Connection conn = null;
         PreparedStatement stm = null;
 
-        try{
+        try {
             conn = MySQLDatabase.dbConnection.getConnection();
             stm = conn.prepareStatement("SELECT id FROM photo");
 
             ResultSet rs = stm.executeQuery();
 
-            while (rs.next()){
+            while (rs.next()) {
                 int id = rs.getInt("id");
 
                 list.add(id);
             }
-            MySQLDatabase.dbConnection.closeConnection(conn,stm);
-        }catch (SQLException ex){
+            MySQLDatabase.dbConnection.closeConnection(conn, stm);
+        } catch (SQLException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
         return list;
+    }
+
+    @Override
+    public Collection<Album> getAllAlbumsByUser(Photographer owner) throws SQLException {
+
+        Collection<Album> albums = new ArrayList<>();
+        try{
+            con = MySQLDatabase.dbConnection.getConnection();
+            stm = con.prepareStatement("SELECT * FROM Album where AccountID = ?");
+            stm.setInt(1, owner.getId());
+
+            rs = stm.executeQuery();
+
+            if (rs.next()) {
+                albums.add(new Album(rs.getString("AlbumName"), owner, rs.getInt("AlbumID")));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        } finally {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
+
+        return albums;
     }
 }

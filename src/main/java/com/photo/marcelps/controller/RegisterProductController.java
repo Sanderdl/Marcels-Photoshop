@@ -1,9 +1,9 @@
 package com.photo.marcelps.controller;
 
-import models.Login;
+import data.database.MySQLAlbumContext;
+import models.Album;
+import models.Photographer;
 import models.ProductRegistration;
-import models.User;
-import models.exceptions.LoginException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
+import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
+import java.util.Collection;
 
 /**
  * Created by ruudv on 13-3-2017.
@@ -20,13 +22,17 @@ import java.util.ArrayList;
 @RequestMapping("/registerproduct")
 public class RegisterProductController {
 
+    private MySQLAlbumContext albumContext = new MySQLAlbumContext();
+
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
-    public String setupPage(Model model) {
+    public String setupPage(Model model, HttpSession session) throws SQLException {
         ProductRegistration user = new ProductRegistration();
         model.addAttribute("productregistration", user);
         String[] products = new String []{"Mok", "Shirt"};
         model.addAttribute("availableProducts", products);
-        String[] albums = new String []{"Natuur", "School"};
+        Photographer photographer = (Photographer) session.getAttribute("User");
+        Collection<Album> albums = albumContext.getAllAlbumsByUser(photographer);
+
         model.addAttribute("albums", albums);
         return "registerproduct";
     }
