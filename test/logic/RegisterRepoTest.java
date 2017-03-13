@@ -2,8 +2,7 @@ package logic;
 
 import data.database.IRegistrationContext;
 import data.database.interfaces.ILoginContext;
-import models.Registration;
-import models.User;
+import models.*;
 import models.exceptions.InvalidRegisterException;
 import models.exceptions.LoginException;
 import org.junit.Before;
@@ -22,14 +21,11 @@ public class RegisterRepoTest {
 
     private RegisterRepo registerRepo;
 
-    private LoginRepo loginRepo;
-
     private Registration registration;
 
     @Before
     public void setup() {
         this.registerRepo = new RegisterRepo(new TestRegistrationContext());
-        this.loginRepo = new LoginRepo(new TestRegistrationContext());
         this.registration = new Registration("Fred", "FredFred1!", "Fred Frans", "fred@fred.nl", "Customer");
     }
 
@@ -90,29 +86,7 @@ public class RegisterRepoTest {
         }
     }
 
-    @Test
-    public void unVerifiedTest() throws SQLException, InvalidRegisterException, LoginException {
-
-        String userName = "Fred";
-        String password = "FredFred1!";
-        this.registerRepo.registerUser(new Registration(userName, password, "Fred Frans",
-                "fred@fred.nl", "Photographer"));
-        User fred = loginRepo.UserLogin(userName, password);
-//        assertEquals(fred.getStatus().toLowerCase(), "unverified");
-    }
-
-    @Test
-    public void verifiedTest() throws SQLException, InvalidRegisterException, LoginException {
-
-        String userName = "Fred";
-        String password = "FredFred1!";
-        this.registerRepo.registerUser(new Registration(userName, password, "Fred Frans",
-                "fred@fred.nl", "Customer"));
-        User fred = loginRepo.UserLogin(userName, password);
-//        assertEquals(fred.getStatus().toLowerCase(), "verified");
-    }
-
-    class TestRegistrationContext implements IRegistrationContext, ILoginContext {
+    class TestRegistrationContext implements IRegistrationContext {
 
         public final List<User> users;
 
@@ -121,25 +95,31 @@ public class RegisterRepoTest {
         }
 
         public void registerUser(String userName, String password, String name, String email, String status, String role) throws SQLException {
-            for (User u : this.users) {
-                if (u.getUserName().equals(userName) || u.getEmail().equals(email)) {
+            for (User u : this.users)
+            {
+                if (u.getUserName().equals(userName) || u.getEmail().equals(email))
+                {
                     throw new SQLException("User already registered");
                 }
-            }
 
-            this.users.add(User.createNewUser(this.users.size(), userName, password, email, role));
+            }
+            int id = users.size() + 1;
+            User newUser = null;
+            switch (role)
+            {
+                case "Customer":
+                    newUser = new Customer(id, userName, name, email, User.UserStatus.valueOf(status));
+                case "Photographer":
+                    newUser = new Photographer(id, userName, name, email, User.UserStatus.valueOf(status));
+                case "Admin":
+                    newUser = new Admin(id, userName, name, email, User.UserStatus.valueOf(status));
+                default:
+            }
+            if (newUser != null) users.add(newUser);
+
+
         }
 
-        @Override
-        public User UserLogin(String username, String password) throws LoginException {
 
-            for (User u : this.users) {
-                if (u.getUserName().equals(username)) {
-                    return u;
-                }
-            }
-
-            return null;
-        }
     }
 }
