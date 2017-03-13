@@ -34,25 +34,27 @@ public class MySQLLoginContext implements ILoginContext {
             stm.setString(2, password);
 
             rs = stm.executeQuery();
-            if(rs.first()){
-                rs.next();
-                if(rs.getString("Status") == "verified"){
+            if(rs.next()){
+                boolean foundUser = false;
+                if(rs.getString("Status").equals("verified")){
                     String role = rs.getString("Role");
-                    if( role == "Client" ||  role == "Photographer"){
+                    if( role.equals("Customer") ||  role.equals("Photographer")){
                         // Is a client
                         generateClient(rs, role);
+                       foundUser = true;
                     }
 //                    else if(rs.getString("ROLE") == "Photographer"){
 //                        generatePhotographer(rs);
 //                    }
-                    else if(role == "Admin"){
+                    else if(role.equals("Admin")){
                         generateAdmin(rs);
+                        foundUser = true;
                     }
                 }
                 rs.close();
                 MySQLDatabase.dbConnection.closeConnection(con, stm);
                 // No user found
-                throw new LoginException("No verified, unblocked user found with these credentials");
+                if (!foundUser) throw new LoginException("No verified, unblocked user found with these credentials");
             }
         }
         catch( SQLException ex ){
@@ -60,8 +62,6 @@ public class MySQLLoginContext implements ILoginContext {
             throw new LoginException("Error while connecting to the database");
 
         }
-        // no user found, somehow we end up here......
-        throw new LoginException("No verified / unblocked user found with these credentials");
     }
 
     private void generateClient(ResultSet rs, String role) throws SQLException{
