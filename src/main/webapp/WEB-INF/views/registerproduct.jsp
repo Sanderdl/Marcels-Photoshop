@@ -91,7 +91,7 @@
 
                             <h4>Choose an album</h4>
                             <form:select class="form-control" path="album" value="">
-                                <option disabled selected value> Select an option </option>
+                                <option disabled selected value> Select an option</option>
                                 <form:options items="${albums}"/>
                             </form:select>
                         </div>
@@ -100,12 +100,19 @@
                     <div class="form-group">
                         <div class="col-lg-10 col-lg-offset-2">
                             <h4>On what product do you want your picture to be placed?</h4>
-                                <%--<c:forEach var="listValue" items="${availableProducts}">--%>
-                                <%--<label class="checkbox">--%>
-                                <%--<form:checkbox path="product" value="${listValue}"/>${listValue}--%>
-                                <%--</label>--%>
-                                <%--</c:forEach>--%>
-                            <form:checkboxes items="${availableProducts}" path="products"/>
+                            <c:if test="${not empty availableProducts}">
+
+                                <c:forEach var="product" items="${availableProducts}">
+                                    <div class="checkbox">
+                                        <label>
+                                            <form:checkbox path="products" value="${product}"/>
+                                            <c:out value="${product}"/>
+                                        </label>
+                                    </div>
+                                </c:forEach>
+
+
+                            </c:if>
                         </div>
                     </div>
                     <div class="form-group">

@@ -1,6 +1,8 @@
 package com.photo.marcelps.controller;
 
 import data.database.MySQLAlbumContext;
+import data.database.MySQLExtrasContext;
+import data.database.interfaces.IExtrasContext;
 import models.Album;
 import models.Photographer;
 import models.ProductRegistration;
@@ -22,14 +24,17 @@ import java.util.Collection;
 @RequestMapping("/registerproduct")
 public class RegisterProductController {
 
+    private IExtrasContext extrasContext = new MySQLExtrasContext();
     private MySQLAlbumContext albumContext = new MySQLAlbumContext();
 
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
     public String setupPage(Model model, HttpSession session) throws SQLException {
-        ProductRegistration user = new ProductRegistration();
-        model.addAttribute("productregistration", user);
-        String[] products = new String []{"Mok", "Shirt"};
+        ProductRegistration newProduct = new ProductRegistration();
+        model.addAttribute("productregistration", newProduct);
+
+        Collection<String> products = extrasContext.getAvailableExtras();
         model.addAttribute("availableProducts", products);
+
         Photographer photographer = (Photographer) session.getAttribute("User");
         Collection<Album> albums = albumContext.getAllAlbumsByUser(photographer);
 
