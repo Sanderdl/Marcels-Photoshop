@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -52,20 +53,23 @@
 <div class="container">
     <div class="row">
         <div class="col-md-5 col-md-offset-3">
-            <form name="myForm" class="form-horizontal" id="sampleForm" action="/login/profile">
+            <form:form class="form-horizontal" action="/login/submit/" commandName="newLogin">
                 <fieldset>
                     <legend>Login</legend>
                     <div class="form-group">
                         <label for="inputUsername" class="col-lg-2 control-label">Username</label>
                         <div class="col-lg-10">
-                            <input name="username" type="text" class="form-control" id="inputUsername" placeholder="username">
+                            <form:input path="username" name="inputUsername" type="text" class="form-control"
+                                        id="username" placeholder="Username"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputPassword" class="col-lg-2 control-label">Password</label>
                         <div class="col-lg-10">
-                            <input name="password" type="password" class="form-control" id="inputPassword"
-                                   placeholder="Password">
+                            <form:input path="password" name="inputPassword" type="password" class="form-control"
+                                        id="inputPassword" placeholder="Password"/>
+                        </div>
+                        <div class="col-lg-10 col-md-offset-2">
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox"> Remember Me
@@ -85,41 +89,14 @@
                         </div>
                     </div>
                 </fieldset>
-            </form>
+            </form:form>
+            <c:if test="${not empty message}">
+                <div class="alert alert-danger">
+                    <c:out value="${message}"/>
+                </div>
+            </c:if>
         </div>
     </div>
 </div>
 </body>
-<script src="<c:url value="/resources/js/jquery-3.1.1.min.js"/>"></script>
-<script src="<c:url value="/resources/js/bootstrap.js"/>"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#sampleForm').submit(
-            function (event) {
-                var username = $('#inputUsername').val();
-                var password = $('#inputPassword').val();
-                var data = 'username='
-                    + encodeURIComponent(username)
-                    + '&password='
-                    + encodeURIComponent(password);
-                $.ajax({
-                    url: $("#sampleForm").attr("action"),
-                    data: data,
-                    type: "GET",
-
-                    success: function (response) {
-                        // Escaping special characters
-                        // http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
-                        response.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-                        alert(response);
-                    },
-                    error: function (xhr, status, error) {
-                        alert(xhr.responseText);
-                    }
-                });
-                return false;
-            });
-    });
-</script>
 </html>
