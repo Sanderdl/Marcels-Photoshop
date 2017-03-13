@@ -2,6 +2,7 @@ package com.photo.marcelps.controller;
 
 import logic.LoginRepo;
 import models.Login;
+import models.User;
 import models.exceptions.LoginException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpSession;
 
 
 /**
@@ -28,16 +31,19 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/submit/", method = RequestMethod.POST)
-    public String loginUser(@ModelAttribute("newLogin") Login login, RedirectAttributes attr) {
-        String message = "blablabla";
-
+    public String loginUser(@ModelAttribute("newLogin") Login login, RedirectAttributes attr, HttpSession session) {
+        String message = null;
         try {
-            repo.UserLogin(login.getUsername(), login.getPassword());
-            return "redirect:/gallery/random/";
+            User u = repo.UserLogin(login.getUsername(), login.getPassword());
+            if(u != null){
+                session.setAttribute("User", u);
+                System.out.println(u.getName());
+                return "redirect:/gallery/random/";
+            }
+            message = "An error occured while retrieving the user.";
         } catch (LoginException ex) {
             message = ex.getMessage();
         }
-
         attr.addFlashAttribute("message", message);
         return "redirect:/login/page/";
     }
