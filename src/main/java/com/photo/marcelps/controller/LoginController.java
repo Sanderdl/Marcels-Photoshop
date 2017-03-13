@@ -27,7 +27,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/submit/", method = RequestMethod.POST)
-    public ModelAndView registerUser(@ModelAttribute("newLogin") Login login) {
+    public ModelAndView loginUser(@ModelAttribute("newLogin") Login login) {
         String message = null;
 
         try {
