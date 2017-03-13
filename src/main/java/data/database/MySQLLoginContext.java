@@ -56,6 +56,10 @@ public class MySQLLoginContext implements ILoginContext {
                 // No user found
                 if (!foundUser) throw new LoginException("No verified, unblocked user found with these credentials");
             }
+            else
+            {
+                throw new LoginException("No verified, unblocked user found with these credentials");
+            }
         }
         catch( SQLException ex ){
             LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
