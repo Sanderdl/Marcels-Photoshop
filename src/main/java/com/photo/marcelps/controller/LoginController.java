@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 /**
@@ -27,17 +28,17 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/submit/", method = RequestMethod.POST)
-    public ModelAndView loginUser(@ModelAttribute("newLogin") Login login) {
-        String message = null;
+    public String loginUser(@ModelAttribute("newLogin") Login login, RedirectAttributes attr) {
+        String message = "blablabla";
 
         try {
             repo.UserLogin(login.getUsername(), login.getPassword());
+            return "redirect:/gallery/random/";
         } catch (LoginException ex) {
             message = ex.getMessage();
         }
 
-        ModelAndView model = new ModelAndView("login");
-        model.addObject("message", message);
-        return model;
+        attr.addFlashAttribute("message", message);
+        return "redirect:/login/page/";
     }
 }
