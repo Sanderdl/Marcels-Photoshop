@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -11,7 +11,8 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -25,7 +26,8 @@
                 <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
                 <li><a href="#">Link</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown
+                        <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#">Action</a></li>
                         <li><a href="#">Another action</a></li>
@@ -52,58 +54,72 @@
 <div class="container">
     <div class="row">
         <div class="col-md-5 col-md-offset-3">
-                    <form:form class="form-horizontal" action="/registration/register/" commandName="newAccount">
-                        <fieldset>
-                            <legend>Registration</legend>
+            <form:form class="form-horizontal" action="/registration/register/" commandName="newAccount">
+                <fieldset>
+                    <legend>Registration</legend>
 
-                            <div class="form-group">
-                                <label class="col-lg-2 control-label">Username</label>
-                                <div class="col-lg-10">
-                                    <form:input path="userName" type="text" class="form-control" id="username" placeholder="Username"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputPassword" class="col-lg-2 control-label">Password</label>
-                                <div class="col-lg-10">
-                                    <form:input path="password" name="inputPassword" type="password" class="form-control" id="inputPassword" placeholder="Password"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputName" class="col-lg-2 control-label">Name</label>
-                                <div class="col-lg-10">
-                                    <form:input path="name" name ="inputName" type="text" class="form-control" id="inputName" placeholder="Name"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail" class="col-lg-2 control-label">Email</label>
-                                <div class="col-lg-10">
-                                    <form:input path="email" name="inputEmail" type="text" class="form-control" id="inputEmail" placeholder="Email"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-2 control-label">Account type</label>
-                                <div class="col-lg-10">
-                                    <label class="radio">
-                                        <form:radiobutton path="role" value="customer" />
-                                        Customer
-                                    </label>
-                                    <label class="radio">
-                                        <form:radiobutton path="role" value="photographer" />
-                                        Photographer
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-lg-10 col-lg-offset-2">
-                                    <button type="reset" class="btn btn-default">Cancel</button>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </form:form>
-            <div class="alert alert-danger">
-                <c:out value="${message}"/>
-            </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Username</label>
+                        <div class="col-lg-10">
+                            <form:input path="userName" type="text" class="form-control" id="username"
+                                        placeholder="Username"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+                        <div class="col-lg-10">
+                            <form:input path="password" name="inputPassword" type="password" class="form-control"
+                                        id="inputPassword" placeholder="Password"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputName" class="col-lg-2 control-label">Name</label>
+                        <div class="col-lg-10">
+                            <form:input path="name" name="inputName" type="text" class="form-control" id="inputName"
+                                        placeholder="Name"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+                        <div class="col-lg-10">
+                            <form:input path="email" name="inputEmail" type="text" class="form-control" id="inputEmail"
+                                        placeholder="Email"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">Account type</label>
+                        <div class="col-lg-10">
+                            <label class="radio">
+                                <form:radiobutton path="role" value="customer"/>
+                                Customer
+                            </label>
+                            <label class="radio">
+                                <form:radiobutton path="role" value="photographer"/>
+                                Photographer
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-2">
+                            <button type="reset" class="btn btn-default">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-2">
+                            Already an account? <a href="/login/page/">Login here</a>
+                        </div>
+                    </div>
+                </fieldset>
+            </form:form>
+
+            <c:if test="${not empty message}">
+                <div class="alert alert-danger">
+                    <c:out value="${message}"/>
+                </div>
+            </c:if>
+
+
         </div>
     </div>
 </div>

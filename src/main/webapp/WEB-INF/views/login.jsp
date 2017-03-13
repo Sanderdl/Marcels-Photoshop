@@ -89,10 +89,12 @@
                         </div>
                     </div>
                 </fieldset>
+            </form:form>
+            <c:if test="${not empty message}">
                 <div class="alert alert-danger">
                     <c:out value="${message}"/>
                 </div>
-            </form:form>
+            </c:if>
         </div>
     </div>
 </div>

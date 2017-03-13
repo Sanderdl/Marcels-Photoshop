@@ -1,18 +1,14 @@
 package com.photo.marcelps.controller;
 
 import logic.LoginRepo;
-import models.Customer;
 import models.Login;
-import models.Registration;
-import models.User;
-import models.exceptions.InvalidRegisterException;
 import models.exceptions.LoginException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
 
 
 /**
@@ -31,7 +27,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/submit/", method = RequestMethod.POST)
-    public ModelAndView registerUser(@ModelAttribute("newAccount") Login login) {
+    public ModelAndView registerUser(@ModelAttribute("newLogin") Login login) {
         String message = null;
 
         try {
