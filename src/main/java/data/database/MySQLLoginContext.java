@@ -29,12 +29,12 @@ public class MySQLLoginContext implements ILoginContext {
             // password = EncryptStuffPlz(password);
 
             con = MySQLDatabase.dbConnection.getConnection();
-            stm = con.prepareStatement("SELECT * FROM ACCOUNT WHERE USERNAME = ? AND PASSWORD = ?");
+            stm = con.prepareStatement("SELECT * FROM Account WHERE Username = ? AND Password = ?");
             stm.setString(1, username);
             stm.setString(2, password);
 
             rs = stm.executeQuery();
-            if(rs.isBeforeFirst()){
+            if(rs.first()){
                 if(rs.getString("STATUS") != "verified"){
                     String role = rs.getString("ROLE");
                     if( role == "Client" ||  role == "Photographer"){
@@ -59,6 +59,8 @@ public class MySQLLoginContext implements ILoginContext {
             throw new LoginException("Error while connecting to the database");
 
         }
+        // no user found, somehow we end up here......
+        throw new LoginException("No verified, unblocked user found with these credentials");
     }
 
     private void generateClient(ResultSet rs, String role) throws SQLException{
