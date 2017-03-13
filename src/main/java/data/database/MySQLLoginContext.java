@@ -1,6 +1,7 @@
 package data.database;
 
 import data.database.interfaces.ILoginContext;
+import models.Admin;
 import models.Customer;
 import models.Photographer;
 import models.User;
@@ -40,12 +41,13 @@ public class MySQLLoginContext implements ILoginContext {
                 if (rs.getString("Status").equals(User.UserStatus.verified.toString())) {
 
                     User.UserRoles role = User.UserRoles.valueOf(rs.getString("Role"));
-                    if (role == User.UserRoles.Customer || role == User.UserRoles.Photographer) {
+                    if (role == User.UserRoles.Customer || role == User.UserRoles.Photographer || role == User.UserRoles.Admin) {
                         // Is a customer
                         foundUser = generateUser(rs, role);
-                    } else if (role == User.UserRoles.Admin) {
-                        foundUser = generateAdmin(rs);
                     }
+                    //else if (role == User.UserRoles.Admin) {
+                    //    foundUser = generateAdmin(rs);
+                    //}
                 }
                 rs.close();
                 MySQLDatabase.dbConnection.closeConnection(con, stm);
@@ -87,6 +89,9 @@ public class MySQLLoginContext implements ILoginContext {
             case Photographer:
                 Photographer p = new Photographer(1, uName, name, eMail, status);
                 return p;
+            case Admin:
+                Admin a = new Admin(1, uName, name, eMail, status);
+                return a;
             default:
                 return null;
         }
