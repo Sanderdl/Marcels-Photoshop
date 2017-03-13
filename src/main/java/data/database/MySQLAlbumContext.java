@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 /**
  * Created by sande on 02/03/2017.
  */
-public class MySQLGalleryContext implements IGalleryContext {
+public class MySQLAlbumContext implements IAlbumContext {
 
     public GalleryImage getImageById(int id) {
         GalleryImage gi = null;
@@ -38,7 +38,7 @@ public class MySQLGalleryContext implements IGalleryContext {
 
             MySQLDatabase.dbConnection.closeConnection(conn,stm);
         }catch (SQLException ex){
-            Logger.getLogger(MySQLGalleryContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
         return gi;
     }
@@ -62,7 +62,7 @@ public class MySQLGalleryContext implements IGalleryContext {
             }
             MySQLDatabase.dbConnection.closeConnection(conn,stm);
         }catch (SQLException ex){
-            Logger.getLogger(MySQLGalleryContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
         return list;
     }

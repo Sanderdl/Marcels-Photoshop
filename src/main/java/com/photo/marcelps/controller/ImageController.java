@@ -1,7 +1,7 @@
 package com.photo.marcelps.controller;
 
-import data.database.IGalleryContext;
-import data.database.MySQLGalleryContext;
+import data.database.IAlbumContext;
+import data.database.MySQLAlbumContext;
 import models.GalleryImage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,10 +20,10 @@ import java.util.HashSet;
 @Controller
 @RequestMapping("/gallery")
 public class ImageController {
-    private IGalleryContext gc;
+    private IAlbumContext gc;
 
     public ImageController(){
-        this.gc = new MySQLGalleryContext();
+        this.gc = new MySQLAlbumContext();
     }
 
     @RequestMapping(value = "/image", method = RequestMethod.GET)

@@ -29,8 +29,8 @@ public class MySQLRegistrationContext implements IRegistrationContext {
             stm.setString(5, status);
             stm.setString(6, role);
             stm.executeUpdate();
-        } catch ( SQLException ex) {
-            Logger.getLogger(MySQLGalleryContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } finally {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }

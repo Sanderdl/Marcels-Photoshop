@@ -26,7 +26,7 @@ public class MySQLUploadContext {
             stm.setDate(7,uploaddate);
             stm.executeUpdate();
         } catch ( SQLException ex) {
-            Logger.getLogger(MySQLGalleryContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } finally {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
