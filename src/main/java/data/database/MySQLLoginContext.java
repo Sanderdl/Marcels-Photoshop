@@ -35,8 +35,9 @@ public class MySQLLoginContext implements ILoginContext {
 
             rs = stm.executeQuery();
             if(rs.first()){
-                if(rs.getString("STATUS") != "verified"){
-                    String role = rs.getString("ROLE");
+                rs.next();
+                if(rs.getString("Status") == "verified"){
+                    String role = rs.getString("Role");
                     if( role == "Client" ||  role == "Photographer"){
                         // Is a client
                         generateClient(rs, role);
