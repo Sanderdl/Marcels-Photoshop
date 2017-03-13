@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -52,13 +53,13 @@
 <div class="container">
     <div class="row">
         <div class="col-md-5 col-md-offset-3">
-            <form:form class="form-horizontal" action="/login/submit/">
+            <form:form class="form-horizontal" action="/login/submit/" commandName="newLogin">
                 <fieldset>
                     <legend>Login</legend>
                     <div class="form-group">
-                        <label for="inputPassword" class="col-lg-2 control-label">Username</label>
+                        <label for="inputUsername" class="col-lg-2 control-label">Username</label>
                         <div class="col-lg-10">
-                            <form:input path="userName" name="inputPassword" type="text" class="form-control"
+                            <form:input path="username" name="inputUsername" type="text" class="form-control"
                                         id="username" placeholder="Username"/>
                         </div>
                     </div>

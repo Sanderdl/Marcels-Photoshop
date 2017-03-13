@@ -26,7 +26,7 @@ public class LoginController {
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
     public String setupPage(Model model) {
         Login login = new Login();
-        model.addAttribute("newAccount", login);
+        model.addAttribute("newLogin", login);
         return "login";
     }
 
@@ -36,12 +36,12 @@ public class LoginController {
 
         try {
             repo.UserLogin(login.getUsername(), login.getPassword());
-        }catch (LoginException ex){
+        } catch (LoginException ex) {
             message = ex.getMessage();
         }
 
         ModelAndView model = new ModelAndView("login");
-        model.addObject("message" , message);
+        model.addObject("message", message);
         return model;
     }
 }
