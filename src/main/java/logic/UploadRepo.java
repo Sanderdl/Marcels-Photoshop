@@ -8,6 +8,7 @@ import models.exceptions.UploadException;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.context.annotation.SessionScope;
 
+import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 
@@ -49,6 +50,6 @@ public class UploadRepo {
         validateTitle(productregistration.getTitle());
         validatePrice(productregistration.getPrice());
 
-        this.context.uploadPhoto(u.getId(),productregistration.getTitle(),productregistration.getAlbum(),productregistration.getPicture(),productregistration.getPrice(),productregistration.getIspublic(),productregistration.getDate());
+        //this.context.uploadPhoto(u.getId(),productregistration.getTitle(),productregistration.getAlbum(),productregistration.getPicture(),productregistration.getPrice(),productregistration.getIsPublic(),productregistration.getDate());
     }
 }
