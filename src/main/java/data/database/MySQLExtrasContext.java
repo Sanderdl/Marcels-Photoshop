@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 /**
  * Created by sande on 13/03/2017.
  */
-public class MySQLExtrasContext implements IExtrasContext{
+public class MySQLExtrasContext implements IExtrasContext {
 
     private Connection con;
     private PreparedStatement stm;
@@ -23,7 +23,7 @@ public class MySQLExtrasContext implements IExtrasContext{
     private static final Logger LOGGER = Logger.getLogger(MySQLExtrasContext.class.getName());
 
     @Override
-    public HashSet<Extra> getAvailableExtras() {
+    public HashSet<Extra> getAvailableExtras() throws SQLException {
         HashSet<Extra> extras = new HashSet<>();
 
         try {
@@ -32,13 +32,15 @@ public class MySQLExtrasContext implements IExtrasContext{
 
             rs = stm.executeQuery();
 
-            while(rs.next()){
+            while (rs.next()) {
                 extras.add(new Extra(rs.getInt("ExtraID"), rs.getString("ExtraName"),
                         rs.getDouble("ExtraPrice")));
             }
             MySQLDatabase.dbConnection.closeConnection(con, stm);
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
+        } finally {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
 
         return extras;

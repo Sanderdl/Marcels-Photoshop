@@ -1,13 +1,9 @@
 package data.database;
 
 import data.database.interfaces.ILoginContext;
-import models.Admin;
-import models.Customer;
-import models.Photographer;
 import models.User;
 import models.exceptions.LoginException;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,9 +21,8 @@ public class MySQLLoginContext implements ILoginContext {
     private ResultSet rs;
     private static final Logger LOGGER = Logger.getLogger(MySQLLoginContext.class.getName());
 
-    public User userLogin(String username, String password) throws LoginException {
-        try
-        {
+    public User userLogin(String username, String password) throws LoginException, SQLException {
+        try {
             // Call encrypting method
             // password = EncryptStuffPlz(password);
 
@@ -37,15 +32,12 @@ public class MySQLLoginContext implements ILoginContext {
             stm.setString(2, password);
 
             rs = stm.executeQuery();
-            if (rs.next())
-            {
+            if (rs.next()) {
                 User foundUser = null;
-                if (rs.getString("Status").equals(User.UserStatus.verified.toString()))
-                {
+                if (rs.getString("Status").equals(User.UserStatus.verified.toString())) {
 
                     User.UserRoles role = User.UserRoles.valueOf(rs.getString("Role"));
-                    if (role == User.UserRoles.Customer || role == User.UserRoles.Photographer || role == User.UserRoles.Admin)
-                    {
+                    if (role == User.UserRoles.Customer || role == User.UserRoles.Photographer || role == User.UserRoles.Admin) {
                         // Is a customer
                         foundUser = User.generateUser(rs, role);
                     }
@@ -59,17 +51,14 @@ public class MySQLLoginContext implements ILoginContext {
                 if (foundUser == null)
                     throw new LoginException("No verified or unblocked user found with these credentials");
                 return foundUser;
-            }
-            else
-            {
+            } else {
                 throw new LoginException("No verified or unblocked user found with these credentials");
             }
-        }
-        catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
             throw new LoginException("Error while connecting to the database");
-
+        } finally {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
     }
 

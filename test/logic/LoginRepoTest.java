@@ -7,10 +7,11 @@ import models.exceptions.LoginException;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.management.relation.Role;
+import java.sql.SQLException;
 import java.util.HashMap;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Created by Adriaan on 12-Mar-17.
@@ -26,7 +27,7 @@ public class LoginRepoTest {
     }
 
     @Test
-    public void invalidPasswordLength() throws LoginException {
+    public void invalidPasswordLength() throws LoginException, SQLException {
         try{
             // password too short
             repo.UserLogin("123", "123");
@@ -46,7 +47,7 @@ public class LoginRepoTest {
     }
 
     @Test
-    public void invalidUsernameLength() throws LoginException {
+    public void invalidUsernameLength() throws LoginException, SQLException {
         try{
             // password too short
             repo.UserLogin("1", "12345678");
@@ -66,7 +67,7 @@ public class LoginRepoTest {
     }
 
     @Test
-    public void loginTest() throws LoginException{
+    public void loginTest() throws LoginException, SQLException {
         try{
             // invalid login
             repo.UserLogin("Bob", "12345678");

@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashSet;
 
 /**
@@ -30,7 +31,12 @@ public class ImageController {
     public void showImage(@RequestParam("id") Integer itemId, HttpServletResponse response)
             throws ServletException, IOException {
 
-        GalleryImage gi = gc.getImageById(itemId);
+        GalleryImage gi = null;
+        try {
+            gi = gc.getImageById(itemId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
         response.getOutputStream().write(gi.getImage());
@@ -41,7 +47,12 @@ public class ImageController {
     @RequestMapping(value = "/random/", method = RequestMethod.GET)
     public ModelAndView getData() {
 
-        HashSet<Integer> list = gc.allImages();
+        HashSet<Integer> list = null;
+        try {
+            list = gc.allImages();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         //return back to index.jsp
         ModelAndView model = new ModelAndView("index");

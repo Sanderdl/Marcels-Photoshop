@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 
 
 /**
@@ -42,6 +43,8 @@ public class LoginController {
             message = "An error occured while retrieving the user.";
         } catch (LoginException ex) {
             message = ex.getMessage();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         attr.addFlashAttribute("message", message);
         return "redirect:/login/page/";

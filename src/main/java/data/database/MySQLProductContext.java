@@ -41,7 +41,18 @@ public class MySQLProductContext implements IProductContext {
     }
 
     @Override
-    public void registerExtras(GalleryImage image, Extra extra) {
+    public void registerExtras(GalleryImage image, Extra extra) throws SQLException {
 
+        try {
+            this.con = MySQLDatabase.dbConnection.getConnection();
+            this.stm = con.prepareStatement("INSERT INTO ExtraSet (?, ?)");
+            stm.setInt(1, image.getId());
+            stm.setInt(2, extra.getId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        } finally {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
     }
 }

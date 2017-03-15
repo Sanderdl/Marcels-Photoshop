@@ -12,5 +12,5 @@ import java.sql.SQLException;
 public interface IProductContext {
     void uploadPhoto(int ownerid, String name, int albumid, byte[] photoblob, double price, boolean ispublic, Date uploaddate) throws SQLException;
 
-    void registerExtras(GalleryImage image, Extra extra);
+    void registerExtras(GalleryImage image, Extra extra) throws SQLException;
 }

@@ -5,6 +5,8 @@ import data.database.interfaces.ILoginContext;
 import models.User;
 import models.exceptions.LoginException;
 
+import java.sql.SQLException;
+
 /**
  * Created by Adriaan on 08-Mar-17.
  */
@@ -18,7 +20,7 @@ public class LoginRepo {
     // For testing.....maybe.
     public LoginRepo(ILoginContext context){this.context = context;};
 
-    public User UserLogin(String loginName, String password) throws LoginException {
+    public User UserLogin(String loginName, String password) throws LoginException, SQLException {
         try {
             if (verifyLoginName(loginName) && verifyPassword(password)) {
                 return context.userLogin(loginName, password);
