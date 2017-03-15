@@ -1,8 +1,12 @@
 package data.database;
 
 import data.database.interfaces.IExtrasContext;
+import models.Extra;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,8 +23,8 @@ public class MySQLExtrasContext implements IExtrasContext{
     private static final Logger LOGGER = Logger.getLogger(MySQLExtrasContext.class.getName());
 
     @Override
-    public HashSet<String> getAvailableExtras() {
-        HashSet<String> extras = new HashSet<>();
+    public HashSet<Extra> getAvailableExtras() {
+        HashSet<Extra> extras = new HashSet<>();
 
         try {
             con = MySQLDatabase.dbConnection.getConnection();
@@ -29,7 +33,8 @@ public class MySQLExtrasContext implements IExtrasContext{
             rs = stm.executeQuery();
 
             while(rs.next()){
-                extras.add(rs.getString("extraName"));
+                extras.add(new Extra(rs.getInt("ExtraID"), rs.getString("ExtraName"),
+                        rs.getDouble("ExtraPrice")));
             }
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }catch (SQLException ex){

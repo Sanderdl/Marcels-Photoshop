@@ -1,13 +1,12 @@
 package data.database;
 
-import models.Admin;
+import data.database.interfaces.IRegistrationContext;
 import models.Customer;
 import models.Photographer;
 import models.User;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.jws.soap.SOAPBinding;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,10 +1,8 @@
 package logic;
 
-import data.database.IRegistrationContext;
-import data.database.interfaces.ILoginContext;
+import data.database.interfaces.IRegistrationContext;
 import models.*;
 import models.exceptions.InvalidRegisterException;
-import models.exceptions.LoginException;
 import org.junit.Before;
 import org.junit.Test;
 

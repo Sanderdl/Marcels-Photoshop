@@ -1,5 +1,9 @@
 package data.database;
 
+import data.database.interfaces.IProductContext;
+import models.Extra;
+import models.GalleryImage;
+
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -8,21 +12,25 @@ import java.util.logging.Logger;
  * Created by Tomt on 13-3-2017.
  */
 
-public class MySQLUploadContext {
+public class MySQLProductContext implements IProductContext {
     private Connection con;
     private PreparedStatement stm;
     private ResultSet rs;
 
-    public void uploadPhoto(int ownerid, String name, int albumid, Blob photoblob, int price, int ispublic, Date uploaddate) throws SQLException {
+    @Override
+    public void uploadPhoto(int ownerid, String name, int albumid, byte[] photoBytes, double price, boolean ispublic, Date uploaddate) throws SQLException {
+
+        Blob photoBlob = con.createBlob();
+        photoBlob.setBytes(1, photoBytes);
         try {
             con = MySQLDatabase.dbConnection.getConnection();
             stm = con.prepareStatement("INSERT INTO FOTO (?, ?, ?, ?, ?, ?, ?)");
             stm.setInt(1, ownerid);
             stm.setString(2, name);
             stm.setInt(3, albumid);
-            stm.setBlob(4, photoblob);
-            stm.setInt(5, price);
-            stm.setInt(6, ispublic);
+            stm.setBlob(4, photoBlob);
+            stm.setDouble(5, price);
+            stm.setInt(6, (ispublic) ? 1 : 0);
             stm.setDate(7,uploaddate);
             stm.executeUpdate();
         } catch ( SQLException ex) {
@@ -30,5 +38,10 @@ public class MySQLUploadContext {
         } finally {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
+    }
+
+    @Override
+    public void registerExtras(GalleryImage image, Extra extra) {
+
     }
 }

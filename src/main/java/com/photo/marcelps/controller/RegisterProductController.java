@@ -4,10 +4,7 @@ import data.database.MySQLAlbumContext;
 import data.database.MySQLExtrasContext;
 import data.database.interfaces.IExtrasContext;
 import logic.UploadRepo;
-import models.Album;
-import models.Photographer;
-import models.ProductRegistration;
-import models.User;
+import models.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -40,7 +37,7 @@ public class RegisterProductController {
         ProductRegistration newProduct = new ProductRegistration();
         model.addAttribute("productregistration", newProduct);
 
-        Collection<String> products = extrasContext.getAvailableExtras();
+        Collection<Extra> products = extrasContext.getAvailableExtras();
         model.addAttribute("availableProducts", products);
 
         Photographer photographer = (Photographer) session.getAttribute("User");

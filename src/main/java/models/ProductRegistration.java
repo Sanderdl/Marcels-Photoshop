@@ -2,7 +2,7 @@ package models;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Created by ruudv on 13-3-2017.
