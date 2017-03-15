@@ -1,5 +1,7 @@
 package models;
 
+import java.sql.Date;
+
 /**
  * Created by ruudv on 13-3-2017.
  */
@@ -7,9 +9,11 @@ public class ProductRegistration {
 
     private String title;
     private Double price;
-    private String picture;
+    private Byte[] picture;
     private String[] products;
-    private String album;
+    private int album;
+    private int ispublic;
+    private Date date;
 
     public String getTitle() {
         return title;
@@ -27,11 +31,11 @@ public class ProductRegistration {
         this.price = price;
     }
 
-    public String getPicture() {
+    public Byte[] getPicture() {
         return picture;
     }
 
-    public void setPicture(String picture) {
+    public void setPicture(Byte[] picture) {
         this.picture = picture;
     }
 
@@ -43,11 +47,19 @@ public class ProductRegistration {
         this.products = products;
     }
 
-    public String getAlbum() {
+    public int getAlbum() {
         return album;
     }
 
-    public void setAlbum(String album) {
+    public void setAlbum(int album) {
         this.album = album;
     }
+
+    public int getIspublic(){return ispublic;}
+
+    public void setIspublic(int ispublic){this.ispublic=ispublic;}
+
+    public Date getDate(){return date;}
+
+    public void setDate(Date date){this.date=date;}
 }

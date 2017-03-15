@@ -2,10 +2,14 @@ package com.photo.marcelps.controller;
 
 import data.database.MySQLAlbumContext;
 import data.database.MySQLExtrasContext;
+import data.database.MySQLUploadContext;
 import data.database.interfaces.IExtrasContext;
+import data.database.interfaces.IUploadContext;
+import logic.UploadRepo;
 import models.Album;
 import models.Photographer;
 import models.ProductRegistration;
+import models.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.sql.Blob;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Collection;
 
@@ -26,6 +32,7 @@ public class RegisterProductController {
 
     private IExtrasContext extrasContext = new MySQLExtrasContext();
     private MySQLAlbumContext albumContext = new MySQLAlbumContext();
+    private UploadRepo uploadRepo = new UploadRepo();
 
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
     public String setupPage(Model model, HttpSession session) throws SQLException {
@@ -43,11 +50,12 @@ public class RegisterProductController {
     }
 
     @RequestMapping(value = "/submit/", method = RequestMethod.POST)
-    public ModelAndView registerUser(@ModelAttribute("productregistration") ProductRegistration productRegistration) {
+    public ModelAndView registerUser(@ModelAttribute("productregistration") ProductRegistration productRegistration, HttpSession session) {
         String message = null;
 
         try {
-
+            User user = (User) session.getAttribute("User");
+            uploadRepo.validateUpload(productRegistration, user);
         } catch (Exception ex) {
             message = ex.getMessage();
         }
