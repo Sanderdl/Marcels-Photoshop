@@ -1,6 +1,6 @@
 package com.photo.marcelps.controller;
 
-import data.database.IAlbumContext;
+import data.database.interfaces.IAlbumContext;
 import data.database.MySQLAlbumContext;
 import models.GalleryImage;
 import org.springframework.stereotype.Controller;

@@ -1,7 +1,6 @@
 package logic;
 
-import data.database.IRegistrationContext;
-import data.database.MySQLRegistrationContext;
+import data.database.interfaces.IRegistrationContext;
 import models.Registration;
 import models.exceptions.InvalidRegisterException;
 

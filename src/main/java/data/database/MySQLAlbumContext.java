@@ -1,6 +1,7 @@
 package data.database;
 
 
+import data.database.interfaces.IAlbumContext;
 import models.Album;
 import models.GalleryImage;
 import models.Photographer;

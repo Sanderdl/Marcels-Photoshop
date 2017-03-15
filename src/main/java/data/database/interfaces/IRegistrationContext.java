@@ -1,4 +1,4 @@
-package data.database;
+package data.database.interfaces;
 
 import java.sql.SQLException;
 
