@@ -1,12 +1,8 @@
 package models;
 
-<<<<<<< Updated upstream
-import java.sql.Date;
-=======
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
->>>>>>> Stashed changes
+import java.util.Date;
 
 /**
  * Created by ruudv on 13-3-2017.
@@ -15,14 +11,10 @@ public class ProductRegistration {
 
     private String title;
     private Double price;
-<<<<<<< Updated upstream
-    private Byte[] picture;
-=======
     private MultipartFile picture;
->>>>>>> Stashed changes
     private String[] products;
     private int album;
-    private int ispublic;
+    private int isPublic;
     private Date date;
 
     public String getTitle() {
@@ -41,17 +33,10 @@ public class ProductRegistration {
         this.price = price;
     }
 
-<<<<<<< Updated upstream
-    public Byte[] getPicture() {
-        return picture;
-    }
-
-    public void setPicture(Byte[] picture) {
-=======
-    public MultipartFile getPicture() {return picture;}
+    public MultipartFile getPicture() {
+        return picture;}
 
     public void setPicture(MultipartFile picture) {
->>>>>>> Stashed changes
         this.picture = picture;
     }
 
@@ -71,11 +56,19 @@ public class ProductRegistration {
         this.album = album;
     }
 
-    public int getIspublic(){return ispublic;}
+    public int getIsPublic() {
+        return isPublic;
+    }
 
-    public void setIspublic(int ispublic){this.ispublic=ispublic;}
+    public void setIsPublic(int ispublic) {
+        this.isPublic = isPublic;
+    }
 
-    public Date getDate(){return date;}
+    public Date getDate() {
+        return date;
+    }
 
-    public void setDate(Date date){this.date=date;}
+    public void setDate(Date date) {
+        this.date = date;
+    }
 }
