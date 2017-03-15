@@ -94,6 +94,10 @@
                                 <option disabled selected value> Select an option</option>
                                 <form:options items="${albums}"/>
                             </form:select>
+
+                            <h4>Should the picture be private?</h4>
+                            <form:checkbox path="isPublic"/> Private
+
                         </div>
                     </div>
 

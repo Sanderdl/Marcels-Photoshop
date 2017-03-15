@@ -14,7 +14,7 @@ public class ProductRegistration {
     private MultipartFile picture;
     private String[] products;
     private int album;
-    private int isPublic;
+    private boolean isPublic;
     private Date date;
 
     public String getTitle() {
@@ -56,11 +56,11 @@ public class ProductRegistration {
         this.album = album;
     }
 
-    public int getIsPublic() {
+    public boolean getIsPublic() {
         return isPublic;
     }
 
-    public void setIsPublic(int ispublic) {
+    public void setIsPublic(boolean ispublic) {
         this.isPublic = isPublic;
     }
 

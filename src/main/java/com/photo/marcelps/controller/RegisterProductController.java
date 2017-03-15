@@ -50,32 +50,33 @@ public class RegisterProductController {
         return "registerproduct";
     }
 
-    @RequestMapping(value = "/submit/", method = RequestMethod.POST)
-    public ModelAndView registerUser(@ModelAttribute("productregistration") ProductRegistration productRegistration, HttpSession session) {
-        String message = null;
-
-        try {
-            User user = (User) session.getAttribute("User");
-            uploadRepo.validateUpload(productRegistration, user);
-        } catch (Exception ex) {
-            message = ex.getMessage();
-        }
-
-        ModelAndView model = new ModelAndView("registerproduct");
-        model.addObject("message", message);
-        return model;
-    }
+//    @RequestMapping(value = "/submit/", method = RequestMethod.POST)
+//    public ModelAndView registerUser(@ModelAttribute("productregistration") ProductRegistration productRegistration, HttpSession session) {
+//        String message = null;
+//
+//        try {
+//            User user = (User) session.getAttribute("User");
+//            uploadRepo.validateUpload(productRegistration, user);
+//        } catch (Exception ex) {
+//            message = ex.getMessage();
+//        }
+//
+//        ModelAndView model = new ModelAndView("registerproduct");
+//        model.addObject("message", message);
+//        return model;
+//    }
 
     /**
      * Upload single file using Spring Controller
      */
     @RequestMapping(value = "/upload/", method = RequestMethod.POST)
-    public @ResponseBody
-    String uploadFileHandler(@ModelAttribute("productregistration") ProductRegistration productRegistration) {
-
+    public
+    @ResponseBody
+    ModelAndView uploadFileHandler(@ModelAttribute("productregistration") ProductRegistration productRegistration, HttpSession session) {
+        String message = null;
+        ModelAndView model = new ModelAndView("registerproduct");
         if (!productRegistration.getPicture().isEmpty()) {
             try {
-                byte[] bytes = productRegistration.getPicture().getBytes();
 
                 // Creating the directory to store file
                 String rootPath = System.getProperty("catalina.home");
@@ -88,19 +89,28 @@ public class RegisterProductController {
                         + File.separator + productRegistration.getTitle());
                 BufferedOutputStream stream = new BufferedOutputStream(
                         new FileOutputStream(serverFile));
-                stream.write(bytes);
+                stream.write(productRegistration.getPicture().getBytes());
                 stream.close();
 
                 System.out.println(("Server File Location="
                         + serverFile.getAbsolutePath()));
 
-                return "You successfully uploaded file=" + productRegistration.getTitle();
+                try {
+                    User user = (User) session.getAttribute("User");
+                    uploadRepo.validateUpload(productRegistration, user);
+                } catch (Exception ex) {
+                    message = ex.getMessage();
+                }
+
+                message = "You successfully uploaded file=" + productRegistration.getTitle();
+                model.addObject("message", message);
             } catch (Exception e) {
-                return "You failed to upload " + productRegistration.getTitle() + " => " + e.getMessage();
+                message = "You failed to upload " + productRegistration.getTitle() + " => " + e.getMessage();
             }
         } else {
-            return "You failed to upload " + productRegistration.getTitle()
+            message = "You failed to upload " + productRegistration.getTitle()
                     + " because the file was empty.";
         }
+        return model;
     }
 }
