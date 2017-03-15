@@ -1,6 +1,12 @@
 package models;
 
+<<<<<<< Updated upstream
 import java.sql.Date;
+=======
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+>>>>>>> Stashed changes
 
 /**
  * Created by ruudv on 13-3-2017.
@@ -9,7 +15,11 @@ public class ProductRegistration {
 
     private String title;
     private Double price;
+<<<<<<< Updated upstream
     private Byte[] picture;
+=======
+    private MultipartFile picture;
+>>>>>>> Stashed changes
     private String[] products;
     private int album;
     private int ispublic;
@@ -31,11 +41,17 @@ public class ProductRegistration {
         this.price = price;
     }
 
+<<<<<<< Updated upstream
     public Byte[] getPicture() {
         return picture;
     }
 
     public void setPicture(Byte[] picture) {
+=======
+    public MultipartFile getPicture() {return picture;}
+
+    public void setPicture(MultipartFile picture) {
+>>>>>>> Stashed changes
         this.picture = picture;
     }
 

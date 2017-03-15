@@ -1,5 +1,11 @@
 Manifest-Version: 1.0
+<<<<<<< Updated upstream
 Built-By: Tomt
 Created-By: IntelliJ IDEA
 Build-Jdk: 1.8.0_101
+=======
+Built-By: ruudv
+Created-By: IntelliJ IDEA
+Build-Jdk: 1.8.0_121
+>>>>>>> Stashed changes
 

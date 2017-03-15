@@ -55,7 +55,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-5 col-md-offset-3">
-            <form:form class="form-horizontal" action="/registerproduct/submit/" commandName="productregistration">
+            <form:form class="form-horizontal" action="/registerproduct/upload/" commandName="productregistration" enctype="multipart/form-data">
                 <fieldset>
                     <legend>Upload a photo</legend>
                     <div class="form-group">

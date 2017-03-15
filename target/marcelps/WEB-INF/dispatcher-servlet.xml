@@ -11,18 +11,26 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-<bean
-        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-    <property name="prefix">
-        <value>/WEB-INF/views/</value>
-    </property>
-    <property name="suffix">
-        <value>.jsp</value>
-    </property>
-</bean>
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 
-<mvc:annotation-driven/>
-<mvc:resources mapping="/resources/**" location="assets/theme1/"/>
+        <!-- setting maximum upload size -->
+        <property name="maxUploadSize" value="1000000"/>
 
-<context:component-scan base-package="com.photo.marcelps.controller" />
+    </bean>
+
+    <bean
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix">
+            <value>/WEB-INF/views/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
+        </property>
+    </bean>
+
+    <mvc:annotation-driven/>
+    <mvc:resources mapping="/resources/**" location="assets/theme1/"/>
+
+    <context:component-scan base-package="com.photo.marcelps.controller"/>
 </beans>
