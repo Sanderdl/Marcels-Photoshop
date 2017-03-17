@@ -7,9 +7,7 @@
 </head>
 <body>
 <h1>Tests</h1>
-<a href="<c:url value="/registration/page/"/>">Link to register page</a><br>
-<a href="<c:url value="/login/page/"/>">Link to login page</a><br>
-<a href="<c:url value="/gallery/random/"/>">Link to image wall</a><br>
+<c:redirect url="/login/page/"/>
 
 </body>
 </html>

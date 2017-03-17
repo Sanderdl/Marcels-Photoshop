@@ -33,19 +33,18 @@ public class MySQLAlbumContext implements IAlbumContext {
 
         try {
             conn = MySQLDatabase.dbConnection.getConnection();
-            stm = conn.prepareStatement("SELECT * FROM photo WHERE id = ?");
+            stm = conn.prepareStatement("SELECT name, FotoBlob FROM Foto WHERE FotoID = ?");
             stm.setInt(1, id);
 
             ResultSet rs = stm.executeQuery();
 
             if (rs.next()) {
-                String naam = rs.getString("naam");
-                byte[] image = rs.getBytes("image");
+                String naam = rs.getString("Name");
+                byte[] image = rs.getBytes("FotoBlob");
 
                 gi = new GalleryImage(id, naam, image);
             }
 
-            MySQLDatabase.dbConnection.closeConnection(conn, stm);
         } catch (SQLException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } finally {
@@ -59,16 +58,15 @@ public class MySQLAlbumContext implements IAlbumContext {
 
         try {
             con = MySQLDatabase.dbConnection.getConnection();
-            stm = con.prepareStatement("SELECT id FROM photo");
+            stm = con.prepareStatement("SELECT FotoID FROM Foto WHERE isPublic = 1");
 
             ResultSet rs = stm.executeQuery();
 
             while (rs.next()) {
-                int id = rs.getInt("id");
+                int id = rs.getInt("FotoID");
 
                 list.add(id);
             }
-            MySQLDatabase.dbConnection.closeConnection(con, stm);
         } catch (SQLException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         } finally {
