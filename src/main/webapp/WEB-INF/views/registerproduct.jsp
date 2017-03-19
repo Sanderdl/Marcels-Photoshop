@@ -55,7 +55,8 @@
 <div class="container">
     <div class="row">
         <div class="col-md-5 col-md-offset-3">
-            <form:form class="form-horizontal" action="/registerproduct/upload/" commandName="productregistration" enctype="multipart/form-data">
+            <form:form class="form-horizontal" action="/registerproduct/submit/" commandName="productregistration"
+                       enctype="multipart/form-data">
                 <fieldset>
                     <legend>Upload a photo</legend>
                     <div class="form-group">
@@ -71,7 +72,7 @@
                         <div class="col-lg-10">
                             <div class="input-group">
                                 <span class="input-group-addon">€</span>
-                                <form:input path="price" value="0,00" min="0"
+                                <form:input path="price" value="0.00" min="0"
                                             data-number-stepfactor="100" class="form-control currency" id="inputPrijs"/>
                             </div>
                         </div>
@@ -82,15 +83,14 @@
                             <div class="input-group">
                         <span class="input-group-btn">
                             <span class="btn btn-primary btn-file">
-                                Browse&hellip; <form:input path="picture" type="file"/>
+                                Browse&hellip; <form:input path="picture" name="file" type="file"/>
                             </span>
                         </span>
                                 <input type="text" class="form-control" readonly>
                             </div>
 
-
                             <h4>Choose an album</h4>
-                            <form:select class="form-control" path="album" value="">
+                            <form:select class="form-control" path="album">
                                 <option disabled selected value> Select an option</option>
                                 <form:options items="${albums}"/>
                             </form:select>
@@ -114,8 +114,6 @@
                                         </label>
                                     </div>
                                 </c:forEach>
-
-
                             </c:if>
                         </div>
                     </div>
@@ -125,8 +123,14 @@
                             <button type="submit" class="btn btn-primary">Upload</button>
                         </div>
                     </div>
+                    <c:if test="${not empty message}">
+                        <div class="alert alert-danger">
+                            <c:out value="${message}"/>
+                        </div>
+                    </c:if>
                 </fieldset>
             </form:form>
+
         </div>
     </div>
 </div>

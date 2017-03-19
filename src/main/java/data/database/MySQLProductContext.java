@@ -12,26 +12,25 @@ import java.util.logging.Logger;
  * Created by Tomt on 13-3-2017.
  */
 
-public class MySQLProductContext implements IProductContext {
+public class    MySQLProductContext implements IProductContext {
     private Connection con;
     private PreparedStatement stm;
     private ResultSet rs;
 
     @Override
-    public void uploadPhoto(int ownerid, String name, int albumid, byte[] photoBytes, double price, boolean ispublic, Date uploaddate) throws SQLException {
+    public void uploadPhoto(int ownerId, String name, int albumid, byte[] photoBytes, double price, boolean isPublic, Date uploadDate) throws SQLException {
 
-        Blob photoBlob = con.createBlob();
-        photoBlob.setBytes(1, photoBytes);
+        Blob blob = new javax.sql.rowset.serial.SerialBlob(photoBytes);
         try {
             con = MySQLDatabase.dbConnection.getConnection();
-            stm = con.prepareStatement("INSERT INTO FOTO (?, ?, ?, ?, ?, ?, ?)");
-            stm.setInt(1, ownerid);
+            stm = con.prepareStatement("INSERT INTO Foto (OwnerID, Name, AlbumID, FotoBlob, Price, IsPublic, UploadDate) values(?, ?, ?, ?, ?, ?, ?)");
+            stm.setInt(1, ownerId);
             stm.setString(2, name);
             stm.setInt(3, albumid);
-            stm.setBlob(4, photoBlob);
+            stm.setBlob(4, blob);
             stm.setDouble(5, price);
-            stm.setInt(6, (ispublic) ? 1 : 0);
-            stm.setDate(7,uploaddate);
+            stm.setInt(6, (isPublic) ? 1 : 0);
+            stm.setDate(7,uploadDate);
             stm.executeUpdate();
         } catch ( SQLException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);

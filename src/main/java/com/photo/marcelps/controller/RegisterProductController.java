@@ -2,23 +2,35 @@ package com.photo.marcelps.controller;
 
 import data.database.MySQLAlbumContext;
 import data.database.MySQLExtrasContext;
+import data.database.MySQLProductContext;
 import data.database.interfaces.IExtrasContext;
 import logic.UploadRepo;
 import models.*;
+import models.exceptions.UploadException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Created by ruudv on 13-3-2017.
@@ -30,7 +42,10 @@ public class RegisterProductController {
     private IExtrasContext extrasContext = new MySQLExtrasContext();
     private MySQLAlbumContext albumContext = new MySQLAlbumContext();
     private UploadRepo uploadRepo = new UploadRepo();
+    MySQLProductContext pc = new MySQLProductContext();
 
+    @Autowired
+    ServletContext context;
 
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
     public String setupPage(Model model, HttpSession session) throws SQLException {
@@ -41,73 +56,37 @@ public class RegisterProductController {
         model.addAttribute("availableProducts", products);
 
         Photographer photographer = (Photographer) session.getAttribute("User");
-        Collection<Album> albums = albumContext.getAllAlbumsByUser(photographer);
 
-        model.addAttribute("albums", albums);
+        Collection<Album> albums = albumContext.getAllAlbumsByUser(photographer);
+        Map<Integer, String> album = new LinkedHashMap<Integer, String>();
+
+        for (Album a : albums) {
+            album.put(a.getId(), a.getName());
+        }
+        model.addAttribute("albums", album);
         return "registerproduct";
     }
 
-//    @RequestMapping(value = "/submit/", method = RequestMethod.POST)
-//    public ModelAndView registerUser(@ModelAttribute("productregistration") ProductRegistration productRegistration, HttpSession session) {
-//        String message = null;
-//
-//        try {
-//            User user = (User) session.getAttribute("User");
-//            uploadRepo.validateUpload(productRegistration, user);
-//        } catch (Exception ex) {
-//            message = ex.getMessage();
-//        }
-//
-//        ModelAndView model = new ModelAndView("registerproduct");
-//        model.addObject("message", message);
-//        return model;
-//    }
-
-    /**
-     * Upload single file using Spring Controller
-     */
-    @RequestMapping(value = "/upload/", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    ModelAndView uploadFileHandler(@ModelAttribute("productregistration") ProductRegistration productRegistration, HttpSession session) {
+    @RequestMapping(value = "/submit/", method = RequestMethod.POST)
+    public String fileUpload(@ModelAttribute("productregistration") ProductRegistration productRegistration,
+                             BindingResult result, ModelMap model, HttpSession session,
+                             RedirectAttributes attr) throws IOException {
         String message = null;
-        ModelAndView model = new ModelAndView("registerproduct");
-        if (!productRegistration.getPicture().isEmpty()) {
-            try {
-
-                // Creating the directory to store file
-                String rootPath = System.getProperty("catalina.home");
-                File dir = new File(rootPath + File.separator + "tmpFiles");
-                if (!dir.exists())
-                    dir.mkdirs();
-
-                // Create the file on server
-                File serverFile = new File(dir.getAbsolutePath()
-                        + File.separator + productRegistration.getTitle());
-                BufferedOutputStream stream = new BufferedOutputStream(
-                        new FileOutputStream(serverFile));
-                stream.write(productRegistration.getPicture().getBytes());
-                stream.close();
-
-                System.out.println(("Server File Location="
-                        + serverFile.getAbsolutePath()));
-
-                try {
-                    User user = (User) session.getAttribute("User");
-                    uploadRepo.validateUpload(productRegistration, user);
-                } catch (Exception ex) {
-                    message = ex.getMessage();
-                }
-
-                message = "You successfully uploaded file=" + productRegistration.getTitle();
-                model.addObject("message", message);
-            } catch (Exception e) {
-                message = "You failed to upload " + productRegistration.getTitle() + " => " + e.getMessage();
-            }
-        } else {
-            message = "You failed to upload " + productRegistration.getTitle()
-                    + " because the file was empty.";
+        try {
+            User user = (User) session.getAttribute("User");
+            java.util.Date date = Calendar.getInstance().getTime();
+            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+            productRegistration.setDate(sqlDate);
+            uploadRepo.validateUpload(productRegistration, user);
+        } catch (SQLException e) {
+            message = e.getMessage();
+        } catch (UploadException e) {
+            message = e.getMessage();
         }
-        return model;
+        attr.addFlashAttribute("message", message);
+
+        return "redirect:/login/page/";
+
     }
+
 }

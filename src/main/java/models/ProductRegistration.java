@@ -3,6 +3,7 @@ package models;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
+import java.util.Arrays;
 
 /**
  * Created by ruudv on 13-3-2017.
@@ -16,6 +17,18 @@ public class ProductRegistration {
     private int album;
     private boolean isPublic;
     private Date date;
+
+    @Override
+    public String toString() {
+        return "ProductRegistration{" +
+                "title='" + title + '\'' +
+                ", price=" + price +
+                ", products=" + Arrays.toString(products) +
+                ", album=" + album +
+                ", isPublic=" + isPublic +
+                ", date=" + date +
+                '}';
+    }
 
     public String getTitle() {
         return title;

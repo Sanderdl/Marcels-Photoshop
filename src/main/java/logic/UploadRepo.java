@@ -1,5 +1,6 @@
 package logic;
 
+import data.database.MySQLProductContext;
 import data.database.interfaces.IProductContext;
 import models.ProductRegistration;
 import models.User;
@@ -13,7 +14,7 @@ import java.sql.SQLException;
  * Created by Tomt on 13-3-2017.
  */
 public class UploadRepo {
-    private IProductContext context;
+    private IProductContext context = new MySQLProductContext();
 
     private boolean validateTitle(final String hex) throws UploadException {
         boolean success = (hex.length() > 1 && hex.length() <= 50);
@@ -46,12 +47,10 @@ public class UploadRepo {
     public void validateUpload(ProductRegistration productregistration, User u) throws UploadException, SQLException {
         validateTitle(productregistration.getTitle());
         validatePrice(productregistration.getPrice());
-        byte[] fredbytes = null;
         try {
-            fredbytes = productregistration.getPicture().getBytes();
+            this.context.uploadPhoto(u.getId(), productregistration.getTitle(), productregistration.getAlbum(), productregistration.getPicture().getBytes(), productregistration.getPrice(), true, productregistration.getDate());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.context.uploadPhoto(u.getId(), productregistration.getTitle(), productregistration.getAlbum(), fredbytes, productregistration.getPrice(), productregistration.getIsPublic(), productregistration.getDate());
     }
 }
