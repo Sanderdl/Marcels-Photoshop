@@ -35,7 +35,6 @@ public class RegisterProductController {
     private IExtrasContext extrasContext = new MySQLExtrasContext();
     private MySQLAlbumContext albumContext = new MySQLAlbumContext();
     private UploadRepo uploadRepo = new UploadRepo();
-    MySQLProductContext pc = new MySQLProductContext();
 
     @Autowired
     ServletContext context;
@@ -77,7 +76,7 @@ public class RegisterProductController {
         }
         attr.addFlashAttribute("message", message);
         if(imageID == -1){
-            return "redirect:/registerproduct/submit/";
+            return "redirect:/registerproduct/page/";
         }
         return "redirect:/random/gallery/";
     }
