@@ -94,7 +94,11 @@
                                 <form:option value="-1" label="--- Select ---"/>
                                 <form:options items="${albums}"/>
                             </form:select>
-
+                            <div class="form-group">
+                                <div class="col-lg-10 col-lg-offset-0">
+                                Want to create an album? <a href="/createalbum/page/">Click here</a>
+                                </div>
+                            </div>
                             <h4>Should the picture be private?</h4>
                             <form:checkbox path="isPublic"/> Private
 
