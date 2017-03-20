@@ -36,6 +36,7 @@ public class LoginRepo {
     //<editor-fold desc="Login sanity check">
     private boolean verifyPassword(String password) throws LoginException {
         // Any other constraints for unencrypted passwords should be included here.
+
         if (password.length() >= 8 && password.length() <= 50) {
             return true;
         }
