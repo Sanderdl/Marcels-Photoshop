@@ -18,6 +18,8 @@ public class ProductRegistration {
     private boolean isPublic;
     private Date date;
 
+    public ProductRegistration(){}
+
     public ProductRegistration(String title, Double price, MultipartFile picture, int[] products, int album, boolean isPublic) {
         this.title = title;
         this.price = price;
