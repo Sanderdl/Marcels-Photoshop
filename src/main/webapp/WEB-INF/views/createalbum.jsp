@@ -60,13 +60,18 @@
                         <label for="inputName" class="col-lg-2 control-label">Name</label>
                         <div class="col-lg-10">
                             <form:input path="name" name="inputName" type="text" class="form-control"
-                                        id="username" placeholder="Name"/>
+                                        id="name" placeholder="Name"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-lg-10 col-lg-offset-2">
                             <button type="reset" class="btn btn-default">Cancel</button>
                             <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-2">
+                            Want to upload a picture? <a href="/registerproduct/page/">Click here</a>
                         </div>
                     </div>
                 </fieldset>
