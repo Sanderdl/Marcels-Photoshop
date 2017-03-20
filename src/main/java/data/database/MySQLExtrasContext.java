@@ -48,14 +48,14 @@ public class MySQLExtrasContext implements IExtrasContext {
     }
 
     @Override
-    public void registerExtras(int imageID, Extra[] extras) throws SQLException {
+    public void registerExtras(int imageID, int[] extras) throws SQLException {
 
         try{
             con = MySQLDatabase.dbConnection.getConnection();
-            for (Extra extra : extras) {
+            for (int extraId : extras) {
                 stm = con.prepareStatement("INSERT INTO ExtraSet(FotoID, ExtraID) values(?, ?)");
                 stm.setInt(1, imageID);
-                stm.setInt(2, extra.getId());
+                stm.setInt(2, extraId);
                 stm.executeUpdate();
             }
         } catch (SQLException ex) {

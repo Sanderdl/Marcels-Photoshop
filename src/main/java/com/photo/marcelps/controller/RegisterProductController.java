@@ -65,10 +65,10 @@ public class RegisterProductController {
                              BindingResult result, ModelMap model, HttpSession session,
                              RedirectAttributes attr) throws IOException {
         String message = null;
+        int imageID = -1;
         try {
             User user = (User) session.getAttribute("User");
-            int imageID = this.uploadRepo.validateUpload(productRegistration, user);
-            System.out.println(imageID + " " + productRegistration.getProducts());
+            imageID = this.uploadRepo.validateUpload(productRegistration, user);
             this.extrasContext.registerExtras(imageID, productRegistration.getProducts());
         } catch (SQLException e) {
             message = e.getMessage();
@@ -76,9 +76,9 @@ public class RegisterProductController {
             message = e.getMessage();
         }
         attr.addFlashAttribute("message", message);
-
-        return "redirect:/login/page/";
-
+        if(imageID == -1){
+            return "redirect:/registerproduct/submit/";
+        }
+        return "redirect:/random/gallery/";
     }
-
 }

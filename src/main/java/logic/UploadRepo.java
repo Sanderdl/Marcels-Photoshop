@@ -5,6 +5,7 @@ import data.database.interfaces.IProductContext;
 import models.ProductRegistration;
 import models.User;
 import models.exceptions.UploadException;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.sql.Blob;
@@ -36,8 +37,8 @@ public class UploadRepo {
     }
 
     // picture check
-    private boolean validateBlob(final Blob hex) throws UploadException, SQLException {
-        boolean success = (hex.length() > 0);
+    private boolean validateBlob(final MultipartFile hex) throws UploadException, SQLException {
+        boolean success = (hex != null);
 
         if (success) {
             return true;
@@ -48,14 +49,25 @@ public class UploadRepo {
     public int validateUpload(ProductRegistration productRegistration, User u) throws UploadException, SQLException {
         validateTitle(productRegistration.getTitle());
         validatePrice(productRegistration.getPrice());
+        validateBlob(productRegistration.getPicture());
         java.util.Date date = Calendar.getInstance().getTime();
         java.sql.Date sqlDate = new java.sql.Date(date.getTime());
         productRegistration.setDate(sqlDate);
-        try {
-            return this.context.uploadPhoto(u.getId(), productRegistration.getTitle(), productRegistration.getAlbum(), productRegistration.getPicture().getBytes(), productRegistration.getPrice(), true, productRegistration.getDate());
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        if(productRegistration.getAlbum() == -1){
+            try {
+                return this.context.uploadPhoto(u.getId(), productRegistration.getTitle(), productRegistration.getPicture().getBytes(), productRegistration.getPrice(), true, productRegistration.getDate());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            try {
+                return this.context.uploadPhotoWithAlbum(u.getId(), productRegistration.getTitle(), productRegistration.getAlbum(), productRegistration.getPicture().getBytes(), productRegistration.getPrice(), true, productRegistration.getDate());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
 
         return -1;
     }
