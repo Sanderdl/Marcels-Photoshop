@@ -1,7 +1,6 @@
 package data.database;
 
 import data.database.interfaces.ILoginContext;
-import logic.Hash;
 import models.User;
 import models.exceptions.LoginException;
 
@@ -28,20 +27,10 @@ public class MySQLLoginContext implements ILoginContext {
             // password = EncryptStuffPlz(password);
 
             con = MySQLDatabase.dbConnection.getConnection();
-            stm = con.prepareStatement("SELECT Password FROM Account WHERE Username = ?");
+            stm = con.prepareStatement("SELECT * FROM Account WHERE Username = ? AND Password = ?");
             stm.setString(1, username);
+            stm.setString(2, password);
 
-            rs = stm.executeQuery();
-            if (rs.next()) {
-                String hashedPass = rs.getString("Password");
-                if (!Hash.validatePass(password, hashedPass))
-                    throw new LoginException("Username and password don't match");
-            }else {
-                throw new LoginException("Username and password don't match");
-            }
-
-            stm = con.prepareStatement("SELECT * FROM Account WHERE Username = ?");
-            stm.setString(1, username);
             rs = stm.executeQuery();
             if (rs.next()) {
                 User foundUser = null;
