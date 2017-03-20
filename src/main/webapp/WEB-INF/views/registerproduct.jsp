@@ -86,7 +86,7 @@
                             </form:select>
                             <div class="form-group">
                                 <div class="col-lg-10 col-lg-offset-0">
-                                Want to create an album? <a href="/createalbum/page/">Click here</a>
+                                <a href="/createalbum/page/">Click here to create an album.</a>
                                 </div>
                             </div>
                             <h4>Should the picture be private?</h4>
@@ -97,7 +97,7 @@
 
                     <div class="form-group">
                         <div class="col-lg-10 col-lg-offset-2">
-                            <h4>On what product do you want your picture to be placed?</h4>
+                            <h4>On which products do you want your picture to be placed?</h4>
                             <c:if test="${not empty availableProducts}">
 
                                 <c:forEach var="product" items="${availableProducts}">
@@ -112,7 +112,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-lg-10 col-lg-offset-4">
+                        <div class="col-lg-10 col-lg-offset-2">
                             <button type="reset" class="btn btn-default">Cancel</button>
                             <button type="submit" class="btn btn-primary">Upload</button>
                         </div>
