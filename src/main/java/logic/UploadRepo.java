@@ -27,7 +27,7 @@ public class UploadRepo {
     }
 
     private boolean validatePrice(final double hex) throws UploadException {
-        boolean success = (hex > 1 && hex < 1000);
+        boolean success = (hex > 0 && hex < 1000);
 
         if (success) {
             return true;
