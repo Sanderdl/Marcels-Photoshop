@@ -39,7 +39,7 @@ public class RegisterRepo {
         boolean success = matcher.matches();
 
         if (!success) {
-            throw new InvalidRegisterException("Not a valid email address");
+            throw new InvalidRegisterException("Please enter a valid email address.");
         }
     }
 
@@ -50,16 +50,17 @@ public class RegisterRepo {
         boolean success = matcher.matches();
 
         if (!success) {
-            throw new InvalidRegisterException("Password must have stuff and things");
+            throw new InvalidRegisterException("Password must have at least 8 characters, 1 lowercase letter," +
+                    " 1 uppercasee letter and 1 number.");
         }
     }
 
     private void validateName(final String hex) throws InvalidRegisterException {
 
-        boolean success = (hex.length() > 1 && hex.length() <= 50);
-
-        if (!success) {
-            throw new InvalidRegisterException("Name is too long or too short");
+        if (hex.length() < 1) {
+            throw new InvalidRegisterException("Please enter a longer name.");
+        } else if (hex.length() > 50) {
+            throw new InvalidRegisterException("Please enter a shorter name.");
         }
     }
 

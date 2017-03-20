@@ -61,7 +61,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-lg-10 col-lg-offset-2">
-                            Want to upload a picture? <a href="/registerproduct/page/">Click here</a>
+                            <a href="/registerproduct/page/">Click here to upload a picture.</a>
                         </div>
                     </div>
                 </fieldset>
