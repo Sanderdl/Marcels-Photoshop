@@ -70,9 +70,12 @@
     <section id="photos" class="justified-gallery shadow-m">
         <c:if test="${not empty lists}">
             <c:forEach var="listValue" items="${lists}">
-                <a href="/gallery/image?id=${listValue}">
-                    <img src="/gallery/image?id=${listValue}">
+                <a href="/gallery/image?id=${listValue.key}">
+                    <img src="/gallery/image?id=${listValue.key}">
                 </a>
+                <%--<a href="/gallery/random/">--%>
+                    <%--<img src="data:img/png;base64, ${listValue}" alt="No image">--%>
+                <%--</a>--%>
             </c:forEach>
 
         </c:if>
