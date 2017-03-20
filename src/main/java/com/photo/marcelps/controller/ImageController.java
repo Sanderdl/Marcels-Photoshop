@@ -3,6 +3,7 @@ package com.photo.marcelps.controller;
 import data.database.interfaces.IAlbumContext;
 import data.database.MySQLAlbumContext;
 import models.GalleryImage;
+import models.exceptions.GalleryException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -54,7 +55,7 @@ public class ImageController {
             list = gc.allImages();
             session.setAttribute("Gallery", list);
         }
-        catch (SQLException e)
+        catch (GalleryException e)
         {
             e.printStackTrace();
         }

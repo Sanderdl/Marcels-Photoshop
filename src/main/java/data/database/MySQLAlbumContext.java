@@ -5,6 +5,7 @@ import data.database.interfaces.IAlbumContext;
 import models.Album;
 import models.GalleryImage;
 import models.Photographer;
+import models.exceptions.GalleryException;
 
 import java.sql.*;
 import java.util.*;
@@ -48,7 +49,7 @@ public class MySQLAlbumContext implements IAlbumContext {
         return gi;
     }
 
-    public Map<Integer, GalleryImage> allImages() throws SQLException {
+    public Map<Integer, GalleryImage> allImages() throws GalleryException {
         Map<Integer, GalleryImage> list = new HashMap<>();
 
         try
@@ -66,13 +67,20 @@ public class MySQLAlbumContext implements IAlbumContext {
                         new GalleryImage(rs.getInt("FotoID"), rs.getString("Name"), bytes));
             }
         }
-        catch (SQLException ex)
+        catch (SQLException | NullPointerException ex)
         {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            throw new GalleryException(ex.getMessage());
         }
         finally
         {
-            MySQLDatabase.dbConnection.closeConnection(con, stm);
+            try{
+                MySQLDatabase.dbConnection.closeConnection(con, stm);
+            }
+            catch(SQLException ex){
+                throw new GalleryException(ex.getMessage());
+            }
+
         }
         return list;
     }
