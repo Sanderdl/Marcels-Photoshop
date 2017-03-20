@@ -74,9 +74,6 @@ public class RegisterProductController {
         String message = null;
         try {
             User user = (User) session.getAttribute("User");
-            java.util.Date date = Calendar.getInstance().getTime();
-            java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-            productRegistration.setDate(sqlDate);
             uploadRepo.validateUpload(productRegistration, user);
         } catch (SQLException e) {
             message = e.getMessage();

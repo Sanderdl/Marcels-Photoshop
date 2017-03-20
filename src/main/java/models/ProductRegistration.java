@@ -13,7 +13,7 @@ public class ProductRegistration {
     private String title;
     private Double price;
     private MultipartFile picture;
-    private String[] products;
+    private Extra[] products;
     private int album;
     private boolean isPublic;
     private Date date;
@@ -53,11 +53,11 @@ public class ProductRegistration {
         this.picture = picture;
     }
 
-    public String[] getProducts() {
+    public Extra[] getProducts() {
         return products;
     }
 
-    public void setProducts(String[] products) {
+    public void setProducts(Extra[] products) {
         this.products = products;
     }
 
