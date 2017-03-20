@@ -2,6 +2,7 @@ package logic;
 
 import data.database.interfaces.IRegistrationContext;
 import models.Registration;
+import models.User;
 import models.exceptions.InvalidRegisterException;
 
 import java.sql.SQLException;
@@ -27,8 +28,6 @@ public class RegisterRepo {
             "|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:" +
             "(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
     private final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$";
-    private final String VERIFIED = "verified";
-    private final String NOT_VERIFIED = "not verified";
     private final String CUSTOMERROLE = "customer";
     private final String PHOTOGRAPHERROLE = "photographer";
 
@@ -73,9 +72,9 @@ public class RegisterRepo {
 
         String verified = "";
         if (registration.getRole().toLowerCase().equals(this.CUSTOMERROLE.toLowerCase())) {
-            verified = this.VERIFIED;
+            verified = User.UserStatus.verified.toString();
         } else if (registration.getRole().toLowerCase().equals(this.PHOTOGRAPHERROLE.toLowerCase())) {
-            verified = this.NOT_VERIFIED;
+            verified = User.UserStatus.not_verified.toString();
         }
 
         this.context.registerUser(registration.getUserName(), registration.getPassword(), registration.getName(),

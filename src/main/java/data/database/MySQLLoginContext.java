@@ -36,7 +36,7 @@ public class MySQLLoginContext implements ILoginContext {
                 String hashedPass = rs.getString("Password");
                 if (!Hash.validatePass(password, hashedPass))
                     throw new LoginException("Username and password don't match");
-            }else {
+            } else {
                 throw new LoginException("Username and password don't match");
             }
 
@@ -45,6 +45,7 @@ public class MySQLLoginContext implements ILoginContext {
             rs = stm.executeQuery();
             if (rs.next()) {
                 User foundUser = null;
+                System.out.println(rs.getString("Status"));
                 if (rs.getString("Status").equals(User.UserStatus.verified.toString())) {
 
                     User.UserRoles role = User.UserRoles.valueOf(rs.getString("Role"));
@@ -55,6 +56,8 @@ public class MySQLLoginContext implements ILoginContext {
                     //else if (role == User.UserRoles.Admin) {
                     //    foundUser = generateAdmin(rs);
                     //}
+                } else if (rs.getString("Status").equals(User.UserStatus.not_verified.toString())) {
+                    foundUser = User.generateUser(rs, User.UserRoles.Customer);
                 }
                 rs.close();
                 MySQLDatabase.dbConnection.closeConnection(con, stm);
