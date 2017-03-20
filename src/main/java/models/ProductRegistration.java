@@ -18,14 +18,15 @@ public class ProductRegistration {
     private boolean isPublic;
     private Date date;
 
-    public ProductRegistration(String title, Double price, MultipartFile picture, int[] products, int album, boolean isPublic) {
+    public ProductRegistration() {
+    }
+
+    public ProductRegistration(String title, Double price, MultipartFile picture, int[] products, boolean isPublic) {
         this.title = title;
         this.price = price;
         this.picture = picture;
         this.products = products;
-        this.album = album;
         this.isPublic = isPublic;
-        this.date = date;
     }
 
     @Override

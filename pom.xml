@@ -44,6 +44,12 @@
       <artifactId>spring-security-core</artifactId>
       <version>4.2.2.RELEASE</version>
     </dependency>
+    <!--MockMultiPart-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>2.5</version>
+    </dependency>
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>

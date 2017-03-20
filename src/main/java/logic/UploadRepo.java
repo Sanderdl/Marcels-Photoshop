@@ -33,7 +33,7 @@ public class UploadRepo {
         if (success) {
             return true;
         }
-        throw new UploadException("Invalid price");
+        throw new UploadException("Price must be between €0.00 and €1000.00");
     }
 
     // picture check

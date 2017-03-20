@@ -91,7 +91,7 @@
 
                             <h4>Choose an album</h4>
                             <form:select class="form-control" path="album">
-                                <form:option value="null" label="--- Select ---"/>
+                                <form:option value="-1" label="--- Select ---"/>
                                 <form:options items="${albums}"/>
                             </form:select>
 
