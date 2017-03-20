@@ -6,6 +6,7 @@ import models.Album;
 import models.GalleryImage;
 import models.Photographer;
 import models.exceptions.GalleryException;
+import models.exceptions.UploadException;
 
 import java.sql.*;
 import java.util.*;
@@ -21,7 +22,7 @@ public class MySQLAlbumContext implements IAlbumContext {
     private PreparedStatement stm;
     private ResultSet rs;
 
-    public GalleryImage getImageById(int id) throws SQLException {
+    public GalleryImage getImageById(int id) throws GalleryException {
         GalleryImage gi = null;
 
         Connection conn = null;
@@ -52,41 +53,29 @@ public class MySQLAlbumContext implements IAlbumContext {
     public Map<Integer, GalleryImage> allImages() throws GalleryException {
         Map<Integer, GalleryImage> list = new HashMap<>();
 
-        try
-        {
+        try {
             con = MySQLDatabase.dbConnection.getConnection();
             stm = con.prepareStatement("SELECT * FROM Foto WHERE IsPublic = 1 ORDER BY 'UploadDate' LIMIT 24");
 
             ResultSet rs = stm.executeQuery();
-            while (rs.next())
-            {
+            while (rs.next()) {
                 Blob b = rs.getBlob("FotoBlob");
                 byte[] bytes = b.getBytes(1L, (int) b.length());
 
                 list.put(rs.getInt("FotoID"),
                         new GalleryImage(rs.getInt("FotoID"), rs.getString("Name"), bytes));
             }
-        }
-        catch (SQLException | NullPointerException ex)
-        {
+        } catch (SQLException | NullPointerException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             throw new GalleryException(ex.getMessage());
-        }
-        finally
-        {
-            try{
-                MySQLDatabase.dbConnection.closeConnection(con, stm);
-            }
-            catch(SQLException ex){
-                throw new GalleryException(ex.getMessage());
-            }
-
+        } finally {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
         return list;
     }
 
     @Override
-    public Collection<Album> getAllAlbumsByUser(Photographer owner) throws SQLException {
+    public Collection<Album> getAllAlbumsByUser(Photographer owner) throws UploadException {
 
         Collection<Album> albums = new ArrayList<>();
         try {
@@ -102,6 +91,7 @@ public class MySQLAlbumContext implements IAlbumContext {
 
         } catch (SQLException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            throw new UploadException("Images not loaded");
         } finally {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
@@ -109,16 +99,16 @@ public class MySQLAlbumContext implements IAlbumContext {
         return albums;
     }
 
-    public void createAlbum(int accountID, String albumName) throws SQLException
-    {
+    public void createAlbum(int accountID, String albumName) throws UploadException {
         try {
             con = MySQLDatabase.dbConnection.getConnection();
             stm = con.prepareStatement("INSERT INTO Album (AccountID, AlbumName) values(?, ?)");
             stm.setInt(1, accountID);
             stm.setString(2, albumName);
             stm.executeUpdate();
-        } catch ( SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            throw new UploadException("Album was not created!");
         } finally {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }

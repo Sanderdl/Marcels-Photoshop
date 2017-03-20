@@ -1,6 +1,7 @@
 package com.photo.marcelps.controller;
 
 import logic.LoginRepo;
+import logic.UploadRepo;
 import models.Login;
 import models.User;
 import models.exceptions.LoginException;
@@ -13,6 +14,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -43,8 +46,9 @@ public class LoginController {
             message = "An error occured while retrieving the user.";
         } catch (LoginException ex) {
             message = ex.getMessage();
+            Logger.getLogger(UploadRepo.class.getName()).log(Level.INFO, ex.getMessage(), ex);
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.getLogger(UploadRepo.class.getName()).log(Level.INFO, e.getMessage(), e);
         }
         attr.addFlashAttribute("message", message);
         return "redirect:/login/page/";

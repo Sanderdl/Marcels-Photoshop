@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -41,6 +43,7 @@ public class RegistrationController {
         try {
             repo.registerUser(registration);
         }catch (InvalidRegisterException | SQLException ex){
+            Logger.getLogger(RegistrationController.class.getName()).log(Level.INFO, ex.getMessage(), ex);
             message = ex.getMessage();
             attr.addFlashAttribute("message", message);
             return "redirect:/registration/page/";

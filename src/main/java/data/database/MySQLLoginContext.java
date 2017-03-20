@@ -24,9 +24,6 @@ public class MySQLLoginContext implements ILoginContext {
 
     public User userLogin(String username, String password) throws LoginException, SQLException {
         try {
-            // Call encrypting method
-            // password = EncryptStuffPlz(password);
-
             con = MySQLDatabase.dbConnection.getConnection();
             stm = con.prepareStatement("SELECT Password FROM Account WHERE Username = ?");
             stm.setString(1, username);

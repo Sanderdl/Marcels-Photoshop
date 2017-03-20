@@ -18,18 +18,19 @@ public class LoginRepo {
     }
 
     // For testing.....maybe.
-    public LoginRepo(ILoginContext context){this.context = context;};
+    public LoginRepo(ILoginContext context) {
+        this.context = context;
+    }
 
     public User UserLogin(String loginName, String password) throws LoginException, SQLException {
         try {
-            if (verifyLoginName(loginName) && verifyPassword(password)) {
-                return context.userLogin(loginName, password);
-            }
-        }
-        catch (LoginException ex) {
+            verifyPassword(password);
+            verifyLoginName(loginName);
+            return context.userLogin(loginName, password);
+
+        } catch (LoginException ex) {
             throw ex;
         }
-        throw new LoginException("You broke everything. Well done.");
     }
 
 

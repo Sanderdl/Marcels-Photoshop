@@ -7,6 +7,8 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Adriaan on 06-Mar-17.
@@ -17,10 +19,8 @@ public class MySQLDatabase {
 
     public final static MySQLDatabase dbConnection = new MySQLDatabase();
 
-    public MySQLDatabase(){
-        if(dbConnection == null){
-            initConnection();
-        }
+    private MySQLDatabase() {
+        initConnection();
     }
 
     public Connection getConnection() throws SQLException {
@@ -28,8 +28,7 @@ public class MySQLDatabase {
         try {
             return dataSource.getConnection();
 
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
@@ -37,20 +36,23 @@ public class MySQLDatabase {
         }
     }
 
-    public void closeConnection(Connection conn, Statement stm) throws SQLException{
+    public void closeConnection(Connection conn, Statement stm) {
         try {
             stm.close();
             stm = null;
 
             conn.close();
             conn = null;
-        }finally {
+
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLDatabase.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        } finally {
 
             if (stm != null) {
                 try {
                     stm.close();
-                } catch (SQLException sqlex) {
-                    // ignore, as we can't do anything about it here
+                } catch (SQLException ex) {
+                    Logger.getLogger(MySQLDatabase.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
                 }
 
                 stm = null;
@@ -59,8 +61,8 @@ public class MySQLDatabase {
             if (conn != null) {
                 try {
                     conn.close();
-                } catch (SQLException sqlex) {
-                    // ignore, as we can't do anything about it here
+                } catch (SQLException ex) {
+                    Logger.getLogger(MySQLDatabase.class.getName()).log(Level.INFO, ex.getMessage(), ex);
                 }
 
                 conn = null;
@@ -73,8 +75,8 @@ public class MySQLDatabase {
             JndiTemplate jndiTemplate = new JndiTemplate();
             dataSource
                     = (DataSource) jndiTemplate.lookup("java:comp/env/jdbc/photoDB");
-        }catch (NamingException ex){
-            System.out.println("database not found");
+        } catch (NamingException ex) {
+            Logger.getLogger(MySQLDatabase.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
 

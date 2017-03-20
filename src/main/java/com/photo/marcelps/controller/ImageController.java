@@ -1,7 +1,7 @@
 package com.photo.marcelps.controller;
 
-import data.database.interfaces.IAlbumContext;
 import data.database.MySQLAlbumContext;
+import data.database.interfaces.IAlbumContext;
 import models.GalleryImage;
 import models.exceptions.GalleryException;
 import org.springframework.stereotype.Controller;
@@ -14,10 +14,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by sande on 02/03/2017.
@@ -34,13 +33,7 @@ public class ImageController {
     @RequestMapping(value = "/image", method = RequestMethod.GET)
     public void showImage(@RequestParam("id") int id, HttpServletResponse response, HttpSession session)
             throws ServletException, IOException {
-        System.out.println("je mama?");
 
-//        try {
-//            gi = gc.getImageById(itemId);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
         Map<Integer, GalleryImage> map = (Map<Integer, GalleryImage>)session.getAttribute("Gallery");
         response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
         response.getOutputStream().write(map.get(id).getImage());
@@ -57,7 +50,7 @@ public class ImageController {
         }
         catch (GalleryException e)
         {
-            e.printStackTrace();
+            Logger.getLogger(ImageController.class.getName()).log(Level.SEVERE, e.getMessage(), e);
         }
 
         //return back to index.jsp

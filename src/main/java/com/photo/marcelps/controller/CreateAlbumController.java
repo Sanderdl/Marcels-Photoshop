@@ -1,14 +1,8 @@
 package com.photo.marcelps.controller;
 
-import data.database.MySQLAlbumContext;
-import data.database.MySQLRegistrationContext;
-import data.database.interfaces.IAlbumContext;
 import logic.CreateAlbumRepo;
-import logic.RegisterRepo;
 import models.Album;
-import models.Registration;
 import models.User;
-import models.exceptions.InvalidRegisterException;
 import models.exceptions.UploadException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -49,15 +43,13 @@ public class CreateAlbumController {
         try {
             User user = (User) session.getAttribute("User");
             albumRepo.validateUploadAlbum(album, user);
-        } catch (SQLException e)
+        }catch (UploadException e)
         {
             message = e.getMessage();
+            Logger.getLogger(CreateAlbumController.class.getName()).log(Level.INFO, e.getMessage(), e);
+            attr.addFlashAttribute("message", message);
         }
-        catch (UploadException e)
-        {
-            message = e.getMessage();
-        }
-        attr.addFlashAttribute("message", message);
+
         return "redirect:/registerproduct/page/";
     }
 }

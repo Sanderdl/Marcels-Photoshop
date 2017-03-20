@@ -2,7 +2,6 @@ package com.photo.marcelps.controller;
 
 import data.database.MySQLAlbumContext;
 import data.database.MySQLExtrasContext;
-import data.database.MySQLProductContext;
 import data.database.interfaces.IExtrasContext;
 import logic.UploadRepo;
 import models.*;
@@ -24,6 +23,8 @@ import java.sql.SQLException;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by ruudv on 13-3-2017.
@@ -40,23 +41,27 @@ public class RegisterProductController {
     ServletContext context;
 
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
-    public String setupPage(Model model, HttpSession session) throws SQLException {
-        if(session.getAttribute("User") instanceof  Photographer){
+    public String setupPage(Model model, HttpSession session)  {
+        if (session.getAttribute("User") instanceof Photographer) {
             ProductRegistration newProduct = new ProductRegistration();
             model.addAttribute("productregistration", newProduct);
 
-            Collection<Extra> products = extrasContext.getAvailableExtras();
-            model.addAttribute("availableProducts", products);
-
             Photographer photographer = (Photographer) session.getAttribute("User");
+            try {
+                Collection<Extra> products = extrasContext.getAvailableExtras();
+                model.addAttribute("availableProducts", products);
 
-            Collection<Album> albums = albumContext.getAllAlbumsByUser(photographer);
-            Map<Integer, String> album = new LinkedHashMap<Integer, String>();
+                Collection<Album> albums = albumContext.getAllAlbumsByUser(photographer);
+                Map<Integer, String> album = new LinkedHashMap<Integer, String>();
 
-            for (Album a : albums) {
-                album.put(a.getId(), a.getName());
+                for (Album a : albums) {
+                    album.put(a.getId(), a.getName());
+                }
+                model.addAttribute("albums", album);
+            } catch (UploadException ex) {
+                Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
-            model.addAttribute("albums", album);
+
             return "registerproduct";
         }
         return "redirect:/gallery/random/";
@@ -66,31 +71,23 @@ public class RegisterProductController {
     public String fileUpload(@ModelAttribute("productregistration") ProductRegistration productRegistration,
                              BindingResult result, ModelMap model, HttpSession session,
                              RedirectAttributes attr) throws IOException {
-        String message = null;
-        try
-        {
-            if (session.getAttribute("User") instanceof Photographer)
-            {
+        String message;
+        try {
+            if (session.getAttribute("User") instanceof Photographer) {
 
-                int imageID = -1;
                 User user = (User) session.getAttribute("User");
-                imageID = this.uploadRepo.validateUpload(productRegistration, user);
+                int imageID = this.uploadRepo.validateUpload(productRegistration, user);
                 this.extrasContext.registerExtras(imageID, productRegistration.getProducts());
 
-                attr.addFlashAttribute("message", message);
-                if (imageID == -1)
-                {
+
+                if (imageID == -1) {
                     return "redirect:/registerproduct/page/";
                 }
             }
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException | UploadException e){
             message = e.getMessage();
-        }
-        catch (UploadException e)
-        {
-            message = e.getMessage();
+            attr.addFlashAttribute("message", message);
+            Logger.getLogger(RegisterProductController.class.getName()).log(Level.INFO, e.getMessage(), e);
         }
         return "redirect:/random/gallery/";
     }

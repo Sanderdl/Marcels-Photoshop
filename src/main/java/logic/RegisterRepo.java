@@ -27,7 +27,7 @@ public class RegisterRepo {
             "*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]" +
             "|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:" +
             "(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
-    private final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$";
+    private final String hexPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$";
     private final String CUSTOMERROLE = "customer";
     private final String PHOTOGRAPHERROLE = "photographer";
 
@@ -43,7 +43,7 @@ public class RegisterRepo {
     }
 
     private void validatePassword(final String hex) throws InvalidRegisterException {
-        pattern = Pattern.compile(PASSWORD_PATTERN);
+        pattern = Pattern.compile(hexPattern);
         matcher = pattern.matcher(hex);
 
         boolean success = matcher.matches();
@@ -71,9 +71,9 @@ public class RegisterRepo {
         this.validateName(registration.getUserName());
 
         String verified = "";
-        if (registration.getRole().toLowerCase().equals(this.CUSTOMERROLE.toLowerCase())) {
+        if (registration.getRole().equalsIgnoreCase(this.CUSTOMERROLE)) {
             verified = User.UserStatus.verified.toString();
-        } else if (registration.getRole().toLowerCase().equals(this.PHOTOGRAPHERROLE.toLowerCase())) {
+        } else if (registration.getRole().equalsIgnoreCase(this.PHOTOGRAPHERROLE)) {
             verified = User.UserStatus.not_verified.toString();
         }
 

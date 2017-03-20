@@ -2,6 +2,7 @@ package data.database;
 
 import data.database.interfaces.IExtrasContext;
 import models.Extra;
+import models.exceptions.UploadException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,7 +24,7 @@ public class MySQLExtrasContext implements IExtrasContext {
     private static final Logger LOGGER = Logger.getLogger(MySQLExtrasContext.class.getName());
 
     @Override
-    public HashSet<Extra> getAvailableExtras() throws SQLException {
+    public HashSet<Extra> getAvailableExtras() throws UploadException {
 
         HashSet<Extra> extras = new HashSet<>();
 
@@ -40,6 +41,7 @@ public class MySQLExtrasContext implements IExtrasContext {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         } catch (SQLException ex) {
             LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
+            throw new UploadException("Could not get available extras");
         } finally {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
