@@ -24,6 +24,7 @@ public class MySQLExtrasContext implements IExtrasContext {
 
     @Override
     public HashSet<Extra> getAvailableExtras() throws SQLException {
+
         HashSet<Extra> extras = new HashSet<>();
 
         try {
@@ -45,4 +46,24 @@ public class MySQLExtrasContext implements IExtrasContext {
 
         return extras;
     }
+
+    @Override
+    public void registerExtras(int imageID, Extra[] extras) throws SQLException {
+
+        try{
+            con = MySQLDatabase.dbConnection.getConnection();
+            for (Extra extra : extras) {
+                stm = con.prepareStatement("INSERT INTO ExtraSet(FotoID, ExtraID) values(?, ?)");
+                stm.setInt(1, imageID);
+                stm.setInt(2, extra.getId());
+                stm.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        } finally {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
+    }
+
+
 }

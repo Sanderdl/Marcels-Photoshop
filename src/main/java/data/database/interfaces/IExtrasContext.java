@@ -10,6 +10,8 @@ import java.util.Collection;
  */
 public interface IExtrasContext {
     Collection<Extra> getAvailableExtras() throws SQLException;
+
+    void registerExtras(int imageID, Extra[] extras) throws SQLException;
 }
 
 

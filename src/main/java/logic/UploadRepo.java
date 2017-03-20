@@ -45,16 +45,18 @@ public class UploadRepo {
         throw new UploadException("Invalid photo");
     }
 
-    public void validateUpload(ProductRegistration productRegistration, User u) throws UploadException, SQLException {
+    public int validateUpload(ProductRegistration productRegistration, User u) throws UploadException, SQLException {
         validateTitle(productRegistration.getTitle());
         validatePrice(productRegistration.getPrice());
         java.util.Date date = Calendar.getInstance().getTime();
         java.sql.Date sqlDate = new java.sql.Date(date.getTime());
         productRegistration.setDate(sqlDate);
         try {
-            this.context.uploadPhoto(u.getId(), productRegistration.getTitle(), productRegistration.getAlbum(), productRegistration.getPicture().getBytes(), productRegistration.getPrice(), true, productRegistration.getDate());
+            return this.context.uploadPhoto(u.getId(), productRegistration.getTitle(), productRegistration.getAlbum(), productRegistration.getPicture().getBytes(), productRegistration.getPrice(), true, productRegistration.getDate());
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return -1;
     }
 }
