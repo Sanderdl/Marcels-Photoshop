@@ -20,7 +20,7 @@ public class ProductRegistration {
 
     public ProductRegistration(){}
 
-    public ProductRegistration(String title, Double price, MultipartFile picture, int[] products, int album, boolean isPublic) {
+    public ProductRegistration(String title, Double price, MultipartFile picture, int[] products, boolean isPublic) {
 
         this.title = title;
         this.price = price;
