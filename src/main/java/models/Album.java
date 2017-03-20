@@ -17,6 +17,7 @@ public class Album {
         this.id = id;
     }
 
+    public Album(){}
     public String getName() {
         return name;
     }

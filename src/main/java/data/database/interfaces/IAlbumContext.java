@@ -15,4 +15,5 @@ public interface IAlbumContext {
     GalleryImage getImageById(int id) throws SQLException;
     HashSet<Integer> allImages() throws SQLException;
     Collection<Album> getAllAlbumsByUser(Photographer owner) throws SQLException;
+    void createAlbum(int accountID, String albumName) throws SQLException;
 }

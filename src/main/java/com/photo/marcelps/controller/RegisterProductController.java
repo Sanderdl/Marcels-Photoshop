@@ -12,22 +12,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Date;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -42,32 +35,28 @@ public class RegisterProductController {
     private IExtrasContext extrasContext = new MySQLExtrasContext();
     private MySQLAlbumContext albumContext = new MySQLAlbumContext();
     private UploadRepo uploadRepo = new UploadRepo();
-    MySQLProductContext pc = new MySQLProductContext();
 
     @Autowired
     ServletContext context;
 
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
     public String setupPage(Model model, HttpSession session) throws SQLException {
-        if((session.getAttribute("User") instanceof Photographer)){
-            ProductRegistration newProduct = new ProductRegistration();
-            model.addAttribute("productregistration", newProduct);
+        ProductRegistration newProduct = new ProductRegistration();
+        model.addAttribute("productregistration", newProduct);
 
-            Collection<Extra> products = extrasContext.getAvailableExtras();
-            model.addAttribute("availableProducts", products);
+        Collection<Extra> products = extrasContext.getAvailableExtras();
+        model.addAttribute("availableProducts", products);
 
-            Photographer photographer = (Photographer) session.getAttribute("User");
+        Photographer photographer = (Photographer) session.getAttribute("User");
 
-            Collection<Album> albums = albumContext.getAllAlbumsByUser(photographer);
-            Map<Integer, String> album = new LinkedHashMap<Integer, String>();
+        Collection<Album> albums = albumContext.getAllAlbumsByUser(photographer);
+        Map<Integer, String> album = new LinkedHashMap<Integer, String>();
 
-            for (Album a : albums) {
-                album.put(a.getId(), a.getName());
-            }
-            model.addAttribute("albums", album);
-            return "registerproduct";
+        for (Album a : albums) {
+            album.put(a.getId(), a.getName());
         }
-        return "redirect:/gallery/random/";
+        model.addAttribute("albums", album);
+        return "registerproduct";
     }
 
     @RequestMapping(value = "/submit/", method = RequestMethod.POST)
@@ -75,24 +64,20 @@ public class RegisterProductController {
                              BindingResult result, ModelMap model, HttpSession session,
                              RedirectAttributes attr) throws IOException {
         String message = null;
-        try
-        {
-            if ((session.getAttribute("User") instanceof Photographer))
-            {
-                User user = (User) session.getAttribute("User");
-                uploadRepo.validateUpload(productRegistration, user);
-            }
-        }
-        catch (SQLException e)
-        {
+        int imageID = -1;
+        try {
+            User user = (User) session.getAttribute("User");
+            imageID = this.uploadRepo.validateUpload(productRegistration, user);
+            this.extrasContext.registerExtras(imageID, productRegistration.getProducts());
+        } catch (SQLException e) {
             message = e.getMessage();
-        }
-        catch (UploadException e)
-        {
+        } catch (UploadException e) {
             message = e.getMessage();
         }
         attr.addFlashAttribute("message", message);
-        return "redirect:/gallery/random/";
+        if(imageID == -1){
+            return "redirect:/registerproduct/page/";
+        }
+        return "redirect:/random/gallery/";
     }
-
 }

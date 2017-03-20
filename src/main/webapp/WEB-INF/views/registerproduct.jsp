@@ -91,7 +91,7 @@
 
                             <h4>Choose an album</h4>
                             <form:select class="form-control" path="album">
-                                <option disabled selected value> Select an option</option>
+                                <form:option value="null" label="--- Select ---"/>
                                 <form:options items="${albums}"/>
                             </form:select>
 
@@ -110,7 +110,7 @@
                                     <div class="checkbox">
                                         <label>
                                             <form:checkbox path="products" value="${product.id}"/>
-                                            <c:out value="${product}"/>
+                                            <c:out value="${product.name}"/>
                                         </label>
                                     </div>
                                 </c:forEach>

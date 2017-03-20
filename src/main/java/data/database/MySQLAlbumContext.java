@@ -98,4 +98,19 @@ public class MySQLAlbumContext implements IAlbumContext {
 
         return albums;
     }
+
+    public void createAlbum(int accountID, String albumName) throws SQLException
+    {
+        try {
+            con = MySQLDatabase.dbConnection.getConnection();
+            stm = con.prepareStatement("INSERT INTO Album (AccountID, AlbumName) values(?, ?)");
+            stm.setInt(1, accountID);
+            stm.setString(2, albumName);
+            stm.executeUpdate();
+        } catch ( SQLException ex) {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        } finally {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
+    }
 }
