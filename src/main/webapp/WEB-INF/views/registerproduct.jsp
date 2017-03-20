@@ -109,8 +109,8 @@
                                 <c:forEach var="product" items="${availableProducts}">
                                     <div class="checkbox">
                                         <label>
-                                            <form:checkbox path="products" value="${product}"/>
-                                            <c:out value="${product.id}"/>
+                                            <form:checkbox path="products" value="${product.id}"/>
+                                            <c:out value="${product}"/>
                                         </label>
                                     </div>
                                 </c:forEach>
