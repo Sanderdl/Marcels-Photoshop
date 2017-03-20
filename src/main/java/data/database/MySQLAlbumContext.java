@@ -6,13 +6,8 @@ import models.Album;
 import models.GalleryImage;
 import models.Photographer;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
+import java.sql.*;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,23 +48,30 @@ public class MySQLAlbumContext implements IAlbumContext {
         return gi;
     }
 
-    public HashSet<Integer> allImages() throws SQLException {
-        HashSet<Integer> list = new HashSet<>();
+    public Map<Integer, GalleryImage> allImages() throws SQLException {
+        Map<Integer, GalleryImage> list = new HashMap<>();
 
-        try {
+        try
+        {
             con = MySQLDatabase.dbConnection.getConnection();
-            stm = con.prepareStatement("SELECT FotoID FROM Foto WHERE isPublic = 1");
+            stm = con.prepareStatement("SELECT * FROM Foto WHERE IsPublic = 1 ORDER BY 'UploadDate' LIMIT 24");
 
             ResultSet rs = stm.executeQuery();
+            while (rs.next())
+            {
+                Blob b = rs.getBlob("FotoBlob");
+                byte[] bytes = b.getBytes(1L, (int) b.length());
 
-            while (rs.next()) {
-                int id = rs.getInt("FotoID");
-
-                list.add(id);
+                list.put(rs.getInt("FotoID"),
+                        new GalleryImage(rs.getInt("FotoID"), rs.getString("Name"), bytes));
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-        } finally {
+        }
+        finally
+        {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
         return list;

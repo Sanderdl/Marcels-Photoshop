@@ -8,6 +8,12 @@ public class GalleryImage {
     private String name;
     private byte[] image;
 
+    public GalleryImage(int id, String name, byte[] image){
+        this.id = id;
+        this.name = name;
+        this.image = image;
+    }
+
     public int getId() {
         return id;
     }
@@ -18,11 +24,5 @@ public class GalleryImage {
 
     public byte[] getImage() {
         return image;
-    }
-
-    public GalleryImage(int id, String name, byte[] image){
-        this.id = id;
-        this.name = name;
-        this.image = image;
     }
 }

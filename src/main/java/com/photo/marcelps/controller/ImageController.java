@@ -11,9 +11,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  * Created by sande on 02/03/2017.
@@ -28,29 +31,31 @@ public class ImageController {
     }
 
     @RequestMapping(value = "/image", method = RequestMethod.GET)
-    public void showImage(@RequestParam("id") Integer itemId, HttpServletResponse response)
+    public void showImage(@RequestParam("id") int id, HttpServletResponse response, HttpSession session)
             throws ServletException, IOException {
+        System.out.println("je mama?");
 
-        GalleryImage gi = null;
-        try {
-            gi = gc.getImageById(itemId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+//        try {
+//            gi = gc.getImageById(itemId);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+        Map<Integer, GalleryImage> map = (Map<Integer, GalleryImage>)session.getAttribute("Gallery");
         response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
-        response.getOutputStream().write(gi.getImage());
-
+        response.getOutputStream().write(map.get(id).getImage());
         response.getOutputStream().close();
     }
 
     @RequestMapping(value = "/random/", method = RequestMethod.GET)
-    public ModelAndView getData() {
-
-        HashSet<Integer> list = null;
-        try {
+    public ModelAndView getData(HttpSession session) {
+        Map<Integer, GalleryImage> list = null;
+        try
+        {
             list = gc.allImages();
-        } catch (SQLException e) {
+            session.setAttribute("Gallery", list);
+        }
+        catch (SQLException e)
+        {
             e.printStackTrace();
         }
 
