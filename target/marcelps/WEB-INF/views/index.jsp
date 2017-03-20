@@ -85,7 +85,7 @@
         $("#photos").justifiedGallery({
             rowHeight: 130,
             maxRowHeight: -1,
-            lastRow: 'hide',
+            randomize: true,
             margins: 6,
             captions: true
         });
