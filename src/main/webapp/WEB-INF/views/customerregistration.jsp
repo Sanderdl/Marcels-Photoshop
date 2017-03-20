@@ -90,11 +90,11 @@
                         <label class="col-lg-2 control-label">Account type</label>
                         <div class="col-lg-10">
                             <label class="radio">
-                                <form:radiobutton path="role" value="customer"/>
+                                <form:radiobutton path="role" value="Customer"/>
                                 Customer
                             </label>
                             <label class="radio">
-                                <form:radiobutton path="role" value="photographer"/>
+                                <form:radiobutton path="role" value="Photographer"/>
                                 Photographer
                             </label>
                         </div>
