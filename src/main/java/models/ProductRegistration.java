@@ -84,7 +84,7 @@ public class ProductRegistration {
         return isPublic;
     }
 
-    public void setIsPublic(boolean ispublic) {
+    public void setIsPublic(boolean isPublic) {
         this.isPublic = isPublic;
     }
 

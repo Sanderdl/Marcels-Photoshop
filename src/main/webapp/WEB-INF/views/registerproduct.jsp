@@ -99,8 +99,8 @@
                                     <a href="/createalbum/page/">Click here to create an album.</a>
                                 </div>
                             </div>
-                            <h4>Should the picture be private?</h4>
-                            <form:checkbox path="isPublic"/> Private
+                            <h4>Should the picture be public?</h4>
+                            <form:checkbox path="isPublic"/> Public
 
                         </div>
                     </div>
