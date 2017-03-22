@@ -77,8 +77,7 @@ public class RegisterRepo {
             verified = User.UserStatus.not_verified.toString();
         }
 
-        this.context.registerUser(registration.getUserName(), registration.getPassword(), registration.getName(),
-                registration.getEmail(), verified, registration.getRole());
+        this.context.registerUser(registration, verified);
 
     }
 

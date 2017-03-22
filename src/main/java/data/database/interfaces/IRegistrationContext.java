@@ -1,5 +1,7 @@
 package data.database.interfaces;
 
+import models.Registration;
+
 import java.sql.SQLException;
 
 /**
@@ -7,6 +9,6 @@ import java.sql.SQLException;
  */
 public interface IRegistrationContext {
 
-    void registerUser(String userName, String password, String name, String email, String status, String role) throws SQLException;
+    void registerUser(Registration registration, String verified) throws SQLException;
 
 }

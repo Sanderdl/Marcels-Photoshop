@@ -3,6 +3,7 @@ package data.database;
 import data.database.interfaces.IRegistrationContext;
 import models.Customer;
 import models.Photographer;
+import models.Registration;
 import models.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,13 +26,13 @@ public class MySQLRegistrationContextTest {
 
     @Test
     public void registerValidUserTest() throws SQLException {
-        userContext.registerUser("Fred", "FredFred1", "Fred Frans", "fred@fred.nl", "verified", "Admin");
+        userContext.registerUser( new Registration("Fred", "FredFred1", "Fred Frans", "fred@fred.nl", "Admin"),"verified");
     }
 
     @Test(expected = SQLException.class)
     public void registerDuplicateUserTest() throws SQLException {
-        userContext.registerUser("Fred", "FredFred1", "Fred Frans", "fred@fred.nl", "verified", "Customer");
-        userContext.registerUser("Fred", "FredFred1", "Fred Frans", "fred@fred.nl", "verified", "Customer");
+        userContext.registerUser( new Registration("Fred", "FredFred1", "Fred", "fred@fred.nl", "Customer"),"verified");
+        userContext.registerUser( new Registration("Fred", "FredFred1", "Fred", "fred@fred.nl", "Customer"),"verified");
     }
 
 
@@ -45,20 +46,20 @@ class TestRegistrationContext implements IRegistrationContext {
         this.users = new ArrayList<>();
     }
 
-    public void registerUser(String userName, String password, String name, String email, String status, String role) throws SQLException {
+    public void registerUser(Registration registration, String verified) throws SQLException {
         for (User u : this.users) {
-            if (u.getUserName().equals(userName) || u.getName().equals(name)) {
+            if (u.getUserName().equals(registration.getUserName()) || u.getName().equals(registration.getName())) {
                 throw new SQLException("User already registered");
             }
         }
         User user = null;
-        if (role.equals(User.UserRoles.Customer.toString()))
+        if (registration.getRole().equals(User.UserRoles.Customer.toString()))
         {
-            user = new Customer(this.users.size() + 1, userName, name, email, User.UserStatus.valueOf(status));
+            user = new Customer(this.users.size() + 1, registration.getUserName(), registration.getName(), registration.getEmail(), User.UserStatus.valueOf(verified));
         }
-        else if (role.equals(User.UserRoles.Photographer.toString()))
+        else if (registration.getRole().equals(User.UserRoles.Photographer.toString()))
         {
-            user = new Photographer(this.users.size() + 1, userName, name, email, User.UserStatus.valueOf(status));
+            user = new Photographer(this.users.size() + 1, registration.getUserName(), registration.getName(), registration.getEmail(), User.UserStatus.valueOf(verified));
         }
         users.add(user);
     }

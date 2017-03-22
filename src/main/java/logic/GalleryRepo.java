@@ -4,6 +4,7 @@ import data.database.MySQLGalleryContext;
 import data.database.interfaces.IGalleryContext;
 import models.GalleryImage;
 import models.exceptions.GalleryException;
+import models.exceptions.PageOutOfBoundsException;
 
 import java.util.Map;
 
@@ -18,9 +19,9 @@ public class GalleryRepo {
         this.context = new MySQLGalleryContext();
     }
 
-    public Map<Integer, GalleryImage> allImages( int pageNumber) throws GalleryException{
+    public Map<Integer, GalleryImage> allImages( int pageNumber) throws GalleryException, PageOutOfBoundsException{
         if(pageNumber <= 0){
-          throw new GalleryException("Always be positive about your numbers") ;
+          throw new PageOutOfBoundsException("Always be positive about your numbers") ;
         }
         pageNumber = (pageNumber - 1) * 24;
 
