@@ -92,10 +92,10 @@ public class RegisterRepoTest {
             this.users = new ArrayList<>();
         }
 
-        public void registerUser(String userName, String password, String name, String email, String status, String role) throws SQLException {
+        public void registerUser(Registration registration, String verified) throws SQLException {
             for (User u : this.users)
             {
-                if (u.getUserName().equals(userName) || u.getEmail().equals(email))
+                if (u.getUserName().equals(registration.getUserName()) || u.getEmail().equals(registration.getEmail()))
                 {
                     throw new SQLException("User already registered");
                 }
@@ -103,14 +103,14 @@ public class RegisterRepoTest {
             }
             int id = users.size() + 1;
             User newUser = null;
-            switch (role)
+            switch (registration.getRole())
             {
                 case "Customer":
-                    newUser = new Customer(id, userName, name, email, User.UserStatus.valueOf(status));
+                    newUser = new Customer(id, registration.getUserName(), registration.getName(), registration.getEmail(), User.UserStatus.valueOf(verified));
                 case "Photographer":
-                    newUser = new Photographer(id, userName, name, email, User.UserStatus.valueOf(status));
+                    newUser = new Photographer(id, registration.getUserName(), registration.getName(), registration.getEmail(), User.UserStatus.valueOf(verified));
                 case "Admin":
-                    newUser = new Admin(id, userName, name, email, User.UserStatus.valueOf(status));
+                    newUser = new Admin(id, registration.getUserName(), registration.getName(), registration.getEmail(), User.UserStatus.valueOf(verified));
                 default:
             }
             if (newUser != null) users.add(newUser);
