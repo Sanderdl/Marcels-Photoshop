@@ -39,7 +39,7 @@ public class CreateAlbumController {
             model.addAttribute("newAlbum", album);
             return "createalbum";
         }
-        String message = "You need to be logged in to create an album";
+        String message = "You need to be logged in as a verified photographer to create an album";
         attr.addFlashAttribute("message", message);
         return "redirect:/login/page/";
     }

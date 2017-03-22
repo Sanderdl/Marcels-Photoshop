@@ -67,7 +67,7 @@ public class RegisterProductController {
             return "registerproduct";
         }
 
-        String message = "You need to be logged in to register products.";
+        String message = "You need to be logged in as a verified photographer to register products.";
         attr.addFlashAttribute("message", message);
         return "redirect:/login/page/";
     }
@@ -94,7 +94,7 @@ public class RegisterProductController {
             attr.addFlashAttribute("message", message);
             Logger.getLogger(RegisterProductController.class.getName()).log(Level.INFO, e.getMessage(), e);
         }
-        return "redirect:/random/gallery/";
+        return "redirect:/gallery/random/";
     }
 
 }
