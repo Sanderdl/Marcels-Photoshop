@@ -50,148 +50,122 @@
         <div class="col-md-5 col-md-offset-3">
             <form:form class="form-horizontal" action="/registerproduct/submit/" commandName="productregistration"
                        enctype="multipart/form-data">
-            <fieldset>
-                <legend>Upload a photo</legend>
-                <div class="form-group">
-                    <label for="inputPicturetitle" class="col-lg-2 control-label">Title</label>
-                    <div class="col-lg-10">
-                        <form:input path="title" name="inputPicturetitle" type="text" class="form-control"
-                                    id="inputPicturetitle" placeholder="Picture Title"/>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="inputPrijs" class="col-lg-2 control-label">Price</label>
-                    <div class="col-lg-10">
-                        <div class="input-group">
-                            <span class="input-group-addon">€</span>
-                            <form:input path="price" value="0.00" min="0"
-                                        data-number-stepfactor="100" class="form-control currency" id="inputPrijs"/>
+                <fieldset>
+                    <legend>Upload a photo</legend>
+                    <div class="form-group">
+                        <label for="inputPicturetitle" class="col-lg-2 control-label">Title</label>
+                        <div class="col-lg-10">
+                            <form:input path="title" name="inputPicturetitle" type="text" class="form-control"
+                                        id="inputPicturetitle" placeholder="Picture Title"/>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-lg-10 col-lg-offset-2">
-                        <h4>Choose a picture</h4>
-                        <div class="input-group">
+
+                    <div class="form-group">
+                        <label for="inputPrijs" class="col-lg-2 control-label">Price</label>
+                        <div class="col-lg-10">
+                            <div class="input-group">
+                                <span class="input-group-addon">€</span>
+                                <form:input path="price" value="0.00" min="0"
+                                            data-number-stepfactor="100" class="form-control currency" id="inputPrijs"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-2">
+                            <h4>Choose a picture</h4>
+                            <div class="input-group">
                         <span class="input-group-btn">
                             <span class="btn btn-primary btn-file">
                                 Browse&hellip; <form:input path="picture" name="file" type="file"/>
                             </span>
                         </span>
-                            <input type="text" class="form-control" readonly>
-                        </div>
-                    </div>
-                </div>
-                <h4>Choose an album</h4>
-                <div class="input-group">
+                                <input type="text" class="form-control" readonly>
+                            </div>
+
+                            <h4>Choose an album</h4>
+                            <div class="input-group">
                         <span class="input-group-btn">
                             <span class="btn btn-primary btn-file">
-                                  <button data-toggle="modal" data-target="#myModal">new Album</button>
+                                  <label data-toggle="modal" data-target="#myModal">new Album</label>
                             </span>
                         </span>
-                    <form:select class="form-control" path="album">
-                        <form:option value="-1" label="--- Select ---"/>
-                        <form:options items="${albums}"/>
-                    </form:select>
+                                <form:select class="form-control" path="album">
+                                    <form:option value="-1" label="--- Select ---"/>
+                                    <form:options items="${albums}"/>
+                                </form:select>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-10 col-lg-offset-0">
+                                    <a href="/createalbum/page/">Click here to create an album.</a>
+                                </div>
+                            </div>
+                            <h4>Should the picture be private?</h4>
+                            <form:checkbox path="isPublic"/> Private
+
+                        </div>
+                    </div>
+
                     <div class="form-group">
-                        <div class="col-lg-10 col-lg-offset-0">
-                            <a href="/createalbum/page/">Click here to create an album.</a>
+                        <div class="col-lg-10 col-lg-offset-2">
+                            <h4>On which products do you want your picture to be placed?</h4>
+                            <c:if test="${not empty availableProducts}">
+
+                                <c:forEach var="product" items="${availableProducts}">
+                                    <div class="checkbox">
+                                        <label>
+                                            <form:checkbox path="products" value="${product.id}"/>
+                                            <c:out value="${product.name}"/>
+                                        </label>
+                                    </div>
+                                </c:forEach>
+                            </c:if>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-lg-10 col-lg-offset-0">
-                        Want to create an album? <a href="/createalbum/page/">Click here</a>
-                    </div>
-                </div>
-                <h4>Should the picture be private?</h4>
-                    <form:checkbox path="isPublic"/> Private
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-lg-10 col-lg-offset-2">
-            <h4>On which products do you want your picture to be placed?</h4>
-            <c:if test="${not empty availableProducts}">
-
-                <c:forEach var="product" items="${availableProducts}">
-                    <div class="checkbox">
-                        <label>
-                            <form:checkbox path="products" value="${product.id}"/>
-                            <c:out value="${product.name}"/>
-                        </label>
-                    </div>
-                </c:forEach>
-            </c:if>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-lg-10 col-lg-offset-2">
-            <button type="reset" class="btn btn-default">Cancel</button>
-            <button type="submit" class="btn btn-primary">Upload</button>
-        </div>
-        <div class="form-group">
-            <div class="col-lg-10 col-lg-offset-2">
-                <h4>On what product do you want your picture to be placed?</h4>
-                <c:if test="${not empty availableProducts}">
-
-                    <c:forEach var="product" items="${availableProducts}">
-                        <div class="checkbox">
-                            <label>
-                                <form:checkbox path="products" value="${product.id}"/>
-                                <c:out value="${product.name}"/>
-                            </label>
-                        </div>
-                    </c:forEach>
-                </c:if>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-lg-10 col-lg-offset-4">
-                <button type="reset" class="btn btn-default">Cancel</button>
-                <button type="submit" class="btn btn-primary">Upload</button>
-            </div>
-        </div>
-        <c:if test="${not empty message}">
-            <div class="alert alert-danger">
-                <c:out value="${message}"/>
-            </div>
-        </c:if>
-
-    </div>
-</div>
-</fieldset>
-</form:form>
-<!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">New album</h4>
-            </div>
-            <form:form class="form-horizontal" action="/createalbum/modal/" commandName="album">
-                <div class="modal-body">
                     <div class="form-group">
-                        <label for="albumName" class="col-lg-2 control-label">Name</label>
-                        <div class="col-lg-10">
-                            <form:input path="name" name="inputName" type="text" class="form-control"
-                                        id="albumName" placeholder="Name"/>
-                            <span class="hide help-inline">This is required</span>
+                        <div class="col-lg-10 col-lg-offset-2">
+                            <button type="reset" class="btn btn-default">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Upload</button>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" id="submitModal" class="btn btn-primary">Submit</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+                    <c:if test="${not empty message}">
+                        <div class="alert alert-danger">
+                            <c:out value="${message}"/>
+                        </div>
+                    </c:if>
+                </fieldset>
             </form:form>
-        </div>
 
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Modal Header</h4>
+                    </div>
+                    <form:form class="form-horizontal" action="/registerproduct/modal/" commandName="album">
+                    <div class="modal-body">
+                            <div class="form-group">
+                                <label for="albumName" class="col-lg-2 control-label">Name</label>
+                                <div class="col-lg-10">
+                                    <form:input path="name" name="inputName" type="text" class="form-control"
+                                                id="albumName" placeholder="Name"/>
+                                    <span class="hide help-inline">This is required</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" id="submitModal" class="btn btn-primary">Submit</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </form:form>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 </div>
 </body>
 </html>
@@ -199,6 +173,21 @@
     .btn-file {
         position: relative;
         overflow: hidden;
+    }
+
+    .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        background: red;
+        cursor: inherit;
+        display: block;
     }
 
     .btn-file input[type=file] {
@@ -243,5 +232,4 @@
 
         });
     });
-
 </script>
