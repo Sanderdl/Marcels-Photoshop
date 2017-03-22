@@ -5,6 +5,7 @@ import data.database.interfaces.IAlbumContext;
 import logic.GalleryRepo;
 import models.GalleryImage;
 import models.exceptions.GalleryException;
+import models.exceptions.PageOutOfBoundsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,6 +50,7 @@ public class ImageController {
         {
             Logger.getLogger(ImageController.class.getName()).log(Level.SEVERE, e.getMessage(), e);
         }
+        catch(PageOutOfBoundsException e){ return new ModelAndView("redirect:/gallery/random/");}
 
         //return back to index.jsp
         ModelAndView model = new ModelAndView("index");
