@@ -38,34 +38,21 @@ public class RegisterProductController {
     private MySQLAlbumContext albumContext = new MySQLAlbumContext();
     private UploadRepo uploadRepo = new UploadRepo();
     private CreateAlbumRepo albumRepo = new CreateAlbumRepo();
+
     @Autowired
     ServletContext context;
 
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
-<<<<<<< Updated upstream
-    public String setupPage(Model model, HttpSession session)  {
-=======
-    public String setupPage(Model model, HttpSession session) throws SQLException {
->>>>>>> Stashed changes
+    public String setupPage(Model model, HttpSession session) {
         if (session.getAttribute("User") instanceof Photographer) {
             ProductRegistration newProduct = new ProductRegistration();
             model.addAttribute("productregistration", newProduct);
 
-<<<<<<< Updated upstream
-=======
-            Album Album = new Album();
-            model.addAttribute("album", Album);
-
-            Collection<Extra> products = extrasContext.getAvailableExtras();
-            model.addAttribute("availableProducts", products);
-
->>>>>>> Stashed changes
             Photographer photographer = (Photographer) session.getAttribute("User");
             try {
                 Collection<Extra> products = extrasContext.getAvailableExtras();
                 model.addAttribute("availableProducts", products);
 
-<<<<<<< Updated upstream
                 Collection<Album> albums = albumContext.getAllAlbumsByUser(photographer);
                 Map<Integer, String> album = new LinkedHashMap<Integer, String>();
 
@@ -75,14 +62,6 @@ public class RegisterProductController {
                 model.addAttribute("albums", album);
             } catch (UploadException ex) {
                 Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-=======
-            Collection<Album> albums = albumContext.getAllAlbumsByUser(photographer);
-            Map<Integer, String> album = new LinkedHashMap<Integer, String>();
-            System.out.println(albums.toString());
-            for (Album a : albums) {
-                System.out.println(a.getName());
-                album.put(a.getId(), a.getName());
->>>>>>> Stashed changes
             }
 
             return "registerproduct";
@@ -94,11 +73,7 @@ public class RegisterProductController {
     public String fileUpload(@ModelAttribute("productregistration") ProductRegistration productRegistration,
                              BindingResult result, ModelMap model, HttpSession session,
                              RedirectAttributes attr) throws IOException {
-<<<<<<< Updated upstream
         String message;
-=======
-        String message = null;
->>>>>>> Stashed changes
         try {
             if (session.getAttribute("User") instanceof Photographer) {
 
@@ -106,41 +81,31 @@ public class RegisterProductController {
                 int imageID = this.uploadRepo.validateUpload(productRegistration, user);
                 this.extrasContext.registerExtras(imageID, productRegistration.getProducts());
 
-<<<<<<< Updated upstream
 
-=======
-                attr.addFlashAttribute("message", message);
->>>>>>> Stashed changes
                 if (imageID == -1) {
                     return "redirect:/registerproduct/page/";
                 }
             }
-<<<<<<< Updated upstream
-        } catch (SQLException | UploadException e){
-=======
-        } catch (SQLException e) {
-            message = e.getMessage();
-        } catch (UploadException e) {
->>>>>>> Stashed changes
+        } catch (SQLException | UploadException e) {
             message = e.getMessage();
             attr.addFlashAttribute("message", message);
             Logger.getLogger(RegisterProductController.class.getName()).log(Level.INFO, e.getMessage(), e);
         }
-        return "redirect:/gallery/random/";
+        return "redirect:/random/gallery/";
     }
 
     @RequestMapping(value = "/modal/", method = RequestMethod.POST)
     public String fileUpload(@ModelAttribute("album") Album album, HttpSession session,
                              RedirectAttributes attr) throws IOException {
-        String message = null;
+        String message;
         try {
             User user = (User) session.getAttribute("User");
             album.setName(album.getName());
             albumRepo.validateUploadAlbum(album, user);
-        } catch (SQLException e) {
-            e.printStackTrace();
         } catch (UploadException e) {
-            e.printStackTrace();
+            message = e.getMessage();
+            attr.addFlashAttribute("message", message);
+            Logger.getLogger(RegisterProductController.class.getName()).log(Level.INFO, e.getMessage(), e);
         }
         return "redirect:/registerproduct/page/";
     }
