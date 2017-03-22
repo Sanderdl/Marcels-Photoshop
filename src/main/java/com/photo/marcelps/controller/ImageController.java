@@ -45,7 +45,7 @@ public class ImageController {
         Map<Integer, GalleryImage> list = null;
         try
         {
-            list = gc.allImages();
+            list = gc.allImages(1);
             session.setAttribute("Gallery", list);
         }
         catch (GalleryException e)
