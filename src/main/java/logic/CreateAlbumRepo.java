@@ -18,9 +18,16 @@ public class CreateAlbumRepo {
     {
         boolean success = (hex.length()>0&&hex.length()<50);
         if (success)
+<<<<<<< Updated upstream
             return success;
 
         throw new UploadException("Invalid album name");
+=======
+        {
+            return true;
+        }
+        throw new UploadException("Invalid Album name");
+>>>>>>> Stashed changes
     }
 
     public void validateUploadAlbum(Album album, User u) throws UploadException{
