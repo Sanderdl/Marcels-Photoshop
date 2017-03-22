@@ -52,7 +52,7 @@ public class MySQLGalleryContext implements IGalleryContext {
 
         try {
             con = MySQLDatabase.dbConnection.getConnection();
-            stm = con.prepareStatement("SELECT * FROM Foto WHERE IsPublic = 1 ORDER BY 'UploadDate' LIMIT ?,24");
+            stm = con.prepareStatement("SELECT * FROM Foto WHERE IsPublic = 1 ORDER BY UploadDate DESC LIMIT ?,24");
             stm.setInt(1, startIndex);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {

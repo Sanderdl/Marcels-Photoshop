@@ -29,7 +29,7 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/createalbum/page/">Create album <span class="sr-only">(current)</span></a></li>
+                <li><a href="/createalbum/page/">Create album <span class="sr-only">(current)</span></a></li>
                 <li><a href="/registerproduct/page/">Upload picture</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -60,11 +60,11 @@
 
         </c:if>
     </section>
-    <div id = pageNavigation>
+    <div id=pageNavigation>
         <c:if test="${pageNumber > 1}">
-        <a href="/gallery/random/?pageNumber=${pageNumber - 1}">Previous</a>
+            <a href="/gallery/random/?pageNumber=${pageNumber - 1}">Previous</a>
         </c:if>
-        <a href="/gallery/random/?pageNumber=${pageNumber + 1}">Next</a>
+    <a href="/gallery/random/?pageNumber=${pageNumber + 1}">Next</a>
     </div>
 </body>
 <script src="<c:url value="/resources/js/jquery-3.1.1.min.js"/>"></script>
