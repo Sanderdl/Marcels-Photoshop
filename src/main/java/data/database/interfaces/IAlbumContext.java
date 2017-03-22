@@ -14,7 +14,8 @@ import java.util.Map;
  */
 public interface IAlbumContext {
     GalleryImage getImageById(int id) throws GalleryException;
-    Map<Integer, GalleryImage> allImages() throws GalleryException;
+    Map<Integer, GalleryImage> allImages(int pageNumber) throws GalleryException;
+    int getImageCount();
     Collection<Album> getAllAlbumsByUser(Photographer owner) throws UploadException;
     void createAlbum(int accountID, String albumName) throws UploadException;
 }
