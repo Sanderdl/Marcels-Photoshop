@@ -43,7 +43,7 @@ public class RegisterProductController {
     ServletContext context;
 
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
-    public String setupPage(Model model, HttpSession session) {
+    public String setupPage(Model model, HttpSession session, RedirectAttributes attr) {
         if (session.getAttribute("User") instanceof Photographer) {
             ProductRegistration newProduct = new ProductRegistration();
             model.addAttribute("productregistration", newProduct);
@@ -66,7 +66,10 @@ public class RegisterProductController {
 
             return "registerproduct";
         }
-        return "redirect:/gallery/random/";
+
+        String message = "You need to be logged in to register products.";
+        attr.addFlashAttribute("message", message);
+        return "redirect:/login/page/";
     }
 
     @RequestMapping(value = "/submit/", method = RequestMethod.POST)

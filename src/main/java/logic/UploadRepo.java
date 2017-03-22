@@ -55,20 +55,23 @@ public class UploadRepo {
         java.sql.Date sqlDate = new java.sql.Date(date.getTime());
         productRegistration.setDate(sqlDate);
 
-        if(productRegistration.getAlbum() == -1){
+        if (productRegistration.getAlbum() == -1) {
             try {
-                return this.context.uploadPhoto(u.getId(), productRegistration.getTitle(), productRegistration.getPicture().getBytes(), productRegistration.getPrice(), true, productRegistration.getDate());
+                return this.context.uploadPhoto(u.getId(), productRegistration.getTitle(),
+                        productRegistration.getPicture().getBytes(), productRegistration.getPrice(),
+                        productRegistration.getIsPublic(), productRegistration.getDate());
             } catch (IOException e) {
                 Logger.getLogger(UploadRepo.class.getName()).log(Level.SEVERE, e.getMessage(), e);
             }
-        }else{
+        } else {
             try {
-                return this.context.uploadPhotoWithAlbum(u.getId(), productRegistration.getTitle(), productRegistration.getAlbum(), productRegistration.getPicture().getBytes(), productRegistration.getPrice(), true, productRegistration.getDate());
+                return this.context.uploadPhotoWithAlbum(u.getId(), productRegistration.getTitle(),
+                        productRegistration.getAlbum(), productRegistration.getPicture().getBytes(),
+                        productRegistration.getPrice(), productRegistration.getIsPublic(), productRegistration.getDate());
             } catch (IOException e) {
                 Logger.getLogger(UploadRepo.class.getName()).log(Level.SEVERE, e.getMessage(), e);
             }
         }
-
 
         return -1;
     }

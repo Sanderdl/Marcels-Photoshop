@@ -22,7 +22,7 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/createalbum/page/">Create album <span class="sr-only">(current)</span></a></li>
+                <li><a href="/createalbum/page/">Create album <span class="sr-only">(current)</span></a></li>
                 <li><a href="/registerproduct/page/">Upload picture</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -33,7 +33,7 @@
                     </c:when>
                     <c:otherwise>
                         <li><a href= "/registration/page/">Register</a> </li>
-                        <li><a href="/login/page/">Login</a></li>
+                        <li class="active"><a href="/login/page/">Login</a></li>
                     </c:otherwise>
                 </c:choose>
             </ul>

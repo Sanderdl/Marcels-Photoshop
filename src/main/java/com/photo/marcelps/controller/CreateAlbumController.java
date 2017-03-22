@@ -2,6 +2,7 @@ package com.photo.marcelps.controller;
 
 import logic.CreateAlbumRepo;
 import models.Album;
+import models.Photographer;
 import models.User;
 import models.exceptions.UploadException;
 import org.springframework.stereotype.Controller;
@@ -32,10 +33,15 @@ public class CreateAlbumController {
     }
 
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
-    public String setupPage( Model model) {
-        Album album = new Album();
-        model.addAttribute("newAlbum", album);
-        return "createalbum";
+    public String setupPage( Model model, HttpSession session, RedirectAttributes attr) {
+        if (session.getAttribute("User") instanceof Photographer) {
+            Album album = new Album();
+            model.addAttribute("newAlbum", album);
+            return "createalbum";
+        }
+        String message = "You need to be logged in to create an album";
+        attr.addFlashAttribute("message", message);
+        return "redirect:/login/page/";
     }
 
     @RequestMapping(value = "/submit/", method = RequestMethod.POST)
