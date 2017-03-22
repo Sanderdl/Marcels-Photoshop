@@ -45,8 +45,11 @@ public class RegisterProductController {
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
     public String setupPage(Model model, HttpSession session, RedirectAttributes attr) {
         if (session.getAttribute("User") instanceof Photographer) {
+
             ProductRegistration newProduct = new ProductRegistration();
             model.addAttribute("productregistration", newProduct);
+            Album newAlbum = new Album();
+            model.addAttribute("album", newAlbum    );
 
             Photographer photographer = (Photographer) session.getAttribute("User");
             try {
@@ -96,6 +99,22 @@ public class RegisterProductController {
             return "redirect:/registerproduct/page/";
         }
         return "redirect:/gallery/random/";
+    }
+
+    @RequestMapping(value = "/modal/", method = RequestMethod.POST)
+    public String fileUpload(@ModelAttribute("album") Album album, HttpSession session,
+                             RedirectAttributes attr) throws IOException {
+        String message;
+        try {
+            User user = (User) session.getAttribute("User");
+            album.setName(album.getName());
+            albumRepo.validateUploadAlbum(album, user);
+        } catch (UploadException e) {
+            message = e.getMessage();
+            attr.addFlashAttribute("message", message);
+            Logger.getLogger(RegisterProductController.class.getName()).log(Level.INFO, e.getMessage(), e);
+        }
+        return "redirect:/registerproduct/page/";
     }
 
 }
