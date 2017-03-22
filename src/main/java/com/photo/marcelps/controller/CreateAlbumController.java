@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,6 +51,22 @@ public class CreateAlbumController {
             attr.addFlashAttribute("message", message);
         }
 
+        return "redirect:/registerproduct/page/";
+    }
+
+    @RequestMapping(value = "/modal/", method = RequestMethod.POST)
+    public String fileUpload(@ModelAttribute("album") Album album, HttpSession session,
+                             RedirectAttributes attr) throws IOException {
+        String message;
+        try {
+            User user = (User) session.getAttribute("User");
+            album.setName(album.getName());
+            albumRepo.validateUploadAlbum(album, user);
+        } catch (UploadException e) {
+            message = e.getMessage();
+            attr.addFlashAttribute("message", message);
+            Logger.getLogger(RegisterProductController.class.getName()).log(Level.INFO, e.getMessage(), e);
+        }
         return "redirect:/registerproduct/page/";
     }
 }

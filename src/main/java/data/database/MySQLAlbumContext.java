@@ -33,7 +33,7 @@ public class MySQLAlbumContext implements IAlbumContext {
 
             rs = stm.executeQuery();
 
-            if (rs.next()) {
+            while (rs.next()) {
                 albums.add(new Album(rs.getString("AlbumName"), owner, rs.getInt("AlbumID")));
             }
 

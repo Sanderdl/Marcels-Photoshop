@@ -27,7 +27,7 @@ public class MySQLProductContext implements IProductContext {
             stm.setString(2, name);
             stm.setBlob(4, blob);
             stm.setDouble(5, price);
-            stm.setInt(6, (isPublic) ? 1 : 0);
+            stm.setInt(6, (!isPublic) ? 1 : 0);
             stm.setDate(7, uploadDate);
             stm.executeUpdate();
 

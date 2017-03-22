@@ -3,6 +3,7 @@ package com.photo.marcelps.controller;
 import data.database.MySQLAlbumContext;
 import data.database.MySQLExtrasContext;
 import data.database.interfaces.IExtrasContext;
+import logic.CreateAlbumRepo;
 import logic.UploadRepo;
 import models.*;
 import models.exceptions.UploadException;
@@ -36,12 +37,13 @@ public class RegisterProductController {
     private IExtrasContext extrasContext = new MySQLExtrasContext();
     private MySQLAlbumContext albumContext = new MySQLAlbumContext();
     private UploadRepo uploadRepo = new UploadRepo();
+    private CreateAlbumRepo albumRepo = new CreateAlbumRepo();
 
     @Autowired
     ServletContext context;
 
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
-    public String setupPage(Model model, HttpSession session)  {
+    public String setupPage(Model model, HttpSession session) {
         if (session.getAttribute("User") instanceof Photographer) {
             ProductRegistration newProduct = new ProductRegistration();
             model.addAttribute("productregistration", newProduct);
@@ -84,11 +86,12 @@ public class RegisterProductController {
                     return "redirect:/registerproduct/page/";
                 }
             }
-        } catch (SQLException | UploadException e){
+        } catch (SQLException | UploadException e) {
             message = e.getMessage();
             attr.addFlashAttribute("message", message);
             Logger.getLogger(RegisterProductController.class.getName()).log(Level.INFO, e.getMessage(), e);
         }
         return "redirect:/random/gallery/";
     }
+
 }

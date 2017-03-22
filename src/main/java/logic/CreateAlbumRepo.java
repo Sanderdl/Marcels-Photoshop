@@ -20,7 +20,7 @@ public class CreateAlbumRepo {
         if (success)
             return success;
 
-        throw new UploadException("Invalid album name");
+        throw new UploadException("Invalid Album name");
     }
 
     public void validateUploadAlbum(Album album, User u) throws UploadException{
