@@ -93,6 +93,7 @@ public class RegisterProductController {
             message = e.getMessage();
             attr.addFlashAttribute("message", message);
             Logger.getLogger(RegisterProductController.class.getName()).log(Level.INFO, e.getMessage(), e);
+            return "redirect:/registerproduct/page/";
         }
         return "redirect:/gallery/random/";
     }

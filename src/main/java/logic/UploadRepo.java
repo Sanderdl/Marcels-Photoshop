@@ -22,7 +22,8 @@ public class UploadRepo {
     private boolean validateTitle(final String hex) throws UploadException {
         boolean success = (hex.length() > 1 && hex.length() <= 50);
 
-        if (success) {
+        if (success)
+        {
             return true;
         }
         throw new UploadException("Invalid name length");
@@ -31,7 +32,8 @@ public class UploadRepo {
     private boolean validatePrice(final double hex) throws UploadException {
         boolean success = (hex > 0 && hex < 1000);
 
-        if (success) {
+        if (success)
+        {
             return true;
         }
         throw new UploadException("Price must be between €0.00 and €1000.00");
@@ -41,7 +43,8 @@ public class UploadRepo {
     private boolean validateBlob(final MultipartFile hex) throws UploadException, SQLException {
         boolean success = (hex != null);
 
-        if (success) {
+        if (success)
+        {
             return true;
         }
         throw new UploadException("Invalid photo");
@@ -54,25 +57,31 @@ public class UploadRepo {
         java.util.Date date = Calendar.getInstance().getTime();
         java.sql.Date sqlDate = new java.sql.Date(date.getTime());
         productRegistration.setDate(sqlDate);
-
-        if (productRegistration.getAlbum() == -1) {
-            try {
-                return this.context.uploadPhoto(u.getId(), productRegistration.getTitle(),
-                        productRegistration.getPicture().getBytes(), productRegistration.getPrice(),
-                        productRegistration.getIsPublic(), productRegistration.getDate());
-            } catch (IOException e) {
-                Logger.getLogger(UploadRepo.class.getName()).log(Level.SEVERE, e.getMessage(), e);
+        try
+        {
+            byte[] bytes = productRegistration.getPicture().getBytes();
+            if (bytes.length > 64000)
+            {
+                throw new UploadException("The chosen file is too large. The maximum permitted size is 64kb");
             }
-        } else {
-            try {
+
+            if (productRegistration.getAlbum() == -1)
+            {
+                return this.context.uploadPhoto(u.getId(), productRegistration.getTitle(),
+                        bytes, productRegistration.getPrice(),
+                        productRegistration.getIsPublic(), productRegistration.getDate());
+            }
+            else
+            {
                 return this.context.uploadPhotoWithAlbum(u.getId(), productRegistration.getTitle(),
-                        productRegistration.getAlbum(), productRegistration.getPicture().getBytes(),
+                        productRegistration.getAlbum(), bytes,
                         productRegistration.getPrice(), productRegistration.getIsPublic(), productRegistration.getDate());
-            } catch (IOException e) {
-                Logger.getLogger(UploadRepo.class.getName()).log(Level.SEVERE, e.getMessage(), e);
             }
         }
-
+        catch (IOException e)
+        {
+            Logger.getLogger(UploadRepo.class.getName()).log(Level.SEVERE, e.getMessage(), e);
+        }
         return -1;
     }
 }
