@@ -2,6 +2,7 @@ package com.photo.marcelps.controller;
 
 import data.database.MySQLAlbumContext;
 import data.database.interfaces.IAlbumContext;
+import logic.GalleryRepo;
 import models.GalleryImage;
 import models.exceptions.GalleryException;
 import org.springframework.stereotype.Controller;
@@ -24,11 +25,7 @@ import java.util.logging.Logger;
 @Controller
 @RequestMapping("/gallery")
 public class ImageController {
-    private IAlbumContext gc;
-
-    public ImageController(){
-        this.gc = new MySQLAlbumContext();
-    }
+    private GalleryRepo repo = new GalleryRepo();
 
     @RequestMapping(value = "/image", method = RequestMethod.GET)
     public void showImage(@RequestParam("id") int id, HttpServletResponse response, HttpSession session)
@@ -41,11 +38,11 @@ public class ImageController {
     }
 
     @RequestMapping(value = "/random/", method = RequestMethod.GET)
-    public ModelAndView getData(HttpSession session) {
+    public ModelAndView getData(@RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber, HttpSession session) {
         Map<Integer, GalleryImage> list = null;
         try
         {
-            list = gc.allImages();
+            list = repo.allImages(pageNumber);
             session.setAttribute("Gallery", list);
         }
         catch (GalleryException e)
@@ -56,6 +53,7 @@ public class ImageController {
         //return back to index.jsp
         ModelAndView model = new ModelAndView("index");
         model.addObject("lists", list);
+        model.addObject("pageNumber", pageNumber);
 
         return model;
 
