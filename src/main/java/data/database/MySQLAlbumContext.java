@@ -50,13 +50,14 @@ public class MySQLAlbumContext implements IAlbumContext {
         return gi;
     }
 
-    public Map<Integer, GalleryImage> allImages() throws GalleryException {
+    public Map<Integer, GalleryImage> allImages(int pageNumber) throws GalleryException {
         Map<Integer, GalleryImage> list = new HashMap<>();
 
         try {
             con = MySQLDatabase.dbConnection.getConnection();
-            stm = con.prepareStatement("SELECT * FROM Foto WHERE IsPublic = 1 ORDER BY 'UploadDate' LIMIT 24");
-
+            stm = con.prepareStatement("SELECT * FROM Foto WHERE IsPublic = 1 ORDER BY 'UploadDate' LIMIT ?,24");
+            pageNumber = (pageNumber - 1) * 24;
+            stm.setInt(1, pageNumber);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Blob b = rs.getBlob("FotoBlob");
@@ -72,6 +73,31 @@ public class MySQLAlbumContext implements IAlbumContext {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
         return list;
+    }
+
+    public int getImageCount()
+    {
+        int num = 0;
+        try {
+            con = MySQLDatabase.dbConnection.getConnection();
+            stm = con.prepareStatement("SELECT COUNT(FotoID) AS Num FROM Foto WHERE IsPublic = 1");
+
+            ResultSet rs = stm.executeQuery();
+            if (rs.next())
+            {
+                num = rs.getInt("Num");
+            }
+        }
+        catch (SQLException | NullPointerException ex)
+        {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        }
+        finally
+        {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
+
+        return num;
     }
 
     @Override
