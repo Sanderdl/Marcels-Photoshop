@@ -39,7 +39,7 @@
                         <li><a href="/login/page/">Logout</a></li>
                     </c:when>
                     <c:otherwise>
-                        <li><a href= "/registration/page/">Register</a> </li>
+                        <li><a href="/registration/page/">Register</a></li>
                         <li><a href="/login/page/">Login</a></li>
                     </c:otherwise>
                 </c:choose>
@@ -47,25 +47,35 @@
         </div>
     </div>
 </nav>
-    <section id="photos" class="justified-gallery shadow-m">
-        <c:if test="${not empty lists}">
-            <c:forEach var="listValue" items="${lists}">
-                <a href="/gallery/image?id=${listValue.key}">
-                    <img src="/gallery/image?id=${listValue.key}">
-                </a>
-                <%--<a href="/gallery/random/">--%>
-                    <%--<img src="data:img/png;base64, ${listValue}" alt="No image">--%>
-                <%--</a>--%>
-            </c:forEach>
+<section id="photos" class="justified-gallery shadow-m">
+    <c:if test="${not empty lists}">
+        <c:forEach var="listValue" items="${lists}">
+            <a href="/gallery/image?id=${listValue.key}">
+                <img src="/gallery/image?id=${listValue.key}">
+            </a>
+            <%--<a href="/gallery/random/">--%>
+            <%--<img src="data:img/png;base64, ${listValue}" alt="No image">--%>
+            <%--</a>--%>
+        </c:forEach>
 
-        </c:if>
-    </section>
-    <div id=pageNavigation>
-        <c:if test="${pageNumber > 1}">
-            <a href="/gallery/random/?pageNumber=${pageNumber - 1}">Previous</a>
-        </c:if>
-    <a href="/gallery/random/?pageNumber=${pageNumber + 1}">Next</a>
-    </div>
+    </c:if>
+</section>
+<div id=pageNavigation class="col-md-2 col-md-offset-5" align="center">
+    <c:choose>
+        <c:when test="${pageNumber > 1}">
+            <ul class="pagination pagination-lg">
+                <li><a href="/gallery/random/?pageNumber=${pageNumber - 1}">&laquo;</a></li>
+                <li><a href="/gallery/random/?pageNumber=${pageNumber + 1}">&raquo;</a></li>
+            </ul>
+        </c:when>
+        <c:otherwise>
+            <ul class="pagination pagination-lg">
+                <li class="disabled"><a href="#">&laquo;</a></li>
+                <li><a href="/gallery/random/?pageNumber=${pageNumber + 1}">&raquo;</a></li>
+            </ul>
+        </c:otherwise>
+    </c:choose>
+</div>
 </body>
 <script src="<c:url value="/resources/js/jquery-3.1.1.min.js"/>"></script>
 <script src="<c:url value="/resources/js/jquery.justifiedGallery.min.js"/>"></script>
@@ -74,7 +84,6 @@
         $("#photos").justifiedGallery({
             rowHeight: 130,
             maxRowHeight: -1,
-            randomize: true,
             margins: 6,
             captions: true
         });
