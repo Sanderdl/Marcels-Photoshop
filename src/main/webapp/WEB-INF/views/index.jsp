@@ -60,11 +60,11 @@
 
         </c:if>
     </section>
-    <div id = pageNavigation>
+    <div id=pageNavigation>
         <c:if test="${pageNumber > 1}">
-        <a href="/gallery/random/?pageNumber=${pageNumber - 1}">Previous</a>
+            <a href="/gallery/random/?pageNumber=${pageNumber - 1}">Previous</a>
         </c:if>
-        <a href="/gallery/random/?pageNumber=${pageNumber + 1}">Next</a>
+    <a href="/gallery/random/?pageNumber=${pageNumber + 1}">Next</a>
     </div>
 </body>
 <script src="<c:url value="/resources/js/jquery-3.1.1.min.js"/>"></script>
