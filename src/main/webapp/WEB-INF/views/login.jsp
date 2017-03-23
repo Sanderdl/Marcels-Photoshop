@@ -6,6 +6,7 @@
 <head>
     <title>Login Screen</title>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -59,13 +60,13 @@
                             <form:input path="password" name="inputPassword" type="password" class="form-control"
                                         id="inputPassword" placeholder="Password"/>
                         </div>
-                        <div class="col-lg-10 col-md-offset-2">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> Remember Me
-                                </label>
-                            </div>
-                        </div>
+                        <%--<div class="col-lg-10 col-md-offset-2">--%>
+                            <%--<div class="checkbox">--%>
+                                <%--<label>--%>
+                                    <%--<input type="checkbox"> Remember Me--%>
+                                <%--</label>--%>
+                            <%--</div>--%>
+                        <%--</div>--%>
                     </div>
                     <div class="form-group">
                         <div class="col-lg-10 col-lg-offset-2">

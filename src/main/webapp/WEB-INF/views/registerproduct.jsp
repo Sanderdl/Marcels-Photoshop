@@ -6,10 +6,7 @@
 <head>
     <title>Register Product Screen</title>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -144,7 +141,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Modal Header</h4>
+                        <h4 class="modal-title">Create album</h4>
                     </div>
                     <form:form class="form-horizontal" action="/registerproduct/modal/" commandName="album">
                     <div class="modal-body">
@@ -210,6 +207,8 @@
         cursor: text !important;
     }
 </style>
+<script src="<c:url value="/resources/js/jquery-3.1.1.min.js"/>"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
     $(document).on('change', '.btn-file :file', function () {
         var input = $(this),

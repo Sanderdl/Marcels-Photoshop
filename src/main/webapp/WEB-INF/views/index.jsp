@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/justifiedGallery.min.css"/>"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <nav class="navbar navbar-default">

@@ -6,6 +6,7 @@
 <head>
     <title>Registration</title>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <nav class="navbar navbar-default">

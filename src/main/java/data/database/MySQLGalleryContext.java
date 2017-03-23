@@ -5,8 +5,8 @@ import models.GalleryImage;
 import models.exceptions.GalleryException;
 
 import java.sql.*;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,7 +48,7 @@ public class MySQLGalleryContext implements IGalleryContext {
     }
 
     public Map<Integer, GalleryImage> allImages(int startIndex) throws GalleryException {
-        Map<Integer, GalleryImage> list = new HashMap<>();
+        Map<Integer, GalleryImage> list = new TreeMap<>();
 
         try {
             con = MySQLDatabase.dbConnection.getConnection();
