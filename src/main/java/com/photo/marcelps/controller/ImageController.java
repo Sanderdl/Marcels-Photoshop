@@ -1,7 +1,5 @@
 package com.photo.marcelps.controller;
 
-import data.database.MySQLAlbumContext;
-import data.database.interfaces.IAlbumContext;
 import logic.GalleryRepo;
 import models.GalleryImage;
 import models.exceptions.GalleryException;
@@ -50,7 +48,10 @@ public class ImageController {
         {
             Logger.getLogger(ImageController.class.getName()).log(Level.SEVERE, e.getMessage(), e);
         }
-        catch(PageOutOfBoundsException e){ return new ModelAndView("redirect:/gallery/random/");}
+        catch(PageOutOfBoundsException e){
+            Logger.getLogger(ImageController.class.getName()).log(Level.INFO, e.getMessage(), e);
+            return new ModelAndView("redirect:/gallery/random/");
+        }
 
         //return back to index.jsp
         ModelAndView model = new ModelAndView("index");
