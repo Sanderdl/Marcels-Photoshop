@@ -33,7 +33,7 @@ public class CreateAlbumRepoTest {
             this.album.setName("");
             createAlbumRepo.validateUploadAlbum(album, user);
         } catch (final UploadException e) {
-            final String msg = "Invalid album name";
+            final String msg = "Invalid Album name";
             assertEquals(msg, e.getMessage());
         }
     }
