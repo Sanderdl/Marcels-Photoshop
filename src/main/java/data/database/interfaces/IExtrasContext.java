@@ -11,8 +11,9 @@ import java.util.Collection;
  */
 public interface IExtrasContext {
     Collection<Extra> getAvailableExtras() throws UploadException;
-
     void registerExtras(int imageID, int[] extras) throws SQLException;
+    void AddNewExtraProduct(String name, int price, boolean available) throws UploadException;
+    void ChangeAvailable(String name, boolean available) throws UploadException;
 }
 
 
