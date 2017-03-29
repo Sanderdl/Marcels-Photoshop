@@ -1,6 +1,6 @@
 package com.photo.marcelps.controller;
 
-import logic.CreateAlbumRepo;
+import logic.AlbumRepo;
 import models.Album;
 import models.Photographer;
 import models.User;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,11 +24,11 @@ import java.util.logging.Logger;
 @RequestMapping("/createalbum")
 public class CreateAlbumController {
 
-    private CreateAlbumRepo albumRepo;
+    private AlbumRepo albumRepo;
 
     public CreateAlbumController()
     {
-        albumRepo= new CreateAlbumRepo();
+        albumRepo= new AlbumRepo();
     }
 
     @RequestMapping(value = "/page/", method = RequestMethod.GET)

@@ -48,7 +48,7 @@ public class MySQLAlbumContext implements IAlbumContext {
     }
 
     public void createAlbum(int accountID, String albumName, int[] categoryIDs, byte[] mainPhotoBytes) throws UploadException {
-        int newAblumID = -1;
+        int newAlbumID = -1;
         try {
             Blob blob = new javax.sql.rowset.serial.SerialBlob(mainPhotoBytes);
             con = MySQLDatabase.dbConnection.getConnection();
@@ -61,11 +61,11 @@ public class MySQLAlbumContext implements IAlbumContext {
 
             ResultSet rs = stm.getGeneratedKeys();
             if (rs.next()) {
-                newAblumID = rs.getInt(1);
+                newAlbumID = rs.getInt(1);
             }
             else
             {
-                throw new UploadException("Your album wasn't created correctly");
+                throw new UploadException("Your album wasn't created correctly.");
             }
 
         } catch (SQLException ex) {
@@ -77,7 +77,7 @@ public class MySQLAlbumContext implements IAlbumContext {
 
         for (int i: categoryIDs)
         {
-            AddCategoryToAlbum(newAblumID, i);
+            AddCategoryToAlbum(newAlbumID, i);
         }
 
     }
