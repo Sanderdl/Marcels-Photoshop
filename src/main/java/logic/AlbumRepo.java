@@ -39,7 +39,7 @@ public class AlbumRepo {
         }
     }
 
-    public Album retrieveAlbumById(int albumId){
+    public Album retrieveAlbumById(int albumId) throws UploadException{
         return context.retrieveAlbumByID(albumId);
 
     }
