@@ -1,6 +1,10 @@
 package models;
 
+import edu.emory.mathcs.backport.java.util.Collections;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by lucreinink on 13/03/2017.
@@ -8,12 +12,15 @@ import org.springframework.web.multipart.MultipartFile;
 public class Album {
 
     private String name;
-
     private Photographer owner;
-
     private int id;
     private MultipartFile picture;
+
+    // When selecting which categories a new album should belong to
     private int[] categories;
+
+    // When loading an existing category and setting it's available categories.
+    private Collection<AlbumCategory> categoryList = new ArrayList<AlbumCategory>();
 
     public Album(String name, Photographer owner, int id, int[] categories, MultipartFile picture ) {
         this.name = name;
@@ -30,6 +37,15 @@ public class Album {
     }
 
     public Album(){}
+
+    public Collection<AlbumCategory> getCategoryList() {
+        return Collections.unmodifiableCollection(categoryList);
+    }
+
+    public void setCategoryList(Collection<AlbumCategory> categoryList) {
+        this.categoryList = categoryList;
+    }
+
     public String getName() {
         return name;
     }
