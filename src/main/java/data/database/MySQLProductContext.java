@@ -54,8 +54,6 @@ public class MySQLProductContext implements IProductContext {
 
     @Override
     public int uploadPhotoWithAlbum(int ownerId, String name, int albumid, byte[] photoBytes, double price, boolean isPublic, Date uploadDate) throws UploadException {
-
-
         try {
             Blob blob = new javax.sql.rowset.serial.SerialBlob(photoBytes);
             con = MySQLDatabase.dbConnection.getConnection();
@@ -76,7 +74,7 @@ public class MySQLProductContext implements IProductContext {
             }
         } catch (SQLException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-            throw new UploadException("An error occured while connecting to the database.");
+            throw new UploadException("An error occurred while connecting to the database.");
         } finally {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }

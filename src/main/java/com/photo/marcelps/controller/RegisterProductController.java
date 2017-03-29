@@ -86,9 +86,9 @@ public class RegisterProductController {
                 User user = (User) session.getAttribute("User");
                 int imageID = this.uploadRepo.validateUpload(productRegistration, user);
                 this.extrasContext.registerExtras(imageID, productRegistration.getProducts());
-
-
                 if (imageID == -1) {
+                    message = "An error occurred while uploading the photo to the database.";
+                    attr.addFlashAttribute("message", message);
                     return "redirect:/registerproduct/page/";
                 }
             }
