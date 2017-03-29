@@ -3,8 +3,9 @@ package logic;
 import data.database.MySQLCategoryContext;
 import data.database.interfaces.ICategoryContext;
 import models.AlbumCategory;
+import models.exceptions.AlbumException;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by Adriaan on 29-Mar-17.
@@ -19,7 +20,7 @@ public class CategoryRepo {
         this.context = context;
     }
 
-    public List<AlbumCategory> getAllCategories(){
+    public Collection<AlbumCategory> getAllCategories() throws AlbumException{
         return context.getAllCategories();
 
     }

@@ -66,13 +66,17 @@ public class MySQLAlbumContext implements IAlbumContext {
             }
             else
             {
-                throw new UploadException("Your album wasn't created correctly.");
+                throw new UploadException("An error occurred while creating the album");
             }
 
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-            throw new UploadException("Album was not created!");
-        } finally {
+            throw new UploadException("An error occurred while connecting to the database.");
+        }
+        finally
+        {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
 

@@ -1,7 +1,9 @@
 package data.database.interfaces;
 
 import models.AlbumCategory;
+import models.exceptions.AlbumException;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -9,5 +11,5 @@ import java.util.List;
  */
 public interface ICategoryContext {
 
-    List<AlbumCategory> getAllCategories();
+    Collection<AlbumCategory> getAllCategories() throws AlbumException;
 }
