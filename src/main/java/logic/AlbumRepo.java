@@ -39,10 +39,10 @@ public class AlbumRepo {
         }
     }
 
-//    public Album retrieveAlbumById(int albumId){
-//        return foo
-//
-//    }
+    public Album retrieveAlbumById(int albumId){
+        return context.retrieveAlbumByID(albumId);
+
+    }
 
     private boolean validateFileSize(byte[] bytes) throws UploadException{
         if (bytes.length > 64000)
