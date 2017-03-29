@@ -50,6 +50,8 @@ public class CreateAlbumController {
         try {
             User user = (User) session.getAttribute("User");
             albumRepo.validateUploadAlbum(album, user);
+            message = "Your album has been successfully added.";
+            attr.addFlashAttribute("message-success", message);
         }catch (UploadException e)
         {
             message = e.getMessage();
@@ -57,7 +59,7 @@ public class CreateAlbumController {
             attr.addFlashAttribute("message", message);
         }
 
-        return "redirect:/registerproduct/page/";
+        return "redirect:/createalbum/setupPage/";
     }
     
 }
