@@ -1,6 +1,7 @@
 package data.database;
 
 import data.database.interfaces.IProductContext;
+import models.exceptions.UploadException;
 
 import java.sql.*;
 import java.util.logging.Level;
@@ -16,10 +17,12 @@ public class MySQLProductContext implements IProductContext {
     private ResultSet rs;
 
     @Override
-    public int uploadPhoto(int ownerId, String name, byte[] photoBytes, double price, boolean isPublic, Date uploadDate) throws SQLException {
-
-        Blob blob = new javax.sql.rowset.serial.SerialBlob(photoBytes);
-        try {
+    public int uploadPhoto( int ownerId, String name, byte[] photoBytes, double price,
+                            boolean isPublic, Date uploadDate)
+            throws UploadException {
+        try
+        {
+            Blob blob = new javax.sql.rowset.serial.SerialBlob(photoBytes);
             con = MySQLDatabase.dbConnection.getConnection();
             stm = con.prepareStatement("INSERT INTO Foto (OwnerID, Name, FotoBlob, Price, IsPublic, " +
                     "UploadDate) values(?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
@@ -32,22 +35,29 @@ public class MySQLProductContext implements IProductContext {
             stm.executeUpdate();
 
             ResultSet rs = stm.getGeneratedKeys();
-            if (rs.next()) {
+            if (rs.next())
+            {
                 return rs.getInt(1);
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-        } finally {
+            throw new UploadException("An error occured while connecting to the database.");
+        }
+        finally
+        {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
         return -1;
     }
 
     @Override
-    public int uploadPhotoWithAlbum(int ownerId, String name, int albumid, byte[] photoBytes, double price, boolean isPublic, Date uploadDate) throws SQLException {
+    public int uploadPhotoWithAlbum(int ownerId, String name, int albumid, byte[] photoBytes, double price, boolean isPublic, Date uploadDate) throws UploadException {
 
-        Blob blob = new javax.sql.rowset.serial.SerialBlob(photoBytes);
+
         try {
+            Blob blob = new javax.sql.rowset.serial.SerialBlob(photoBytes);
             con = MySQLDatabase.dbConnection.getConnection();
             stm = con.prepareStatement("INSERT INTO Foto (OwnerID, Name, AlbumID, FotoBlob, Price, IsPublic, " +
                     "UploadDate) values(?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
@@ -66,6 +76,7 @@ public class MySQLProductContext implements IProductContext {
             }
         } catch (SQLException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            throw new UploadException("An error occured while connecting to the database.");
         } finally {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
