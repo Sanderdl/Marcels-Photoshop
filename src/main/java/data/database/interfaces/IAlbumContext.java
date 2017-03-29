@@ -7,6 +7,7 @@ import models.exceptions.GalleryException;
 import models.exceptions.UploadException;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,5 +15,5 @@ import java.util.Map;
  */
 public interface IAlbumContext {
     Collection<Album> getAllAlbumsByUser(Photographer owner) throws UploadException;
-    void createAlbum(int accountID, String albumName) throws UploadException;
+    void createAlbum(int accountID, String albumName, List<Integer> categoryIDs, byte[] mainPhotoBytes) throws UploadException;
 }
