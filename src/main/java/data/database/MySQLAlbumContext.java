@@ -5,6 +5,7 @@ import data.database.interfaces.IAlbumContext;
 import models.Album;
 import models.GalleryImage;
 import models.Photographer;
+import models.User;
 import models.exceptions.GalleryException;
 import models.exceptions.UploadException;
 
@@ -93,6 +94,30 @@ public class MySQLAlbumContext implements IAlbumContext {
         } catch (SQLException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             throw new UploadException("Category could not be linked to album.");
+        } finally {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
+    }
+
+    public Album retrieveAlbumByID(int albumID) throws UploadException
+    {
+        try {
+            con = MySQLDatabase.dbConnection.getConnection();
+            stm = con.prepareStatement("SELECT  * FROM Album Al JOIN Account Ac ON Al.AccountID = Ac.AccountID WHERE AlbumID = ?");
+            stm.setInt(1, albumID);
+            rs = stm.executeQuery();
+            if (rs.next())
+            {
+                return new Album(rs.getString("AlbumName"),
+                        new Photographer(rs.getInt("AccountID"),rs.getString("Username")
+                            ,rs.getString("Name"),rs.getString("Email"), User.UserStatus.ERROR),
+                        -1);
+            }
+
+            throw new UploadException("Album could not be loaded");
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            throw new UploadException("Album could not be loaded");
         } finally {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
