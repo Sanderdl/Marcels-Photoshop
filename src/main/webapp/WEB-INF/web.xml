@@ -27,4 +27,9 @@
             org.springframework.web.context.ContextLoaderListener
         </listener-class>
     </listener>
+
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>values</param-value>
+    </context-param>
 </web-app>
