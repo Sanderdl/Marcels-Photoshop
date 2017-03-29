@@ -47,7 +47,7 @@ public class MySQLAlbumContext implements IAlbumContext {
         return albums;
     }
 
-    public void createAlbum(int accountID, String albumName, List<Integer> categoryIDs, byte[] mainPhotoBytes) throws UploadException {
+    public void createAlbum(int accountID, String albumName, int[] categoryIDs, byte[] mainPhotoBytes) throws UploadException {
         int newAblumID = -1;
         try {
             Blob blob = new javax.sql.rowset.serial.SerialBlob(mainPhotoBytes);

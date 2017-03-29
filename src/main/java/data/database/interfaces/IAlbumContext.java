@@ -15,5 +15,5 @@ import java.util.Map;
  */
 public interface IAlbumContext {
     Collection<Album> getAllAlbumsByUser(Photographer owner) throws UploadException;
-    void createAlbum(int accountID, String albumName, List<Integer> categoryIDs, byte[] mainPhotoBytes) throws UploadException;
+    void createAlbum(int accountID, String albumName, int[] categoryIDs, byte[] mainPhotoBytes) throws UploadException;
 }
