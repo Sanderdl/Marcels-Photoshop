@@ -43,6 +43,9 @@ public class MySQLCategoryContext implements ICategoryContext {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             throw new AlbumException("An error occurred while connecting with the database.");
         }
+        finally{
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
 
     }
 
@@ -65,6 +68,30 @@ public class MySQLCategoryContext implements ICategoryContext {
         catch(SQLException ex){
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             throw new AlbumException("An error occurred while connecting with the database.");
+        }
+        finally{
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
+    }
+
+    @Override
+    public void addCategoryToAlbum(Collection<AlbumCategory> albumList, int albumId) throws AlbumException {
+        try{
+            con = MySQLDatabase.dbConnection.getConnection();
+            for (AlbumCategory ac : albumList)
+            {
+                stm = con.prepareStatement("INSERT INTO AlbumCategories (AlbumID, CategoryID) VALUES (?, ?)");
+                stm.setInt(1, albumId);
+                stm.setInt(2, ac.getCategoryId());
+                stm.executeUpdate();
+            }
+        }
+        catch (SQLException ex){
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            throw new AlbumException("An error occurred while connecting with the database or setting categories.");
+        }
+        finally{
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
     }
 

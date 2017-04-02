@@ -22,7 +22,16 @@ public interface ICategoryContext {
      * Retrieves a list of all categories applicable to a specific album.
      * @param albumId The Id of an album. Used to retrieve all its category tags.
      * @return A list of all available categories as Collection<AlbumCategory>
-     * @throws AlbumException for any error encountered while retrieving values
+     * @throws AlbumException for any error encountered while retrieving values.
      */
     Collection<AlbumCategory> getCategoryForAlbum(int albumId) throws AlbumException;
+
+    /**
+     * Adds every given AlbumCategory to the Album specified album in the database.
+     * ASSUMES albumList DOES NOT CONTAIN existing category entries.
+     * @param albumList A collection of AlbumCategory, used to determine which categories are added.
+     * @param albumId The Id of an album.
+     * @throws AlbumException for any error encountered while setting values.
+     */
+    void addCategoryToAlbum(Collection<AlbumCategory> albumList, int albumId) throws AlbumException;
 }
