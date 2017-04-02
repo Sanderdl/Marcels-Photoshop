@@ -10,6 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+<spring:message code="account.username" var="lb_username" />
+<spring:message code="account.password" var="lb_password" />
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -44,22 +46,23 @@
 </nav>
 <div class="container">
     <div class="row">
-        <div class="col-md-5 col-md-offset-3">
+        <div class="col-lg-8 col-md-offset-2">
+            <a href="?locale=en">English </a>|<a href="?locale=nl"> Nederlands</a>
             <form:form class="form-horizontal" action="/login/submit/" commandName="newLogin">
                 <fieldset>
                     <legend>Login</legend>
                     <div class="form-group">
-                        <label for="inputUsername" class="col-lg-2 control-label"><spring:message code="account.username" /></label>
+                        <label for="inputUsername" class="col-lg-2 control-label"><spring:message code="account.username"/></label>
                         <div class="col-lg-10">
                             <form:input path="username" name="inputUsername" type="text" class="form-control"
-                                        id="username" placeholder="Username"/>
+                                        id="username" placeholder="${lb_username}"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputPassword" class="col-lg-2 control-label"><spring:message code="account.password" /></label>
                         <div class="col-lg-10">
                             <form:input path="password" name="inputPassword" type="password" class="form-control"
-                                        id="inputPassword" placeholder="Password"/>
+                                        id="inputPassword" placeholder="${lb_password}"/>
                         </div>
 
                     </div>
@@ -82,7 +85,6 @@
                 </div>
             </c:if>
         </div>
-        ${pageContext.response.locale}
     </div>
 </div>
 </body>
