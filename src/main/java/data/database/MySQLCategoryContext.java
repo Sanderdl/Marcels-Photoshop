@@ -46,4 +46,27 @@ public class MySQLCategoryContext implements ICategoryContext {
 
     }
 
+    @Override
+    public Collection<AlbumCategory> getCategoryForAlbum(int albumId) throws AlbumException {
+        List<AlbumCategory> catList = new ArrayList<AlbumCategory>();
+        try{
+            con = MySQLDatabase.dbConnection.getConnection();
+            stm = con.prepareStatement(
+                    "SELECT C.CategoryID, C.CategoryName FROM AlbumCategories AC JOIN Categories C ON AC.CategoryID = C.CategoryID WHERE AlbumID = ?");
+            stm.setInt(1, albumId);
+
+            rs = stm.executeQuery();
+
+            while(rs.next()){
+                catList.add(new AlbumCategory(rs.getInt("CategoryID"), rs.getString("CategoryName")));
+            }
+            return catList;
+        }
+        catch(SQLException ex){
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            throw new AlbumException("An error occurred while connecting with the database.");
+        }
+    }
+
+
 }

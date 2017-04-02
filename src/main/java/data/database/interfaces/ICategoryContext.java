@@ -11,5 +11,18 @@ import java.util.List;
  */
 public interface ICategoryContext {
 
+    /**
+     * Retrieves a list of all available categories applicable to albums.
+     * @return A list of all available categories as Collection<AlbumCategory>
+     * @throws AlbumException for any error encountered while retrieving values
+     */
     Collection<AlbumCategory> getAllCategories() throws AlbumException;
+
+    /**
+     * Retrieves a list of all categories applicable to a specific album.
+     * @param albumId The Id of an album. Used to retrieve all its category tags.
+     * @return A list of all available categories as Collection<AlbumCategory>
+     * @throws AlbumException for any error encountered while retrieving values
+     */
+    Collection<AlbumCategory> getCategoryForAlbum(int albumId) throws AlbumException;
 }
