@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -10,6 +11,13 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/checkMark.css"/>"/>
 </head>
 <body>
+<spring:message code="account.username" var="lb_username" />
+<spring:message code="account.password" var="lb_password" />
+<spring:message code="account.name" var="lb_name" />
+<spring:message code="account.email" var="lb_email" />
+<spring:message code="account.type" var="lb_accounttype" />
+
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -45,22 +53,22 @@
 <div class="container">
     <div class="row">
         <div class="col-md-5 col-md-offset-3">
+            <a href="?locale=en">English </a>|<a href="?locale=nl"> Nederlands</a>
             <form:form class="form-horizontal" action="/registration/register/" commandName="newAccount">
                 <fieldset>
-                    <legend>Registration</legend>
-
+                    <legend><spring:message code="screen.register"/></legend>
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">Username</label>
+                        <label class="col-lg-2 control-label"><spring:message code="account.username"/></label>
                         <div class="col-lg-9">
                             <form:input path="userName" type="text" class="form-control" id="username"
-                                        placeholder="Username"/>
+                                        placeholder="${lb_username}"/>
                         </div>
                     </div>
                     <div id="passwordFormGroup" class="form-group">
-                        <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+                        <label for="inputPassword" class="col-lg-2 control-label"><spring:message code="account.password"/></label>
                         <div class="col-lg-9">
                             <form:input path="password" name="inputPassword" type="password" class="form-control"
-                                        id="inputPassword" placeholder="Password" onkeyup="passwordCheck()"/>
+                                        id="inputPassword" placeholder="${lb_password}" onkeyup="passwordCheck()"/>
 
                             <p id="passwordInfo" class="text-danger hide"><small>Het wachtwoord moet tenminste één hoofdletter en één cijfer bevatten</small></p>
                         </div>
@@ -70,17 +78,17 @@
                         </svg>
                     </div>
                     <div class="form-group">
-                        <label for="inputName" class="col-lg-2 control-label">Name</label>
+                        <label for="inputName" class="col-lg-2 control-label"><spring:message code="account.name"/></label>
                         <div class="col-lg-9">
                             <form:input path="name" name="inputName" type="text" class="form-control" id="inputName"
-                                        placeholder="Name"/>
+                                        placeholder="${lb_name}"/>
                         </div>
                     </div>
                     <div id="emailFormGroup" class="form-group">
-                        <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+                        <label for="inputEmail" class="col-lg-2 control-label"><spring:message code="account.email"/></label>
                         <div class="col-lg-9">
                             <form:input path="email" name="inputEmail" type="text" class="form-control" id="inputEmail"
-                                        placeholder="Email" onkeyup="emailCheck()"/>
+                                        placeholder="${lb_email}" onkeyup="emailCheck()"/>
                         </div>
                         <svg id="checkmarkEmail" class="checkmark hide" viewBox="0 0 52 52">
                             <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
@@ -88,7 +96,7 @@
                         </svg>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-2 control-label">Account type</label>
+                        <label class="col-lg-2 control-label"><spring:message code="account.type"/></label>
                         <div class="col-lg-10">
                             <label class="radio">
                                 <form:radiobutton path="role" value="Customer" checked="checked"/>
@@ -102,8 +110,8 @@
                     </div>
                     <div class="form-group">
                         <div class="col-lg-10 col-lg-offset-2">
-                            <button type="reset" class="btn btn-default">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Register</button>
+                            <button type="reset" class="btn btn-default"><spring:message code="command.cancel"/></button>
+                            <button type="submit" class="btn btn-primary"><spring:message code="command.register"/></button>
                         </div>
                     </div>
                     <div class="form-group">
