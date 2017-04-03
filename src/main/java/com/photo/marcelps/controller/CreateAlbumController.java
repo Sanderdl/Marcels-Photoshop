@@ -26,13 +26,12 @@ public class CreateAlbumController {
 
     private AlbumRepo albumRepo;
 
-    public CreateAlbumController()
-    {
-        albumRepo= new AlbumRepo();
+    public CreateAlbumController() {
+        albumRepo = new AlbumRepo();
     }
 
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
-    public String setupPage( Model model, HttpSession session, RedirectAttributes attr) {
+    public String setupPage(Model model, HttpSession session, RedirectAttributes attr) {
         if (session.getAttribute("User") instanceof Photographer) {
             Album album = new Album();
             model.addAttribute("newAlbum", album);
@@ -44,21 +43,26 @@ public class CreateAlbumController {
     }
 
     @RequestMapping(value = "/submit/", method = RequestMethod.POST)
-    public String uploadAlbum(@ModelAttribute("newAlbum") Album album,  RedirectAttributes attr, HttpSession session) {
-        String message = null;
-        try {
-            User user = (User) session.getAttribute("User");
-            albumRepo.validateUploadAlbum(album, user);
-            message = "Your album has been successfully added.";
-            attr.addFlashAttribute("message-success", message);
-        }catch (UploadException e)
-        {
-            message = e.getMessage();
-            Logger.getLogger(CreateAlbumController.class.getName()).log(Level.INFO, e.getMessage(), e);
+    public String uploadAlbum(@ModelAttribute("newAlbum") Album album, RedirectAttributes attr, HttpSession session) {
+
+        String message;
+        if (!album.getName().isEmpty() && !"".equalsIgnoreCase(album.getName()) && !" ".equalsIgnoreCase(album.getName())) {
+            try {
+                User user = (User) session.getAttribute("User");
+                albumRepo.validateUploadAlbum(album, user);
+                message = "Your album has been successfully added.";
+                attr.addFlashAttribute("message-success", message);
+            } catch (UploadException e) {
+                message = e.getMessage();
+                Logger.getLogger(CreateAlbumController.class.getName()).log(Level.INFO, e.getMessage(), e);
+                attr.addFlashAttribute("message", message);
+            }
+        } else {
+            message = "please enter a valid album name.";
             attr.addFlashAttribute("message", message);
         }
 
-        return "redirect:/createalbum/setupPage/";
+        return "redirect:/createalbum/page/";
     }
-    
+
 }

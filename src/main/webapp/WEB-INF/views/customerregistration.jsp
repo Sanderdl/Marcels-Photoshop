@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="<c:url value="/resources/css/checkMark.css"/>"/>
+    <script src="<c:url value="/resources/js/jquery-3.1.1.min.js"/>"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 <spring:message code="account.username" var="lb_username" />
@@ -16,56 +19,22 @@
 <spring:message code="account.name" var="lb_name" />
 <spring:message code="account.email" var="lb_email" />
 <spring:message code="account.type" var="lb_accounttype" />
-
-
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/gallery/random/">Home</a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li><a href="/createalbum/page/">Create album <span class="sr-only">(current)</span></a></li>
-                <li><a href="/registerproduct/page/">Upload picture</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <c:choose>
-                    <c:when test="${not empty sessionScope.User}">
-                        <li><a href="#"><c:out value="${sessionScope.User.userName}"/></a></li>
-                        <li><a href="/login/page/">Logout</a></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li class="active"><a href="/registration/page/">Register</a></li>
-                        <li><a href="/login/page/">Login</a></li>
-                    </c:otherwise>
-                </c:choose>
-            </ul>
-        </div>
-    </div>
-</nav>
+<%@ include file="header.jsp" %>
 <div class="container">
     <div class="row">
-        <div class="col-md-5 col-md-offset-3">
-            <a href="?locale=en">English </a>|<a href="?locale=nl"> Nederlands</a>
+        <div class="center-block" style="width:500px">
             <form:form class="form-horizontal" action="/registration/register/" commandName="newAccount">
                 <fieldset>
                     <legend><spring:message code="screen.register"/></legend>
                     <div class="form-group">
-                        <label class="col-lg-2 control-label"><spring:message code="account.username"/></label>
+                        <label class="col-lg-3 control-label"><spring:message code="account.username"/></label>
                         <div class="col-lg-9">
                             <form:input path="userName" type="text" class="form-control" id="username"
                                         placeholder="${lb_username}"/>
                         </div>
                     </div>
                     <div id="passwordFormGroup" class="form-group">
-                        <label for="inputPassword" class="col-lg-2 control-label"><spring:message code="account.password"/></label>
+                        <label for="inputPassword" class="col-lg-3 control-label"><spring:message code="account.password"/></label>
                         <div class="col-lg-9">
                             <form:input path="password" name="inputPassword" type="password" class="form-control"
                                         id="inputPassword" placeholder="${lb_password}" onkeyup="passwordCheck()"/>
@@ -78,14 +47,14 @@
                         </svg>
                     </div>
                     <div class="form-group">
-                        <label for="inputName" class="col-lg-2 control-label"><spring:message code="account.name"/></label>
+                        <label for="inputName" class="col-lg-3 control-label"><spring:message code="account.name"/></label>
                         <div class="col-lg-9">
                             <form:input path="name" name="inputName" type="text" class="form-control" id="inputName"
                                         placeholder="${lb_name}"/>
                         </div>
                     </div>
                     <div id="emailFormGroup" class="form-group">
-                        <label for="inputEmail" class="col-lg-2 control-label"><spring:message code="account.email"/></label>
+                        <label for="inputEmail" class="col-lg-3 control-label"><spring:message code="account.email"/></label>
                         <div class="col-lg-9">
                             <form:input path="email" name="inputEmail" type="text" class="form-control" id="inputEmail"
                                         placeholder="${lb_email}" onkeyup="emailCheck()"/>
@@ -96,8 +65,8 @@
                         </svg>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-2 control-label"><spring:message code="account.type"/></label>
-                        <div class="col-lg-10">
+                        <label class="col-lg-3 control-label"><spring:message code="account.type"/></label>
+                        <div class="col-lg-offset-4">
                             <label class="radio">
                                 <form:radiobutton path="role" value="Customer" checked="checked"/>
                                 <spring:message code="user.customer"/>
@@ -109,13 +78,13 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-lg-10 col-lg-offset-2">
+                        <div class="col-lg-10 col-lg-offset-3">
                             <button type="reset" class="btn btn-default"><spring:message code="command.cancel"/></button>
                             <button type="submit" class="btn btn-primary"><spring:message code="command.register"/></button>
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-lg-10 col-lg-offset-2">
+                        <div class="col-lg-10 col-lg-offset-3">
                             <spring:message code="account.alreadyaccount"/> <a href="/login/page/"><spring:message code="command.loginhere"/></a>
                         </div>
                     </div>

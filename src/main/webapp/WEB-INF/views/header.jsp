@@ -26,6 +26,13 @@
                         <li><a href="/login/page/">Login</a></li>
                     </c:otherwise>
                 </c:choose>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="material-icons" style="font-size:17px;color:white;vertical-align:bottom;">language</i><span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="?locale=en"">English</a></li>
+                        <li><a href="?locale=nl">Nederlands</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
