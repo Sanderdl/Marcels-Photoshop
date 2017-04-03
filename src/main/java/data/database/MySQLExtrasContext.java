@@ -2,6 +2,7 @@ package data.database;
 
 import data.database.interfaces.IExtrasContext;
 import models.Extra;
+import models.exceptions.ExtraException;
 import models.exceptions.UploadException;
 
 import java.sql.Connection;
@@ -38,7 +39,7 @@ public class MySQLExtrasContext implements IExtrasContext {
 
             while (rs.next()) {
                 extras.add(new Extra(rs.getInt("ExtraID"), rs.getString("ExtraName"),
-                        rs.getDouble("ExtraPrice")));
+                        rs.getDouble("ExtraPrice"), rs.getBoolean("Available")));
             }
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         } catch (SQLException ex) {
@@ -69,13 +70,13 @@ public class MySQLExtrasContext implements IExtrasContext {
         }
     }
 
-    public void AddNewExtraProduct(String name, int price, boolean available) throws UploadException
+    public void addNewExtraProduct(String name, double price, boolean available) throws UploadException
     {
         try{
             con = MySQLDatabase.dbConnection.getConnection();
             stm = con.prepareStatement("INSERT INTO Extras(ExtraName, ExtraPrice, Available) values(?, ?, ?)");
             stm.setString(1, name);
-            stm.setInt(2, price);
+            stm.setDouble(2, price);
             stm.setInt(2, available? 1 : 0);
             stm.executeUpdate();
         } catch (SQLException ex) {
@@ -87,7 +88,7 @@ public class MySQLExtrasContext implements IExtrasContext {
 
     }
 
-    public void ChangeAvailable(String name, boolean available) throws UploadException
+    public void changeAvailable(String name, boolean available) throws UploadException
     {
         try{
             con = MySQLDatabase.dbConnection.getConnection();
@@ -103,5 +104,33 @@ public class MySQLExtrasContext implements IExtrasContext {
         }
     }
 
+    public void changePrice(String name, double price) throws UploadException
+    {
+        try{
+            con = MySQLDatabase.dbConnection.getConnection();
+            stm = con.prepareStatement("UPDATE Extras SET price = ? WHERE ExtraName = ?;");
+            stm.setDouble(1, price);
+            stm.setString(2, name);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            throw  new UploadException("Extra wasn't added properly");
+        } finally {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
+    }
 
+    public void deleteExtra(String name) throws ExtraException {
+        try {
+            con = MySQLDatabase.dbConnection.getConnection();
+            stm = con.prepareStatement("DELETE FROM Extras WHERE ExtraName = ?");
+            stm.setString(1, name);
+            stm.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLExtrasContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            throw new ExtraException("Extra wasn't deleted properly");
+        } finally {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
+    }
 }

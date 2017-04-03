@@ -21,7 +21,7 @@ public class AlbumRepo {
 
         try
         {
-            byte[] bytes = album.getPicture().getBytes();
+            byte[] bytes = album.getThumbnail().getBytes();
             if(validateFileSize(bytes) && validateName(album.getName())){
                 this.context.createAlbum(u.getId(), album.getName(), album.getCategories(), bytes);
             }

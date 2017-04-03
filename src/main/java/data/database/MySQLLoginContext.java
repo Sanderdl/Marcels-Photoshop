@@ -50,9 +50,6 @@ public class MySQLLoginContext implements ILoginContext {
                         // Is a customer
                         foundUser = User.generateUser(rs, role);
                     }
-                    //else if (role == User.UserRoles.Admin) {
-                    //    foundUser = generateAdmin(rs);
-                    //}
                 } else if (rs.getString("Status").equals(User.UserStatus.not_verified.toString())) {
                     foundUser = User.generateUser(rs, User.UserRoles.Customer);
                 }
@@ -72,26 +69,4 @@ public class MySQLLoginContext implements ILoginContext {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
     }
-
-//    private void generatePhotographer(ResultSet rs, String role) throws SQLException{
-//        int id = -1;
-//        String uName = "";
-//        String name = "";
-//        String eMail = "";
-//        while(rs.next()){
-//            // id, uName, pass, name, email, status, role
-//            // currently overly verbose to keep method straightforward
-//            id = rs.getInt("AccountID");
-//            uName = rs.getString("Username");
-//            name = rs.getString("Name");
-//            eMail = rs.getString("Email");
-//        }
-//        Photographer p = new Photographer(1, uName, name, eMail);
-//    }
-
-
-    private User generateAdmin(ResultSet rs) {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
-
 }

@@ -39,6 +39,7 @@ public class CategoryRepo {
             filterDuplicates(acList, catList);
             if(catList.size() > 0){
                 context.addCategoryToAlbum(catList, albumId);
+                return;
             }
             throw new AlbumException("ERROR: The desired categories cannot be added due to duplicate values.");
         }

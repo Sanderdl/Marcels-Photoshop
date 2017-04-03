@@ -14,20 +14,27 @@ public class Album {
     private String name;
     private Photographer owner;
     private int id;
-    private MultipartFile picture;
+    private MultipartFile thumbnail;
 
     // When selecting which categories a new album should belong to
     private int[] categories;
 
     // When loading an existing category and setting it's available categories.
-    private Collection<AlbumCategory> categoryList = new ArrayList<AlbumCategory>();
+    private Collection<AlbumCategory> categoryCollection = new ArrayList<AlbumCategory>();
 
     public Album(String name, Photographer owner, int id, int[] categories, MultipartFile picture ) {
         this.name = name;
         this.owner = owner;
         this.id = id;
         this.categories = categories;
-        this.picture = picture;
+        this.thumbnail = picture;
+    }
+
+    public Album(String name, Photographer owner, int id, Collection<AlbumCategory> categoryCollection){
+        this.name = name;
+        this.owner = owner;
+        this.id = id;
+        this.categoryCollection = categoryCollection;
     }
 
     public Album(String name, Photographer owner, int id){
@@ -36,14 +43,16 @@ public class Album {
         this.id = id;
     }
 
+
+
     public Album(){}
 
     public Collection<AlbumCategory> getCategoryList() {
-        return Collections.unmodifiableCollection(categoryList);
+        return Collections.unmodifiableCollection(categoryCollection);
     }
 
     public void setCategoryList(Collection<AlbumCategory> categoryList) {
-        this.categoryList = categoryList;
+        this.categoryCollection = categoryList;
     }
 
     public String getName() {
@@ -68,14 +77,14 @@ public class Album {
 
     public void setId(int id) {
         this.id = id;
+    } 
+
+    public MultipartFile getThumbnail() {
+        return thumbnail;
     }
 
-    public MultipartFile getPicture() {
-        return picture;
-    }
-
-    public void setPicture(MultipartFile picture) {
-        this.picture = picture;
+    public void setThumbnail(MultipartFile thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public int[] getCategories() {
