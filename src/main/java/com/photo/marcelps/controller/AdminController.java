@@ -50,11 +50,22 @@ public class AdminController {
         return "redirect:/login/page/";
     }
 
+    @RequestMapping(value = "/add/", method = RequestMethod.POST)
+    public String fileUpload(@ModelAttribute("productregistration") AdminExtra extras){
+        try {
+            extrasContext.addNewExtraProduct(extras.getExtraName(),extras.getPrice(),true);
+        } catch (UploadException e) {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, e.getMessage(), e);
+        }
+
+        return "admin";
+    }
+
     @RequestMapping(value = "/delete/", method = RequestMethod.POST)
     public String fileUpload(@ModelAttribute("productregistration") AdminExtra extras,
                              BindingResult result, ModelMap model, HttpSession session,
                              RedirectAttributes attr) throws IOException {
 
-        return "redirect:/admin/page";
+        return "admin";
     }
 }
