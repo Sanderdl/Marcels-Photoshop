@@ -41,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-                <label for="album" class="col-lg-2 control-label"><spring:message code="product.album"/></label>
+                <label for="album" class="col-lg-2"><spring:message code="product.album"/></label>
                 <div class="input-group">
                     <div class="col-lg-9 col-lg-offset-1" style="width:400px;">
                         <form:select class="form-control" path="album">
@@ -50,34 +50,37 @@
                         </form:select>
                     </div>
                 </div>
-                <div class="input-group">
-                    <label class="col-lg-2 control-label"><spring:message code="product.shouldpublic"/></label>
-                    <div ><form:checkbox path="isPublic"/></div>
-                    <spring:message code="product.public"/>
+                <div class="form-group">
+                    <label for="public" class="col-lg-2"><spring:message code="product.shouldpublic"/></label>
+                    <div class="col-lg-9 col-lg-offset-3">
+                        <div class="check-box">
+                            <form:checkbox path="isPublic" name="public"/>
+                            <spring:message code="product.public"/>
+                        </div>
+                    </div>
                 </div>
+            </fieldset>
         </div>
     </div>
-
-    <div class="form-group">
-        <div class="col-lg-10 col-lg-offset-3">
-            <h4><spring:message code="product.whichproduct"/></h4>
+    <div class="center-block" style="width:500px">
+        <div class="form-group">
+            <label for="product" class="col-lg-2"><spring:message code="product.whichproduct"/></label>
             <c:if test="${not empty availableProducts}">
-
                 <c:forEach var="product" items="${availableProducts}">
-                    <div class="checkbox">
-                        <label>
-                            <form:checkbox path="products" value="${product.id}"/>
+                    <div class="col-lg-9 col-lg-offset-3">
+                        <div class="check-box">
+                            <form:checkbox path="products" value="${product.id}" name="product"/>
                             <c:out value="${product.name}"/>
-                        </label>
+                        </div>
                     </div>
                 </c:forEach>
             </c:if>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-lg-10 col-lg-offset-3">
+    <div class="center-block" style="width:500px">
+        <div class="col-lg-9 col-lg-offset-3">
             <button type="reset" class="btn btn-default"><spring:message code="command.cancel"/></button>
-            <button type="submit" class="btn btn-primary"><spring:message code="command.upload"/></button>
+            <button type="submit" class="btn btn-primary" class="col-lg-2 col-lg-offset-1"><spring:message code="command.upload"/></button>
         </div>
     </div>
     <c:if test="${not empty message}">
