@@ -43,9 +43,14 @@ public class ExtraRepo {
         this.context.addNewExtraProduct(extra.getName(), extra.getPrice(), extra.getAvailable());
     }
 
-    public void updateExtra(Extra extra) throws ExtraException, UploadException {
+    public void updateExtraAvailable(Extra extra) throws ExtraException, UploadException {
         this.validateName(extra.getName());
 
         this.context.changeAvailable(extra.getName(), extra.getAvailable());
+    }
+
+    public void updateExtraPrice(Extra extra) throws ExtraException {
+        this.validateName(extra.getName());
+        this.validatePrice(extra.getPrice());
     }
 }
