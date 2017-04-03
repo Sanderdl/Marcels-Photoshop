@@ -84,18 +84,18 @@
                             </div>
 
                             <h4><spring:message code="product.album"/></h4>
-                            <div class="input-group">
-                        <span class="input-group-btn">
-                            <span class="btn btn-primary btn-file">
-                                  <label data-toggle="modal" data-target="#myModal"><spring:message
-                                          code="product.newalbum"/></label>
-                            </span>
-                        </span>
+                                <div class="input-group">
+                                <span class="input-group-btn">
+                                <span class="btn btn-primary btn-file">
+                                <label data-toggle="modal" data-target="#myModal"><spring:message
+                                code="product.newalbum"/></label>
+                                </span>
+                                </span>
                                 <form:select class="form-control" path="album">
-                                    <form:option value="-1" label="--- Select ---"/>
-                                    <form:options items="${albums}"/>
+                                <form:option value="-1" label="--- Select ---"/>
+                                <form:options items="${albums}"/>
                                 </form:select>
-                            </div>
+                                </div>
                             <div class="form-group">
                                 <div class="col-lg-10 col-lg-offset-0">
                                     <a href="/createalbum/page/"><spring:message code="product.clickalbum"/></a>
@@ -116,7 +116,7 @@
                                     <div class="checkbox">
                                         <label>
                                             <form:checkbox path="products" value="${product.id}"/>
-                                            <c:out value="${product.name}"/>
+                                            <spring:message code="${product.name}"/>
                                         </label>
                                     </div>
                                 </c:forEach>
@@ -149,7 +149,7 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title"><spring:message code="command.createalbum"/></h4>
                     </div>
-                    <form:form class="form-horizontal" action="/registerproduct/modal/" commandName="album">
+                    <form:form class="form-horizontal" action="/registerproduct/modal/" commandName="album" enctype="multipart/form-data">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="albumName" class="col-lg-2 control-label"><spring:message
@@ -160,8 +160,7 @@
                                     <span class="hide help-inline">This is required</span>
                                     <div class="input-group">
                                         <h4>Choose a categorie</h4>
-                                        <form:select class="form-control" data-live-search="true" path="categories"
-                                                     multiple="true">
+                                        <form:select class="form-control" path="categories">
                                             <form:option value="-1" label="--- Select ---"/>
                                             <form:options items="${categories}"/>
                                         </form:select>

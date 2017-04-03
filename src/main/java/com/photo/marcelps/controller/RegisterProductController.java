@@ -60,7 +60,7 @@ public class RegisterProductController {
                 model.addAttribute("availableProducts", products);
 
                 Collection<Album> albums = albumContext.getAllAlbumsByUser(photographer);
-                Map<Integer, String> album = new LinkedHashMap<Integer, String>();
+                Map<Integer, String> album = new LinkedHashMap<>();
 
                 for (Album a : albums) {
                     album.put(a.getId(), a.getName());
@@ -68,7 +68,7 @@ public class RegisterProductController {
                 model.addAttribute("albums", album);
 
                 Collection<AlbumCategory> categories = categoryRepo.getAllCategories();
-                Map<Integer, String> categorie = new LinkedHashMap<Integer, String>();
+                Map<Integer, String> categorie = new LinkedHashMap<>();
 
                 for (AlbumCategory a : categories) {
                     categorie.put(a.getCategoryId(), a.getCategoryName());
@@ -114,7 +114,7 @@ public class RegisterProductController {
 
     @RequestMapping(value = "/modal/", method = RequestMethod.POST)
     public String fileUpload(@ModelAttribute("album") Album album, HttpSession session,
-                             RedirectAttributes attr) throws IOException {
+                             BindingResult result, RedirectAttributes attr) throws IOException {
         String message;
         try {
             User user = (User) session.getAttribute("User");
