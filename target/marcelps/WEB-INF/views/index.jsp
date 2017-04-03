@@ -50,6 +50,8 @@
     </c:choose>
 </div>
 </body>
+<script src="<c:url value="/resources/js/jquery-3.1.1.min.js"/>"></script>
+<script src="<c:url value="/resources/js/jquery.justifiedGallery.min.js"/>"></script>
 <script>
     $(function () {
         $("#photos").justifiedGallery({
