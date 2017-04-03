@@ -7,6 +7,7 @@
     <title>Registration</title>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="<c:url value="/resources/css/checkMark.css"/>"/>
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -33,7 +34,7 @@
                         <li><a href="/login/page/">Logout</a></li>
                     </c:when>
                     <c:otherwise>
-                        <li class="active"><a href= "/registration/page/">Register</a> </li>
+                        <li class="active"><a href="/registration/page/">Register</a></li>
                         <li><a href="/login/page/">Login</a></li>
                     </c:otherwise>
                 </c:choose>
@@ -50,31 +51,41 @@
 
                     <div class="form-group">
                         <label class="col-lg-2 control-label">Username</label>
-                        <div class="col-lg-10">
+                        <div class="col-lg-9">
                             <form:input path="userName" type="text" class="form-control" id="username"
                                         placeholder="Username"/>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div id="passwordFormGroup" class="form-group">
                         <label for="inputPassword" class="col-lg-2 control-label">Password</label>
-                        <div class="col-lg-10">
+                        <div class="col-lg-9">
                             <form:input path="password" name="inputPassword" type="password" class="form-control"
-                                        id="inputPassword" placeholder="Password"/>
+                                        id="inputPassword" placeholder="Password" onkeyup="passwordCheck()"/>
+
+                            <p id="passwordInfo" class="text-danger hide"><small>Het wachtwoord moet tenminste één hoofdletter en één cijfer bevatten</small></p>
                         </div>
+                        <svg id="checkmarkPassword" class="checkmark hide" viewBox="0 0 52 52">
+                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
                     </div>
                     <div class="form-group">
                         <label for="inputName" class="col-lg-2 control-label">Name</label>
-                        <div class="col-lg-10">
+                        <div class="col-lg-9">
                             <form:input path="name" name="inputName" type="text" class="form-control" id="inputName"
                                         placeholder="Name"/>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div id="emailFormGroup" class="form-group">
                         <label for="inputEmail" class="col-lg-2 control-label">Email</label>
-                        <div class="col-lg-10">
+                        <div class="col-lg-9">
                             <form:input path="email" name="inputEmail" type="text" class="form-control" id="inputEmail"
-                                        placeholder="Email"/>
+                                        placeholder="Email" onkeyup="emailCheck()"/>
                         </div>
+                        <svg id="checkmarkEmail" class="checkmark hide" viewBox="0 0 52 52">
+                            <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
                     </div>
                     <div class="form-group">
                         <label class="col-lg-2 control-label">Account type</label>
@@ -115,3 +126,37 @@
 </div>
 </body>
 </html>
+<script src="<c:url value="/resources/js/jquery-3.1.1.min.js"/>"></script>
+<script>
+    function emailCheck() {
+        var emailCheckMark = document.getElementById("checkmarkEmail");
+        var emailInputElement = document.getElementById("emailFormGroup");
+        var emailInput = document.getElementById("inputEmail").value;
+
+        if (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(emailInput)) {
+            $(emailCheckMark).removeClass("hide");
+            $(emailInputElement).removeClass("has-error");
+
+        } else {
+            $(emailCheckMark).addClass("hide");
+            $(emailInputElement).addClass("has-error");
+        }
+    }
+    function passwordCheck() {
+        var passwordCheckmark = document.getElementById("checkmarkPassword");
+        var passwordInputElement = document.getElementById("passwordFormGroup");
+        var passwordInput = document.getElementById("inputPassword").value;
+        var passwordInfo = document.getElementById("passwordInfo");
+
+        if (/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\S+$).{8,}$/.test(passwordInput)) {
+            $(passwordCheckmark).removeClass("hide");
+            $(passwordInfo).addClass("hide");
+            $(passwordInputElement).removeClass("has-error");
+
+        } else {
+            $(passwordCheckmark).addClass("hide");
+            $(passwordInfo).removeClass("hide");
+            $(passwordInputElement).addClass("has-error");
+        }
+    }
+</script>
