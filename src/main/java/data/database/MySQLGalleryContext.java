@@ -58,7 +58,7 @@ public class MySQLGalleryContext implements IGalleryContext {
 
         try {
             con = MySQLDatabase.dbConnection.getConnection();
-            stm = con.prepareStatement("SELECT * FROM Foto WHERE IsPublic = 1 ORDER BY UploadDate DESC LIMIT ?,24");
+            stm = con.prepareStatement("(Select FotoID, AlbumID, Name, FotoBlob From Foto Where AlbumID IS NULL) Union All (Select AlbumID, AlbumID, AlbumName, AlbumFoto From Album) Order By FotoID Desc Limit ?,24");
             stm.setInt(1, startIndex);
             rs = stm.executeQuery();
 

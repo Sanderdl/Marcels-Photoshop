@@ -34,7 +34,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/submit/", method = RequestMethod.POST)
-    public String loginUser(@ModelAttribute("newLogin") Login login, RedirectAttributes attr, HttpSession session) {
+    public String loginUser(@ModelAttribute("newLogin") Login login, RedirectAttributes attr, HttpSession session, Model model) {
         String message = null;
         try {
             User u = repo.UserLogin(login.getUsername(), login.getPassword());
@@ -50,7 +50,7 @@ public class LoginController {
         } catch (SQLException e) {
             Logger.getLogger(UploadRepo.class.getName()).log(Level.INFO, e.getMessage(), e);
         }
-        attr.addFlashAttribute("message", message);
-        return "redirect:/login/page/";
+        model.addAttribute("message", message);
+        return "login";
     }
 }
