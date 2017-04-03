@@ -1,5 +1,6 @@
 package models;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.web.multipart.MultipartFile;
@@ -7,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -14,8 +16,7 @@ import static org.junit.Assert.*;
  * Created by Adriaan on 03-Apr-17.
  */
 public class AlbumTest {
-    private Album album;
-    private Album album1;
+    private Album inputAlbum;
 
     @Before
     public void setup(){
@@ -24,11 +25,32 @@ public class AlbumTest {
 
     @Test
     public void albumConstructorTest() throws Exception {
-        assertTrue(album == null);
-        MockyPartFile file;
+        assertTrue(inputAlbum == null);
+        MockyPartFile file = new MockyPartFile();
+        inputAlbum = new Album("name", new Photographer(-1, "userName", "name", "email", User.UserStatus.verified),
+                -1, new int[]{1,2}, file);
 
+        assertTrue(inputAlbum.getId() == -1);
+        inputAlbum.setId(1);
+        assertTrue(inputAlbum.getId() == 1);
 
+        assertTrue(inputAlbum.getName() == "name");
+        inputAlbum.setName("foo");
+        assertTrue(inputAlbum.getName() == "foo");
 
+        assertTrue(inputAlbum.getOwner() != null);
+        inputAlbum.setOwner(new Photographer(-1, "foo", "name", "email", User.UserStatus.verified));
+        assertTrue(inputAlbum.getOwner().getUserName() == "foo");
+
+        assertTrue(inputAlbum.getCategories()[0] ==  1);
+        inputAlbum.setCategories(new int[]{2 , 1});
+        assertTrue(inputAlbum.getCategories()[0] ==  2);
+
+        assertTrue(inputAlbum.getThumbnail() != null);
+        inputAlbum.setThumbnail(new MockyPartFile());
+
+        inputAlbum.setCategoryList(new ArrayList<AlbumCategory>());
+        assertTrue(inputAlbum.getCategoryList() != null);
 
     }
 

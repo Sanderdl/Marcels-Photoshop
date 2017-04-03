@@ -37,6 +37,14 @@ public class Album {
         this.categoryCollection = categoryCollection;
     }
 
+    public Album(String name, Photographer owner, int id){
+        this.name = name;
+        this.owner = owner;
+        this.id = id;
+    }
+
+
+
     public Album(){}
 
     public Collection<AlbumCategory> getCategoryList() {
