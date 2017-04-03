@@ -4,8 +4,10 @@ import data.database.MySQLAlbumContext;
 import data.database.MySQLExtrasContext;
 import data.database.interfaces.IExtrasContext;
 import logic.AlbumRepo;
+import logic.CategoryRepo;
 import logic.UploadRepo;
 import models.*;
+import models.exceptions.AlbumException;
 import models.exceptions.UploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,6 +40,7 @@ public class RegisterProductController {
     private MySQLAlbumContext albumContext = new MySQLAlbumContext();
     private UploadRepo uploadRepo = new UploadRepo();
     private AlbumRepo albumRepo = new AlbumRepo();
+    private CategoryRepo categoryRepo = new CategoryRepo();
 
     @Autowired
     ServletContext context;
@@ -63,7 +66,15 @@ public class RegisterProductController {
                     album.put(a.getId(), a.getName());
                 }
                 model.addAttribute("albums", album);
-            } catch (UploadException ex) {
+
+                Collection<AlbumCategory> categories = categoryRepo.getAllCategories();
+                Map<Integer, String> categorie = new LinkedHashMap<Integer, String>();
+
+                for (AlbumCategory a : categories) {
+                    categorie.put(a.getCategoryId(), a.getCategoryName());
+                }
+                model.addAttribute("categories", categorie);
+            } catch (UploadException | AlbumException ex) {
                 Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
 
