@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -77,7 +76,7 @@ public class MySQLExtrasContext implements IExtrasContext {
             stm = con.prepareStatement("INSERT INTO Extras(ExtraName, ExtraPrice, Available) values(?, ?, ?)");
             stm.setString(1, name);
             stm.setDouble(2, price);
-            stm.setInt(2, available? 1 : 0);
+            stm.setInt(3, available? 1 : 0);
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);

@@ -14,13 +14,48 @@
 <div class="container">
     <div class="row">
         <div class="col-md-5 col-md-offset-3">
-            <form:form class="form-horizontal" action="/registerproduct/submit/" commandName="Extras"
-                       enctype="multipart/form-data">
+
                 <fieldset>
+
                     <legend>Admin console</legend>
+                    <form:form class="form-horizontal" action="/admin/add/" commandName="Extras"
+                               enctype="multipart/form-data">
                     <div class="form-group">
                         <div class="col-lg-10 col-lg-offset-2">
                             <h4><spring:message code="admin.allproducts"/></h4>
+                            <div class="form-group">
+                                <label for="addExtra" class="col-lg-2 control-label"><spring:message code="admin.add"/></label>
+                                <div class="col-lg-10">
+                                    <form:input path="extraName" name="addExtra" type="text" class="form-control"
+                                                id="addExtra" placeholder=""/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPrijs" class="col-lg-2 control-label"><spring:message
+                                        code="product.price"/></label>
+                                <div class="col-lg-9 col-lg-offset-1">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">€</span>
+                                        <form:input path="price" value="0.00" min="0"
+                                                    data-number-stepfactor="100" class="form-control currency" id="inputPrijs"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-10 col-lg-offset-2">
+                                    <button type="submit" class="btn btn-primary"><spring:message code="admin.add"/></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </form:form>
+                </fieldset>
+
+            <fieldset>
+                <form:form class="form-horizontal" action="/admin/delete/" commandName="Extras"
+                           enctype="multipart/form-data">
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-2">
                             <c:if test="${not empty availableProducts}">
 
                                 <c:forEach var="product" items="${availableProducts}">
@@ -36,12 +71,12 @@
                     </div>
                     <div class="form-group">
                         <div class="col-lg-10 col-lg-offset-2">
-                            <button type="reset" class="btn btn-default"><spring:message code="command.cancel"/></button>
-                            <button type="submit" class="btn btn-primary"><spring:message code="command.upload"/></button>
+                            <button type="submit" class="btn btn-primary"><spring:message code="admin.delete"/></button>
                         </div>
                     </div>
-                </fieldset>
-            </form:form>
+                </form:form>
+            </fieldset>
+
 
         </div>
 
