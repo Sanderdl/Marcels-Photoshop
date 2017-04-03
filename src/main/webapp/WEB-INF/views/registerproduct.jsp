@@ -1,16 +1,16 @@
 <!DOCTYPE HTML>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Register Product Screen</title>
-    <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
+        <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<spring:message code="product.title" var="lb_picturetitle" />
+<spring:message code="product.title" var="lb_picturetitle"/>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -61,7 +61,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="inputPrijs" class="col-lg-2 control-label"><spring:message code="product.prize"/></label>
+                        <label for="inputPrijs" class="col-lg-2 control-label"><spring:message
+                                code="product.price"/></label>
                         <div class="col-lg-10">
                             <div class="input-group">
                                 <span class="input-group-addon">€</span>
@@ -72,11 +73,12 @@
                     </div>
                     <div class="form-group">
                         <div class="col-lg-10 col-lg-offset-2">
-                            <h4><spring:message code="product.album"/></h4>
+                            <h4><spring:message code="product.select"/></h4>
                             <div class="input-group">
                         <span class="input-group-btn">
                             <span class="btn btn-primary btn-file">
-                                <spring:message code="command.browse"/>&hellip; <form:input path="picture" name="file" type="file"/>
+                                <spring:message code="command.browse"/>&hellip; <form:input path="picture" name="file"
+                                                                                            type="file"/>
                             </span>
                         </span>
                                 <input type="text" class="form-control" readonly>
@@ -86,7 +88,8 @@
                             <div class="input-group">
                         <span class="input-group-btn">
                             <span class="btn btn-primary btn-file">
-                                  <label data-toggle="modal" data-target="#myModal"><spring:message code="product.newalbum"/></label>
+                                  <label data-toggle="modal" data-target="#myModal"><spring:message
+                                          code="product.newalbum"/></label>
                             </span>
                         </span>
                                 <form:select class="form-control" path="album">
@@ -123,8 +126,10 @@
                     </div>
                     <div class="form-group">
                         <div class="col-lg-10 col-lg-offset-2">
-                            <button type="reset" class="btn btn-default"><spring:message code="command.cancel"/></button>
-                            <button type="submit" class="btn btn-primary"><spring:message code="command.upload"/></button>
+                            <button type="reset" class="btn btn-default"><spring:message
+                                    code="command.cancel"/></button>
+                            <button type="submit" class="btn btn-primary"><spring:message
+                                    code="command.upload"/></button>
                         </div>
                     </div>
                     <c:if test="${not empty message}">
@@ -139,7 +144,6 @@
         <!-- Modal -->
         <div class="modal fade" id="myModal" role="dialog">
             <div class="modal-dialog">
-
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
@@ -147,19 +151,41 @@
                         <h4 class="modal-title"><spring:message code="command.createalbum"/></h4>
                     </div>
                     <form:form class="form-horizontal" action="/registerproduct/modal/" commandName="album">
-                    <div class="modal-body">
+                        <div class="modal-body">
                             <div class="form-group">
-                                <label for="albumName" class="col-lg-2 control-label"><spring:message code="account.name"/></label>
+                                <label for="albumName" class="col-lg-2 control-label"><spring:message
+                                        code="account.name"/></label>
                                 <div class="col-lg-10">
                                     <form:input path="name" name="inputName" type="text" class="form-control"
                                                 id="albumName" placeholder="Name"/>
                                     <span class="hide help-inline">This is required</span>
+                                    <div class="input-group">
+                                        <h4>Choose a categorie</h4>
+                                        <form:select class="form-control" data-live-search="true" path="categories"
+                                                     multiple="true">
+                                            <form:option value="-1" label="--- Select ---"/>
+                                            <form:options items="${categories}"/>
+                                        </form:select>
+                                    </div>
+                                    <h4><spring:message code="product.select"/></h4>
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                             <span class="btn btn-primary btn-file">
+                                                <spring:message code="command.browse"/>&hellip; <form:input
+                                                     path="thumbnail" name="file"
+                                                     type="file"/>
+                                             </span>
+                                        </span>
+                                        <input type="text" class="form-control" readonly>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" id="submitModal" class="btn btn-primary"><spring:message code="command.upload"/></button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="command.cancel"/></button>
+                            <button type="submit" id="submitModal" class="btn btn-primary"><spring:message
+                                    code="command.upload"/></button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><spring:message
+                                    code="command.cancel"/></button>
                         </div>
                     </form:form>
                 </div>
@@ -235,3 +261,5 @@
         });
     });
 </script>
+
+

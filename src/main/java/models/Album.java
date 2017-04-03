@@ -14,7 +14,7 @@ public class Album {
     private String name;
     private Photographer owner;
     private int id;
-    private MultipartFile picture;
+    private MultipartFile thumbnail;
 
     // When selecting which categories a new album should belong to
     private int[] categories;
@@ -27,7 +27,7 @@ public class Album {
         this.owner = owner;
         this.id = id;
         this.categories = categories;
-        this.picture = picture;
+        this.thumbnail = picture;
     }
 
     public Album(String name, Photographer owner, int id){
@@ -68,14 +68,14 @@ public class Album {
 
     public void setId(int id) {
         this.id = id;
+    } 
+
+    public MultipartFile getThumbnail() {
+        return thumbnail;
     }
 
-    public MultipartFile getPicture() {
-        return picture;
-    }
-
-    public void setPicture(MultipartFile picture) {
-        this.picture = picture;
+    public void setThumbnail(MultipartFile thumbnail) {
+        this.thumbnail = thumbnail;
     }
 
     public int[] getCategories() {
