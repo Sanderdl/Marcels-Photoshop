@@ -25,32 +25,28 @@ public class RegistrationController {
 
     private RegisterRepo repo;
 
-    public RegistrationController(){
+    public RegistrationController() {
         repo = new RegisterRepo(new MySQLRegistrationContext());
     }
 
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
-    public String setupPage( Model model) {
+    public String setupPage(Model model) {
         Registration registration = new Registration();
         model.addAttribute("newAccount", registration);
         return "customerregistration";
     }
 
     @RequestMapping(value = "/register/", method = RequestMethod.POST)
-    public String registerUser(@ModelAttribute("newAccount") Registration registration,  RedirectAttributes attr) {
+    public String registerUser(@ModelAttribute("newAccount") Registration registration, RedirectAttributes attr, Model model) {
         String message;
-
         try {
             repo.registerUser(registration);
-        }catch (InvalidRegisterException | SQLException ex){
+        } catch (InvalidRegisterException | SQLException ex) {
             Logger.getLogger(RegistrationController.class.getName()).log(Level.INFO, ex.getMessage(), ex);
             message = ex.getMessage();
-            attr.addFlashAttribute("message", message);
-            return "redirect:/registration/page/";
+            model.addAttribute("message", message);
+            return "customerregistration";
         }
         return "redirect:/login/page/";
     }
-
-
-
 }
