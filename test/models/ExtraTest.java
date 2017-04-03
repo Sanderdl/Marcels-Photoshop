@@ -13,7 +13,7 @@ public class ExtraTest {
     @Test
     public void extraConstructorTest(){
         assertTrue(e == null);
-        e = new Extra(-1, "Shirt", 1.00);
+        e = new Extra(-1, "Shirt", 1.00, true);
 
         assertTrue(e.getId() == -1);
         e.setId(1);
@@ -26,6 +26,10 @@ public class ExtraTest {
         assertTrue(e.getPrice() == 1.00);
         e.setPrice(2.00);
         assertTrue(e.getPrice() == 2.00);
+
+        assertTrue(e.getAvailable() == true);
+        e.setAvailable(false);
+        assertTrue(e.getAvailable() == false);
 
     }
 
