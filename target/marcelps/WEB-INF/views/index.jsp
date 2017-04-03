@@ -26,7 +26,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand active" href="/gallery/random/">Home</a>
+            <a class="navbar-brand" href="/gallery/random/">Home</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
@@ -51,14 +51,13 @@
 <section id="photos" class="justified-gallery shadow-m">
     <c:if test="${not empty lists}">
         <c:forEach var="listValue" items="${lists}">
-            <a href="/gallery/image?id=${listValue.key}">
+            <a href="/viewphoto/page/?id=${listValue.key}">
                 <img src="/gallery/image?id=${listValue.key}">
             </a>
             <%--<a href="/gallery/random/">--%>
             <%--<img src="data:img/png;base64, ${listValue}" alt="No image">--%>
             <%--</a>--%>
         </c:forEach>
-
     </c:if>
 </section>
 <div id=pageNavigation class="col-md-2 col-md-offset-5" align="center">

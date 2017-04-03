@@ -28,6 +28,15 @@ public class GalleryRepo {
         return context.allImages(pageNumber);
     }
 
+    public GalleryImage getImageById(int id) throws GalleryException {
+
+        if (id >= 0) {
+            return context.getImageById(id);
+        }
+
+        return null;
+    }
+
 
 
 

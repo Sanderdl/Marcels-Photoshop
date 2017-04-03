@@ -20,23 +20,29 @@ public class MySQLGalleryContext implements IGalleryContext {
     private ResultSet rs;
 
     public GalleryImage getImageById(int id) throws GalleryException {
+
         GalleryImage gi = null;
 
-        Connection conn = null;
-        PreparedStatement stm = null;
-
         try {
-            conn = MySQLDatabase.dbConnection.getConnection();
-            stm = conn.prepareStatement("SELECT name, FotoBlob FROM Foto WHERE FotoID = ?");
+            con = MySQLDatabase.dbConnection.getConnection();
+            stm = con.prepareStatement("SELECT * FROM Foto WHERE FotoID = ?");
             stm.setInt(1, id);
 
-            ResultSet rs = stm.executeQuery();
+            rs = stm.executeQuery();
 
             if (rs.next()) {
-                String naam = rs.getString("Name");
-                byte[] image = rs.getBytes("FotoBlob");
+                Blob b = rs.getBlob("FotoBlob");
+                byte[] bytes = b.getBytes(1L, (int) b.length());
+                int ownerID = rs.getInt("OwnerID");
 
-                gi = new GalleryImage(id, naam, image);
+                stm = con.prepareStatement("SELECT Name FROM Account WHERE AccountID =" + ownerID);
+
+                ResultSet rs2 = stm.executeQuery();
+
+                if (rs2.next()) {
+                    gi = new GalleryImage(id, rs.getString("Name"), bytes, ownerID,
+                            rs2.getString("Name"));
+                }
             }
 
         } catch (SQLException ex) {
@@ -54,13 +60,21 @@ public class MySQLGalleryContext implements IGalleryContext {
             con = MySQLDatabase.dbConnection.getConnection();
             stm = con.prepareStatement("SELECT * FROM Foto WHERE IsPublic = 1 ORDER BY UploadDate DESC LIMIT ?,24");
             stm.setInt(1, startIndex);
-            ResultSet rs = stm.executeQuery();
+            rs = stm.executeQuery();
+
             while (rs.next()) {
                 Blob b = rs.getBlob("FotoBlob");
                 byte[] bytes = b.getBytes(1L, (int) b.length());
+                int ownerID = rs.getInt("OwnerID");
 
-                list.put(rs.getInt("FotoID"),
-                        new GalleryImage(rs.getInt("FotoID"), rs.getString("Name"), bytes));
+                stm = con.prepareStatement("SELECT Name FROM Account WHERE AccountID =" + ownerID);
+
+                ResultSet rs2 = stm.executeQuery();
+
+                if (rs2.next()) {
+                    list.put(rs.getInt("FotoID"), new GalleryImage(rs.getInt("FotoID"),
+                            rs.getString("Name"), bytes, ownerID, rs2.getString("Name")));
+                }
             }
         } catch (SQLException | NullPointerException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
@@ -71,25 +85,19 @@ public class MySQLGalleryContext implements IGalleryContext {
         return list;
     }
 
-    public int getImageCount()
-    {
+    public int getImageCount() {
         int num = 0;
         try {
             con = MySQLDatabase.dbConnection.getConnection();
             stm = con.prepareStatement("SELECT COUNT(FotoID) AS Num FROM Foto WHERE IsPublic = 1");
 
             ResultSet rs = stm.executeQuery();
-            if (rs.next())
-            {
+            if (rs.next()) {
                 num = rs.getInt("Num");
             }
-        }
-        catch (SQLException | NullPointerException ex)
-        {
+        } catch (SQLException | NullPointerException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-        }
-        finally
-        {
+        } finally {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
 

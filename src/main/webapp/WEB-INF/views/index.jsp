@@ -51,14 +51,13 @@
 <section id="photos" class="justified-gallery shadow-m">
     <c:if test="${not empty lists}">
         <c:forEach var="listValue" items="${lists}">
-            <a href="/gallery/image?id=${listValue.key}">
+            <a href="/viewphoto/page/?id=${listValue.key}">
                 <img src="/gallery/image?id=${listValue.key}">
             </a>
             <%--<a href="/gallery/random/">--%>
             <%--<img src="data:img/png;base64, ${listValue}" alt="No image">--%>
             <%--</a>--%>
         </c:forEach>
-
     </c:if>
 </section>
 <div id=pageNavigation class="col-md-2 col-md-offset-5" align="center">
