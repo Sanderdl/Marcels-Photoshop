@@ -31,6 +31,8 @@ public class ExtraTest {
         e.setAvailable(false);
         assertTrue(e.getAvailable() == false);
 
+        assertTrue(e.toString().equals(e.getName()));
+
     }
 
 }
