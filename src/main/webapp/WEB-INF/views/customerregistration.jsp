@@ -70,7 +70,7 @@
                             <form:input path="password" name="inputPassword" type="password" class="form-control"
                                         id="inputPassword" placeholder="${lb_password}" onkeyup="passwordCheck()"/>
 
-                            <p id="passwordInfo" class="text-danger hide"><small>Het wachtwoord moet tenminste één hoofdletter en één cijfer bevatten</small></p>
+                            <p id="passwordInfo" class="text-danger hide"><small><spring:message code="message.password"/></small></p>
                         </div>
                         <svg id="checkmarkPassword" class="checkmark hide" viewBox="0 0 52 52">
                             <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
@@ -100,11 +100,11 @@
                         <div class="col-lg-10">
                             <label class="radio">
                                 <form:radiobutton path="role" value="Customer" checked="checked"/>
-                                Customer
+                                <spring:message code="user.customer"/>
                             </label>
                             <label class="radio">
                                 <form:radiobutton path="role" value="Photographer"/>
-                                Photographer
+                                <spring:message code="user.photographer"/>
                             </label>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-lg-10 col-lg-offset-2">
-                            Already an account? <a href="/login/page/">Login here</a>
+                            <spring:message code="account.alreadyaccount"/> <a href="/login/page/"><spring:message code="command.loginhere"/></a>
                         </div>
                     </div>
                 </fieldset>
