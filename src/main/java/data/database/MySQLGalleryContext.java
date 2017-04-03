@@ -33,16 +33,7 @@ public class MySQLGalleryContext implements IGalleryContext {
             if (rs.next()) {
                 Blob b = rs.getBlob("FotoBlob");
                 byte[] bytes = b.getBytes(1L, (int) b.length());
-                int ownerID = rs.getInt("OwnerID");
-
-                stm = con.prepareStatement("SELECT Name FROM Account WHERE AccountID =" + ownerID);
-
-                ResultSet rs2 = stm.executeQuery();
-
-                if (rs2.next()) {
-                    gi = new GalleryImage(id, rs.getString("Name"), bytes, ownerID,
-                            rs2.getString("Name"));
-                }
+                gi = new GalleryImage(id, rs.getString("Name"), bytes);
             }
 
         } catch (SQLException ex) {
@@ -65,16 +56,9 @@ public class MySQLGalleryContext implements IGalleryContext {
             while (rs.next()) {
                 Blob b = rs.getBlob("FotoBlob");
                 byte[] bytes = b.getBytes(1L, (int) b.length());
-                int ownerID = rs.getInt("OwnerID");
-
-                stm = con.prepareStatement("SELECT Name FROM Account WHERE AccountID =" + ownerID);
-
-                ResultSet rs2 = stm.executeQuery();
-
-                if (rs2.next()) {
                     list.put(rs.getInt("FotoID"), new GalleryImage(rs.getInt("FotoID"),
-                            rs.getString("Name"), bytes, ownerID, rs2.getString("Name")));
-                }
+                            rs.getString("Name"), bytes));
+
             }
         } catch (SQLException | NullPointerException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
