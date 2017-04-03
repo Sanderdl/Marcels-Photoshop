@@ -61,8 +61,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="inputPrijs" class="col-lg-2 control-label"><spring:message
-                                code="product.price"/></label>
+                        <label for="inputPrijs" class="col-lg-2 control-label"><spring:message code="product.price"/></label>
                         <div class="col-lg-10">
                             <div class="input-group">
                                 <span class="input-group-addon">€</span>

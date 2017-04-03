@@ -52,8 +52,8 @@ public class CategoryRepo {
         return false;
     }
 
-    private void filterDuplicates(Collection<AlbumCategory> acList, Collection<AlbumCategory> catList){
-        for (AlbumCategory ac : acList)
+    private void filterDuplicates(Collection<AlbumCategory> existingList, Collection<AlbumCategory> catList){
+        for (AlbumCategory ac : existingList)
         {
             if(catList.contains(ac)){
                 catList.remove(ac);
