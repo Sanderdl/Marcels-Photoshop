@@ -16,6 +16,7 @@ public interface IExtrasContext {
     void addNewExtraProduct(String name, double price, boolean available) throws UploadException;
     void changeAvailable(String name, boolean available) throws UploadException;
     void deleteExtra(String name) throws ExtraException;
+    void changePrice(String name, double price) throws UploadException;
 }
 
 
