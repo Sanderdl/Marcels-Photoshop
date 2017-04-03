@@ -16,7 +16,7 @@
 <div class="container">
     <div class="jumbotron">
         <h1>${image.name}</h1>
-        <p>by <a>${image.photographerName}</a></p>
+        <p>by <a>${image.id}</a></p>
         <img src="data:image/png;base64,${imageBytes}">
     </div>
 </div>
