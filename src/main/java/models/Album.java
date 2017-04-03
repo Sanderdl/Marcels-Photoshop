@@ -20,7 +20,7 @@ public class Album {
     private int[] categories;
 
     // When loading an existing category and setting it's available categories.
-    private Collection<AlbumCategory> categoryList = new ArrayList<AlbumCategory>();
+    private Collection<AlbumCategory> categoryCollection = new ArrayList<AlbumCategory>();
 
     public Album(String name, Photographer owner, int id, int[] categories, MultipartFile picture ) {
         this.name = name;
@@ -30,20 +30,21 @@ public class Album {
         this.picture = picture;
     }
 
-    public Album(String name, Photographer owner, int id){
+    public Album(String name, Photographer owner, int id, Collection<AlbumCategory> categoryCollection){
         this.name = name;
         this.owner = owner;
         this.id = id;
+        this.categoryCollection = categoryCollection;
     }
 
     public Album(){}
 
     public Collection<AlbumCategory> getCategoryList() {
-        return Collections.unmodifiableCollection(categoryList);
+        return Collections.unmodifiableCollection(categoryCollection);
     }
 
     public void setCategoryList(Collection<AlbumCategory> categoryList) {
-        this.categoryList = categoryList;
+        this.categoryCollection = categoryList;
     }
 
     public String getName() {
