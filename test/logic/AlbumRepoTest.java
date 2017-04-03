@@ -14,15 +14,15 @@ import static org.junit.Assert.*;
 /**
  * Created by ruudv on 20-3-2017.
  */
-public class CreateAlbumRepoTest {
+public class AlbumRepoTest {
 
-    private CreateAlbumRepo createAlbumRepo;
+    private AlbumRepo albumRepo;
     private Photographer user;
     private Album album;
 
     @Before
     public void setup() {
-        this.createAlbumRepo = new CreateAlbumRepo();
+        this.albumRepo = new AlbumRepo();
         this.user = new Photographer(1, "Fred", "Fred Fransen", "Fred@Fred.nl", User.UserStatus.verified);
         this.album = new Album("TestAlbum", user, 1);
     }
@@ -31,7 +31,7 @@ public class CreateAlbumRepoTest {
     public void validateAlbumNameTest() throws UploadException, SQLException {
         try {
             this.album.setName("");
-            createAlbumRepo.validateUploadAlbum(album, user);
+            albumRepo.validateUploadAlbum(album, user);
         } catch (final UploadException e) {
             final String msg = "Invalid Album name";
             assertEquals(msg, e.getMessage());

@@ -5,6 +5,7 @@ import data.database.interfaces.IAlbumContext;
 import models.Album;
 import models.GalleryImage;
 import models.Photographer;
+import models.User;
 import models.exceptions.GalleryException;
 import models.exceptions.UploadException;
 
@@ -47,16 +48,80 @@ public class MySQLAlbumContext implements IAlbumContext {
         return albums;
     }
 
-    public void createAlbum(int accountID, String albumName) throws UploadException {
+    public void createAlbum(int accountID, String albumName, int[] categoryIDs, byte[] mainPhotoBytes) throws UploadException {
+        int newAlbumID = -1;
         try {
+            Blob blob = new javax.sql.rowset.serial.SerialBlob(mainPhotoBytes);
             con = MySQLDatabase.dbConnection.getConnection();
-            stm = con.prepareStatement("INSERT INTO Album (AccountID, AlbumName) values(?, ?)");
+            stm = con.prepareStatement("INSERT INTO Album (AccountID, AlbumName, AlbumFoto) values(?, ?, ?)"
+                    ,Statement.RETURN_GENERATED_KEYS);
             stm.setInt(1, accountID);
             stm.setString(2, albumName);
+            stm.setBlob(3, blob);
+            stm.executeUpdate();
+
+            ResultSet rs = stm.getGeneratedKeys();
+            if (rs.next()) {
+                newAlbumID = rs.getInt(1);
+            }
+            else
+            {
+                throw new UploadException("An error occurred while creating the album");
+            }
+
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            throw new UploadException("An error occurred while connecting to the database.");
+        }
+        finally
+        {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
+
+        for (int i: categoryIDs)
+        {
+            AddCategoryToAlbum(newAlbumID, i);
+        }
+
+    }
+
+    private void AddCategoryToAlbum(int albumID, int categoryID) throws UploadException
+    {
+        try {
+            con = MySQLDatabase.dbConnection.getConnection();
+            stm = con.prepareStatement("INSERT INTO AlbumCategories (AlbumID, CategoryID) values(?, ?)");
+            stm.setInt(1, albumID);
+            stm.setInt(2, categoryID);
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-            throw new UploadException("Album was not created!");
+            throw new UploadException("Category could not be linked to album.");
+        } finally {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
+    }
+
+    public Album retrieveAlbumByID(int albumID) throws UploadException
+    {
+        try {
+            con = MySQLDatabase.dbConnection.getConnection();
+            stm = con.prepareStatement("SELECT  * FROM Album Al JOIN Account Ac ON Al.AccountID = Ac.AccountID WHERE AlbumID = ?");
+            stm.setInt(1, albumID);
+            rs = stm.executeQuery();
+            if (rs.next())
+            {
+                return new Album(rs.getString("AlbumName"),
+                        new Photographer(rs.getInt("AccountID"),rs.getString("Username")
+                            ,rs.getString("Name"),rs.getString("Email"), User.UserStatus.ERROR),
+                        -1);
+            }
+
+            throw new UploadException("Album could not be loaded");
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            throw new UploadException("Album could not be loaded");
         } finally {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }

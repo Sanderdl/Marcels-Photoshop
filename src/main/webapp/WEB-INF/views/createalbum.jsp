@@ -72,6 +72,11 @@
                     <c:out value="${message}"/>
                 </div>
             </c:if>
+            <c:if test="${not empty message-success}">
+                <div class="alert alert-success">
+                    <c:out value="${message-success}"/>
+                </div>
+            </c:if>
         </div>
     </div>
 </div>

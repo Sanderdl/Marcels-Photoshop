@@ -69,5 +69,39 @@ public class MySQLExtrasContext implements IExtrasContext {
         }
     }
 
+    public void AddNewExtraProduct(String name, int price, boolean available) throws UploadException
+    {
+        try{
+            con = MySQLDatabase.dbConnection.getConnection();
+            stm = con.prepareStatement("INSERT INTO Extras(ExtraName, ExtraPrice, Available) values(?, ?, ?)");
+            stm.setString(1, name);
+            stm.setInt(2, price);
+            stm.setInt(2, available? 1 : 0);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            throw  new UploadException("Extra wasn't added properly");
+        } finally {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
+
+    }
+
+    public void ChangeAvailable(String name, boolean available) throws UploadException
+    {
+        try{
+            con = MySQLDatabase.dbConnection.getConnection();
+            stm = con.prepareStatement("UPDATE Extras SET Available = ? WHERE ExtraName = ?;");
+            stm.setInt(1, available? 1 : 0);
+            stm.setString(2, name);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            throw  new UploadException("Extra wasn't added properly");
+        } finally {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
+    }
+
 
 }

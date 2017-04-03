@@ -3,7 +3,7 @@ package com.photo.marcelps.controller;
 import data.database.MySQLAlbumContext;
 import data.database.MySQLExtrasContext;
 import data.database.interfaces.IExtrasContext;
-import logic.CreateAlbumRepo;
+import logic.AlbumRepo;
 import logic.UploadRepo;
 import models.*;
 import models.exceptions.UploadException;
@@ -37,7 +37,7 @@ public class RegisterProductController {
     private IExtrasContext extrasContext = new MySQLExtrasContext();
     private MySQLAlbumContext albumContext = new MySQLAlbumContext();
     private UploadRepo uploadRepo = new UploadRepo();
-    private CreateAlbumRepo albumRepo = new CreateAlbumRepo();
+    private AlbumRepo albumRepo = new AlbumRepo();
 
     @Autowired
     ServletContext context;
@@ -86,9 +86,9 @@ public class RegisterProductController {
                 User user = (User) session.getAttribute("User");
                 int imageID = this.uploadRepo.validateUpload(productRegistration, user);
                 this.extrasContext.registerExtras(imageID, productRegistration.getProducts());
-
-
                 if (imageID == -1) {
+                    message = "An error occurred while uploading the photo to the database.";
+                    attr.addFlashAttribute("message", message);
                     return "redirect:/registerproduct/page/";
                 }
             }
