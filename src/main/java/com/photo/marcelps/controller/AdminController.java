@@ -6,18 +6,15 @@ import data.database.interfaces.IExtrasContext;
 import models.Admin;
 import models.AdminExtra;
 import models.Extra;
+import models.exceptions.ExtraException;
 import models.exceptions.UploadException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,21 +48,26 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/add/", method = RequestMethod.POST)
-    public String fileUpload(@ModelAttribute("productregistration") AdminExtra extras){
+    public String addExtra(@ModelAttribute("Extras") AdminExtra extras){
         try {
             extrasContext.addNewExtraProduct(extras.getExtraName(),extras.getPrice(),true);
         } catch (UploadException e) {
-            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, e.getMessage(), e);
+            Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, e.getMessage(), e);
         }
 
-        return "admin";
+        return "redirect:/admin/page/";
     }
 
     @RequestMapping(value = "/delete/", method = RequestMethod.POST)
-    public String fileUpload(@ModelAttribute("productregistration") AdminExtra extras,
-                             BindingResult result, ModelMap model, HttpSession session,
-                             RedirectAttributes attr) throws IOException {
-
+    public String deleteExtra(@ModelAttribute("Extras") AdminExtra extras) {
+        int[] extraIds = extras.getExtras();
+        for (int id : extraIds){
+            try{
+                extrasContext.deleteExtra(id);
+            } catch (ExtraException e) {
+                Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, e.getMessage(), e);
+            }
+        }
         return "admin";
     }
 }

@@ -15,7 +15,8 @@ public interface IExtrasContext {
     void registerExtras(int imageID, int[] extras) throws SQLException;
     void addNewExtraProduct(String name, double price, boolean available) throws UploadException;
     void changeAvailable(String name, boolean available) throws UploadException;
-    void deleteExtra(String name) throws ExtraException;
+    //void deleteExtra(String name) throws ExtraException;
+    void deleteExtra(int id) throws ExtraException;
     void changePrice(String name, double price) throws UploadException;
 }
 

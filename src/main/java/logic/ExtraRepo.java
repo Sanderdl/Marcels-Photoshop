@@ -3,7 +3,6 @@ package logic;
 import data.database.interfaces.IExtrasContext;
 import models.Extra;
 import models.exceptions.ExtraException;
-import models.exceptions.InvalidRegisterException;
 import models.exceptions.UploadException;
 
 /**
@@ -33,7 +32,7 @@ public class ExtraRepo {
     public void deleteExtra(Extra extra) throws ExtraException {
         this.validateName(extra.getName());
 
-        this.context.deleteExtra(extra.getName());
+        this.context.deleteExtra(extra.getId());
     }
 
     public void addExtra(Extra extra) throws ExtraException, UploadException {

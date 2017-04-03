@@ -119,11 +119,11 @@ public class MySQLExtrasContext implements IExtrasContext {
         }
     }
 
-    public void deleteExtra(String name) throws ExtraException {
+    public void deleteExtra(int id) throws ExtraException {
         try {
             con = MySQLDatabase.dbConnection.getConnection();
-            stm = con.prepareStatement("DELETE FROM Extras WHERE ExtraName = ?");
-            stm.setString(1, name);
+            stm = con.prepareStatement("DELETE FROM Extras WHERE ExtraID = ?");
+            stm.setInt(1, id);
             stm.executeQuery();
         } catch (SQLException ex) {
             Logger.getLogger(MySQLExtrasContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
