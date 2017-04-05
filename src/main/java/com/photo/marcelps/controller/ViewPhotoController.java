@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import javax.xml.bind.DatatypeConverter;
-import java.util.Map;
+import java.text.NumberFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,22 +28,22 @@ public class ViewPhotoController {
     public String setupPage(@RequestParam("id") int id, Model model, HttpSession session) {
 
         GalleryImage image = null;
-        Map<Integer, GalleryImage> map = (Map<Integer, GalleryImage>) session.getAttribute("Gallery");
-        if (map != null) {
-            image = map.get(id);
+
+        try {
+            image = this.imageRepo.getImageById(id);
+        } catch (GalleryException ex) {
+            Logger.getLogger(ViewPhotoController.class.getName()).log(Level.INFO, ex.getMessage(), ex);
         }
 
-        if (image == null) {
-            try {
-                image = this.imageRepo.getImageById(id);
-            } catch (GalleryException ex) {
-                Logger.getLogger(ViewPhotoController.class.getName()).log(Level.INFO, ex.getMessage(), ex);
-            }
+        if (image != null) {
+            model.addAttribute("image", image);
+            model.addAttribute("imageBytes", DatatypeConverter.printBase64Binary(image.getImage()));
+            NumberFormat formatter = NumberFormat.getCurrencyInstance();
+            model.addAttribute("price", formatter.format(image.getPrice()));
+        } else {
+            //TODO fix nullpointer
+            setupPage(0, model, session);
         }
-
-        model.addAttribute("image", image);
-        model.addAttribute("id", image.getId());
-        model.addAttribute("imageBytes", DatatypeConverter.printBase64Binary(image.getImage()));
 
         return "viewphoto";
     }

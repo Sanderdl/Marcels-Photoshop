@@ -13,11 +13,12 @@ public class GalleryImageTest {
     @Test
     public void galleryImageConstructorTest(){
         assertTrue(gi == null);
-        gi = new GalleryImage(-1, "boo", new byte[]{});
+        gi = new GalleryImage(-1, "boo", new byte[]{}, 1.0);
 
         assertTrue(gi.getId() == -1);
         assertTrue(gi.getName() == "boo");
         assertTrue(gi.getImage().length == 0);
+        assertTrue(gi.getPrice() == 1.0);
     }
 
 }

@@ -7,6 +7,14 @@ public class GalleryImage {
     private int id;
     private String name;
     private byte[] image;
+    private double price;
+
+    public GalleryImage(int id, String name, byte[] image, double price){
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.price = price;
+    }
 
     public GalleryImage(int id, String name, byte[] image){
         this.id = id;
@@ -23,4 +31,8 @@ public class GalleryImage {
     }
 
     public byte[] getImage() { return image; }
+
+    public double getPrice() {
+        return price;
+    }
 }

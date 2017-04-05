@@ -35,6 +35,25 @@
                 </ul>
                 <img src="data:image/png;base64,${imageBytes}" style="width:100%">
             </div>
+            <div id="about" class="col-md-4" style="float:right;margin-top:11%">
+                <h3><spring:message code="photo.about"/></h3>
+                <h4>
+                    <table>
+                        <tr>
+                            <td style="padding:5px;"><spring:message code="photo.title"/></td>
+                            <td style="padding:5px;">${image.name}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px;"><spring:message code="photo.photographer"/></td>
+                            <td style="padding:5px;">${image.id}</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:5px;"><spring:message code="photo.price"/></td>
+                            <td style="padding:5px;">&euro; ${price}</td>
+                        </tr>
+                    </table>
+                </h4>
+            </div>
         </div>
     </div>
 </div>
