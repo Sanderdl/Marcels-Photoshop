@@ -42,6 +42,7 @@ public class ViewPhotoController {
         }
 
         model.addAttribute("image", image);
+        model.addAttribute("id", image.getId());
         model.addAttribute("imageBytes", DatatypeConverter.printBase64Binary(image.getImage()));
 
         return "viewphoto";

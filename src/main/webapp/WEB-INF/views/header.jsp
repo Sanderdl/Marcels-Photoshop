@@ -22,7 +22,7 @@
                         <li><a href="<c:url value="/login/logout/" />" ><spring:message code="command.logout"  /></a></li>
                     </c:when>
                     <c:otherwise>
-                        <li class="active"><a href= "/registration/page/"><spring:message code="command.register" /></a> </li>
+                        <li><a href= "/registration/page/"><spring:message code="command.register" /></a> </li>
                         <li><a href="/login/page/"><spring:message code="command.login" /></a></li>
                     </c:otherwise>
                 </c:choose>
