@@ -23,14 +23,14 @@
                 <fieldset>
                     <legend>Login</legend>
                     <div class="form-group">
-                        <label for="inputUsername" class="col-lg-3 control-label"><spring:message code="account.username"/></label>
+                        <label for="inputUsername" class="col-lg-3 control-label" style="text-align:left"><spring:message code="account.username"/></label>
                         <div class="col-lg-9">
                             <form:input path="username" name="inputUsername" type="text" class="form-control"
                                         id="username" placeholder="${lb_username}"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputPassword" class="col-lg-3 control-label"><spring:message code="account.password" /></label>
+                        <label for="inputPassword" class="col-lg-3 control-label" style="text-align:left"><spring:message code="account.password" /></label>
                         <div class="col-lg-9">
                             <form:input path="password" name="inputPassword" type="password" class="form-control"
                                         id="inputPassword" placeholder="${lb_password}"/>
