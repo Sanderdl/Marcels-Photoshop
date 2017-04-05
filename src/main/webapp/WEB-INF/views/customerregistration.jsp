@@ -27,14 +27,14 @@
                 <fieldset>
                     <legend><spring:message code="screen.register"/></legend>
                     <div class="form-group">
-                        <label class="col-lg-3 control-label"><spring:message code="account.username"/></label>
+                        <label class="col-lg-3 control-label" style="text-align: left"><spring:message code="account.username"/></label>
                         <div class="col-lg-9">
                             <form:input path="userName" type="text" class="form-control" id="username"
                                         placeholder="${lb_username}"/>
                         </div>
                     </div>
                     <div id="passwordFormGroup" class="form-group">
-                        <label for="inputPassword" class="col-lg-3 control-label"><spring:message code="account.password"/></label>
+                        <label for="inputPassword"  class="col-lg-3 control-label" style="text-align: left"><spring:message code="account.password"/></label>
                         <div class="col-lg-9">
                             <form:input path="password" name="inputPassword" type="password" class="form-control"
                                         id="inputPassword" placeholder="${lb_password}" onkeyup="passwordCheck()"/>
@@ -47,14 +47,14 @@
                         </svg>
                     </div>
                     <div class="form-group">
-                        <label for="inputName" class="col-lg-3 control-label"><spring:message code="account.name"/></label>
+                        <label for="inputName" class="col-lg-3 control-label" style="text-align: left"><spring:message code="account.name"/></label>
                         <div class="col-lg-9">
                             <form:input path="name" name="inputName" type="text" class="form-control" id="inputName"
                                         placeholder="${lb_name}"/>
                         </div>
                     </div>
                     <div id="emailFormGroup" class="form-group">
-                        <label for="inputEmail" class="col-lg-3 control-label"><spring:message code="account.email"/></label>
+                        <label for="inputEmail" class="col-lg-3 control-label" style="text-align: left"><spring:message code="account.email"/></label>
                         <div class="col-lg-9">
                             <form:input path="email" name="inputEmail" type="text" class="form-control" id="inputEmail"
                                         placeholder="${lb_email}" onkeyup="emailCheck()"/>
@@ -65,7 +65,7 @@
                         </svg>
                     </div>
                     <div class="form-group">
-                        <label class="col-lg-3 control-label"><spring:message code="account.type"/></label>
+                        <label class="col-lg-3 control-label" style="text-align: left"><spring:message code="account.type"/></label>
                         <div class="col-lg-offset-4">
                             <label class="radio">
                                 <form:radiobutton path="role" value="Customer" checked="checked"/>

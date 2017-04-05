@@ -116,6 +116,16 @@ public class LoginRepoTest {
             // Wrong password, in this test, do nothing
             return null;
         }
+
+        @Override
+        public String getUserLanguage(User user) throws SQLException {
+            return null;
+        }
+
+        @Override
+        public void setUserLanguage(String language, User user) throws SQLException {
+
+        }
     }
 
 }

@@ -10,4 +10,8 @@ import java.sql.SQLException;
  */
 public interface ILoginContext {
     User userLogin(String username, String password) throws LoginException, SQLException;
+
+    String getUserLanguage(User user) throws SQLException;
+
+    void setUserLanguage(String language, User user) throws SQLException;
 }
