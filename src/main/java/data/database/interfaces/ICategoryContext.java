@@ -34,4 +34,11 @@ public interface ICategoryContext {
      * @throws AlbumException for any error encountered while setting values.
      */
     void addCategoryToAlbum(Collection<AlbumCategory> albumList, int albumId) throws AlbumException;
+
+    /**
+     * Deletes every given AlbumCategory from specified album in the database.
+     * @param albumId The Id of an album.
+     * @throws AlbumException for any error encountered while setting values.
+     */
+    void deleteCategoryFromAlbum(int albumId) throws AlbumException;
 }

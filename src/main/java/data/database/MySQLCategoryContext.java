@@ -95,5 +95,25 @@ public class MySQLCategoryContext implements ICategoryContext {
         }
     }
 
+    @Override
+    public void deleteCategoryFromAlbum(int albumId) throws AlbumException {
+        try
+        {
+            con = MySQLDatabase.dbConnection.getConnection();
+            stm = con.prepareStatement("DELETE FROM AlbumCategories WHERE AlbumID= ?");
+            stm.setInt(1, albumId);
+            stm.executeUpdate();
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            throw new AlbumException("An error occurred while connecting with the database or setting categories.");
+        }
+        finally
+        {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
+    }
+
 
 }

@@ -5,6 +5,7 @@ import data.database.interfaces.ICategoryContext;
 import models.AlbumCategory;
 import models.exceptions.AlbumException;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -35,13 +36,9 @@ public class CategoryRepo {
     public void addCategoryToAlbum(Collection<AlbumCategory> catList, int albumId) throws AlbumException{
         // retrieve existing categories
         if(isPositive(albumId)){
-            Collection<AlbumCategory> acList = context.getCategoryForAlbum(albumId);
-            filterDuplicates(acList, catList);
-            if(catList.size() > 0){
-                context.addCategoryToAlbum(catList, albumId);
-                return;
-            }
-            throw new AlbumException("ERROR: The desired categories cannot be added due to duplicate values.");
+            context.deleteCategoryFromAlbum(albumId);
+            if(catList.size() > 0) context.addCategoryToAlbum(catList, albumId);
+            return;
         }
         throw new AlbumException("ERROR: The requested album does not exist.");
     }
@@ -53,13 +50,5 @@ public class CategoryRepo {
         return false;
     }
 
-    private void filterDuplicates(Collection<AlbumCategory> existingList, Collection<AlbumCategory> catList){
-        for (AlbumCategory ac : existingList)
-        {
-            if(catList.contains(ac)){
-                catList.remove(ac);
-            }
-        }
-    }
 
 }

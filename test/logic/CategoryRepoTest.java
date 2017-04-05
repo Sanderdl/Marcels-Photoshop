@@ -91,6 +91,11 @@ public class CategoryRepoTest
         {
             this.albumList.get(albumId).setCategoryList(albumList);
         }
+
+        @Override
+        public void deleteCategoryFromAlbum(int albumId) throws AlbumException {
+            this.albumList.get(albumId).getCategoryList().clear();
+        }
     }
 
 }
