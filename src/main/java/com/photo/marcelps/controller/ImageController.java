@@ -39,8 +39,10 @@ public class ImageController {
     @RequestMapping(value = "/random/", method = RequestMethod.GET)
     public ModelAndView getData(@RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber, HttpSession session) {
         Map<Integer, GalleryImage> list = null;
+        int maxPageCount = 1;
         try
         {
+            maxPageCount = repo.getPageCount();
             list = repo.allImages(pageNumber);
             session.setAttribute("Gallery", list);
         }
@@ -52,11 +54,17 @@ public class ImageController {
             Logger.getLogger(ImageController.class.getName()).log(Level.INFO, e.getMessage(), e);
             return new ModelAndView("redirect:/gallery/random/");
         }
+        int[] nums = new int[3];
+        nums[0] = 1;
+        nums[1] = 2;
+        nums[2] = 3;
 
         //return back to index.jsp
         ModelAndView model = new ModelAndView("index");
         model.addObject("lists", list);
         model.addObject("pageNumber", pageNumber);
+        model.addObject("pageCount", maxPageCount);
+        model.addObject("loopCount", nums);
 
         return model;
 

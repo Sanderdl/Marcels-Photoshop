@@ -37,8 +37,10 @@ public class GalleryRepo {
         return null;
     }
 
-
-
-
+    public int getPageCount(){
+        double result = context.getHomePageCount();
+        int pageCount = (int)java.lang.Math.ceil(result);
+        return pageCount;
+    }
 
 }

@@ -88,4 +88,23 @@ public class MySQLGalleryContext implements IGalleryContext {
         return num;
     }
 
+    public double getHomePageCount() {
+        double num = 0;
+        try {
+            con = MySQLDatabase.dbConnection.getConnection();
+            stm = con.prepareStatement("Select Count(FotoID) / 24 AS PageCount from ((Select FotoID, AlbumID From Foto Where AlbumID IS NULL) Union All (Select AlbumID, AlbumID From Album)) AS FotoAndAlbum");
+
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                num = rs.getDouble("PageCount");
+            }
+        } catch (SQLException | NullPointerException ex) {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        } finally {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
+
+        return num;
+    }
+
 }
