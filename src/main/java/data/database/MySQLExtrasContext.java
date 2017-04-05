@@ -87,13 +87,13 @@ public class MySQLExtrasContext implements IExtrasContext {
 
     }
 
-    public void changeAvailable(String name, boolean available) throws UploadException
+    public void changeAvailable(int id, boolean available) throws UploadException
     {
         try{
             con = MySQLDatabase.dbConnection.getConnection();
-            stm = con.prepareStatement("UPDATE Extras SET Available = ? WHERE ExtraName = ?;");
-            stm.setInt(1, available? 1 : 0);
-            stm.setString(2, name);
+            stm = con.prepareStatement("UPDATE Extras SET Available = ? WHERE ExtraID = ?;");
+            stm.setInt(1, available? 1:0);
+            stm.setInt(2, id);
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
@@ -103,13 +103,13 @@ public class MySQLExtrasContext implements IExtrasContext {
         }
     }
 
-    public void changePrice(String name, double price) throws UploadException
+    public void changePrice(int id, double price) throws UploadException
     {
         try{
             con = MySQLDatabase.dbConnection.getConnection();
-            stm = con.prepareStatement("UPDATE Extras SET price = ? WHERE ExtraName = ?;");
+            stm = con.prepareStatement("UPDATE Extras SET ExtraPrice = ? WHERE ExtraID = ?;");
             stm.setDouble(1, price);
-            stm.setString(2, name);
+            stm.setInt(2, id);
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);

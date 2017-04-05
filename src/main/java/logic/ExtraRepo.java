@@ -5,13 +5,24 @@ import models.Extra;
 import models.exceptions.ExtraException;
 import models.exceptions.UploadException;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 /**
  * Created by Tomt on 3-4-2017.
  */
 public class ExtraRepo {
     private IExtrasContext context;
+    private Properties props;
+    private InputStream input;
 
-    public ExtraRepo(IExtrasContext context){ this.context= context;}
+    public ExtraRepo(IExtrasContext context){
+        this.context= context;
+        this.props = new Properties();
+    }
 
     private void validateName(final String hex) throws ExtraException {
         if (hex.length() < 1) {
@@ -29,10 +40,9 @@ public class ExtraRepo {
         }
     }
     
-    public void deleteExtra(Extra extra) throws ExtraException {
-        this.validateName(extra.getName());
+    public void deleteExtra(int id) throws ExtraException {
 
-        this.context.deleteExtra(extra.getId());
+        this.context.deleteExtra(id);
     }
 
     public void addExtra(Extra extra) throws ExtraException, UploadException {
@@ -40,18 +50,32 @@ public class ExtraRepo {
         this.validatePrice(extra.getPrice());
 
         this.context.addNewExtraProduct(extra.getName(), extra.getPrice(), extra.getAvailable());
+        this.addExtrasToProperties(extra.getName());
     }
 
-    public void updateExtraAvailable(Extra extra) throws ExtraException, UploadException {
-        this.validateName(extra.getName());
+    public void updateExtraAvailable(int id, boolean avail) throws ExtraException, UploadException {
 
-        this.context.changeAvailable(extra.getName(), extra.getAvailable());
+        this.context.changeAvailable(id, avail);
     }
 
-    public void updateExtraPrice(Extra extra) throws ExtraException, UploadException {
-        this.validateName(extra.getName());
-        this.validatePrice(extra.getPrice());
+    public void updateExtraPrice(int id, double prize) throws ExtraException, UploadException {
+        this.validatePrice(prize);
 
-        this.context.changePrice(extra.getName(), extra.getPrice());
+        this.context.changePrice(id, prize);
+    }
+
+    private void addExtrasToProperties(String name) throws ExtraException {
+        try {
+            input = new FileInputStream("values.properties");
+            props.load(input);
+            String key = "extra."+name.toLowerCase();
+            props.setProperty(key, name);
+            String test = props.getProperty("extra.cap");
+            System.out.println(test);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            throw new ExtraException("Adding to properties failed!");
+        }
     }
 }

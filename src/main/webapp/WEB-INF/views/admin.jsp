@@ -13,7 +13,7 @@
 <%@ include file="header.jsp" %>
 <div class="container">
     <div class="row">
-        <div class="col-md-5 col-md-offset-3">
+        <div class="col-lg-8 col-md-offset-3">
 
                 <fieldset>
 
@@ -22,12 +22,13 @@
                                enctype="multipart/form-data">
                     <div class="form-group">
                         <div class="col-lg-10 col-lg-offset-2">
-                            <h4><spring:message code="admin.allproducts"/></h4>
                             <div class="form-group">
                                 <label for="addExtra" class="col-lg-2 control-label"><spring:message code="admin.add"/></label>
                                 <div class="col-lg-10">
+                                    <div class="input-group">
                                     <form:input path="extraName" name="addExtra" type="text" class="form-control"
                                                 id="addExtra" placeholder=""/>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -52,6 +53,7 @@
                 </fieldset>
 
             <fieldset>
+                <h4><spring:message code="admin.allproducts"/></h4>
                 <form:form class="form-horizontal" action="/admin/delete/" commandName="Extras"
                            enctype="multipart/form-data">
                     <div class="form-group">
@@ -59,11 +61,21 @@
                             <c:if test="${not empty availableProducts}">
 
                                 <c:forEach var="product" items="${availableProducts}">
-                                    <div class="checkbox">
-                                        <label>
-                                            <form:checkbox path="extras" value="${product.id}"/>
-                                            <spring:message code="${product.name}"/>
-                                        </label>
+
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <td>
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <form:checkbox path="extras" value="${product.id}"/>
+                                                        <spring:message code="${product.name}"/>
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td>€<input id="prod${product.id}" value="${product.price}" min="0"></td>
+                                            <td><input id="avail${product.id}" value="${product.available}" min="0"></td>
+                                            <td><a href="" onclick="updateLink(this, ${product.id})" class="btn btn-primary" role="button">Edit</a></td>
+                                        </table>
                                     </div>
                                 </c:forEach>
                             </c:if>
@@ -79,6 +91,14 @@
 
 
         </div>
-
+    </div>
+    <script>
+        function updateLink(link, id) {
+            var val = document.getElementById("prod" + id).value;
+            var avail = document.getElementById("avail" + id).value;
+            link.href = "/admin/edit/?id=" + id + "&price=" + val + "&avail="+avail;
+        }
+    </script>
+</div>
 </body>
 </html>
