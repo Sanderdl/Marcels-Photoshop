@@ -5,6 +5,7 @@ import logic.UploadRepo;
 import models.Login;
 import models.User;
 import models.exceptions.LoginException;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -40,7 +43,6 @@ public class LoginController {
             User u = repo.UserLogin(login.getUsername(), login.getPassword());
             if (u != null) {
                 session.setAttribute("User", u);
-                System.out.println(u.getName());
                 return "redirect:/gallery/random/";
             }
             message = "An error occured while retrieving the user.";
@@ -52,5 +54,14 @@ public class LoginController {
         }
         model.addAttribute("message", message);
         return "login";
+    }
+
+    @RequestMapping(value= "/logout/", method = RequestMethod.GET)
+    public String logoutUser(HttpSession session) {
+        if (session!=null)
+        {
+            session.invalidate();
+        }
+        return "redirect:/login/page/";
     }
 }

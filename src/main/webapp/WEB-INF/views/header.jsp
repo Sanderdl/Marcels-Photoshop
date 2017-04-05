@@ -19,7 +19,7 @@
                 <c:choose>
                     <c:when test="${not empty sessionScope.User}">
                         <li><a href="#"><c:out value="${sessionScope.User.userName}"/></a></li>
-                        <li><a href="/login/page/"><spring:message code="command.logout" /></a></li>
+                        <li><a href="<c:url value="/login/logout/" />" ><spring:message code="command.logout"  /></a></li>
                     </c:when>
                     <c:otherwise>
                         <li class="active"><a href= "/registration/page/"><spring:message code="command.register" /></a> </li>
