@@ -43,17 +43,19 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/submit/", method = RequestMethod.POST)
-    public String loginUser(@ModelAttribute("newLogin") Login login, HttpServletRequest servletRequest, HttpServletResponse servletResponse, RedirectAttributes attr, HttpSession session, Model model) {
+    public String loginUser(@ModelAttribute("newLogin") Login login, HttpServletRequest servletRequest,
+                            HttpServletResponse servletResponse, RedirectAttributes attr, HttpSession session, Model model) {
         String message = null;
         try {
             User u = repo.UserLogin(login.getUsername(), login.getPassword());
             if (u != null) {
                 String locale = repo.getUserLanguage(u);
                 LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(servletRequest);
-                if (locale != null) {
+                if (!locale.equals("")) {
                     localeResolver.setLocale(servletRequest, servletResponse, StringUtils.parseLocaleString(locale));
                 } else {
-                    localeResolver.setLocale(servletRequest, servletResponse, StringUtils.parseLocaleString("en"));
+                    String currentLanguage = RequestContextUtils.getLocale(servletRequest).toLanguageTag().toString();
+                    repo.setUserLanguage(currentLanguage, u);
                 }
                 session.setAttribute("User", u);
                 return "redirect:/gallery/random/";
@@ -69,10 +71,9 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping(value= "/logout/", method = RequestMethod.GET)
+    @RequestMapping(value = "/logout/", method = RequestMethod.GET)
     public String logoutUser(HttpSession session) {
-        if (session!=null)
-        {
+        if (session != null) {
             session.invalidate();
         }
         return "redirect:/login/page/";
