@@ -140,7 +140,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="album" style="text-align: left;left:10px;" class="col-lg-2 control-label"><spring:message code="album.categorie"/></label>
+                            <label for="album" style="text-align: left;left:10px;" class="col-lg-2 control-label"><spring:message code="album.category"/></label>
                             <div class="col-lg-10" style="width:400px;">
                                 <div class="input-group">
                                     <form:select class="form-control" path="categories">
