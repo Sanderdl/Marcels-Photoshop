@@ -69,4 +69,39 @@ public class MySQLLoginContext implements ILoginContext {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
     }
+
+    @Override
+    public String getUserLanguage(User user) throws SQLException {
+        String language = null;
+        try {
+            con = MySQLDatabase.dbConnection.getConnection();
+            stm = con.prepareStatement("SELECT Language FROM Account WHERE AccountID = ?");
+            stm.setInt(1, user.getId());
+            rs = stm.executeQuery();
+
+            if (rs.next()) {
+                language = rs.getString("Language");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        } finally {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
+        return language;
+    }
+
+    @Override
+    public void setUserLanguage(String language, User user) throws SQLException {
+        try {
+            con = MySQLDatabase.dbConnection.getConnection();
+            stm = con.prepareStatement("UPDATE Account SET Language = ? WHERE AccountID = ?");
+            stm.setString(1, language);
+            stm.setInt(2, user.getId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        } finally {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
+    }
 }

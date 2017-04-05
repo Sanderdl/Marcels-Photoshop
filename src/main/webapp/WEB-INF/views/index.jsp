@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -5,14 +6,13 @@
 <html>
 <head>
     <title>Marcel's Photo Shop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="<c:url value="/resources/css/justifiedGallery.min.css"/>"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>"/>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="<c:url value="/resources/js/jquery-3.1.1.min.js"/>"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <%@ include file="header.jsp" %>
@@ -78,7 +78,6 @@
     </c:choose>
 </div>
 </body>
-<script src="<c:url value="/resources/js/jquery-3.1.1.min.js"/>"></script>
 <script src="<c:url value="/resources/js/jquery.justifiedGallery.min.js"/>"></script>
 <script>
     $(function () {
