@@ -28,7 +28,7 @@ public class LoginRepo {
     }
 
     public void setUserLanguage(String language, User user) throws SQLException, LoginException {
-        if (language == "en" || language == "nl")
+        if (language.equals("en") || language.equals("nl"))
             context.setUserLanguage(language, user);
         else
             throw new LoginException(language +" is not an valid language");
