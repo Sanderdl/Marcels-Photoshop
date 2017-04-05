@@ -33,13 +33,46 @@
         <c:when test="${pageNumber > 1}">
             <ul class="pagination pagination-lg">
                 <li><a href="/gallery/random/?pageNumber=${pageNumber - 1}">&laquo;</a></li>
-                <li><a href="/gallery/random/?pageNumber=${pageNumber + 1}">&raquo;</a></li>
             </ul>
         </c:when>
         <c:otherwise>
             <ul class="pagination pagination-lg">
                 <li class="disabled"><a href="#">&laquo;</a></li>
+            </ul>
+        </c:otherwise>
+    </c:choose>
+
+    <c:forEach var="X" items="${loopCount}">
+        <c:choose>
+            <c:when test="${pageNumber - X < 1}"></c:when>
+            <c:otherwise>
+                <a href="/gallery/random/?pageNumber=${pageNumber-X}">${pageNumber-X}</a>
+            </c:otherwise>
+            
+        </c:choose>
+    </c:forEach>
+    ${pageNumber}
+
+    <c:forEach var="X" items="${loopCount}">
+        <c:choose>
+            <c:when test="${pageNumber + X > pageCount}"></c:when>
+            <c:otherwise>
+                <a href="/gallery/random/?pageNumber=${pageNumber+X}">${pageNumber+X}</a>
+            </c:otherwise>
+
+        </c:choose>
+    </c:forEach>
+
+
+    <c:choose>
+        <c:when test="${pageNumber < pageCount}">
+            <ul class="pagination pagination-lg">
                 <li><a href="/gallery/random/?pageNumber=${pageNumber + 1}">&raquo;</a></li>
+            </ul>
+        </c:when>
+        <c:otherwise>
+            <ul class="pagination pagination-lg">
+                <li class="disabled"><a href="#">&raquo;</a></li>
             </ul>
         </c:otherwise>
     </c:choose>
