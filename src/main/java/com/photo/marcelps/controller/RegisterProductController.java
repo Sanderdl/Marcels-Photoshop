@@ -41,7 +41,7 @@ public class RegisterProductController {
     private UploadRepo uploadRepo = new UploadRepo();
     private AlbumRepo albumRepo = new AlbumRepo();
     private CategoryRepo categoryRepo = new CategoryRepo();
-    private static final String attributeMessage = "message";
+    private static final String ATTRIBUTE_MESSAGE = "message";
 
     @Autowired
     ServletContext context;
@@ -90,7 +90,7 @@ public class RegisterProductController {
         }
 
         String message = "You need to be logged in as a verified photographer to register products.";
-        attr.addFlashAttribute(attributeMessage, message);
+        attr.addFlashAttribute(ATTRIBUTE_MESSAGE, message);
         return "redirect:/login/page/";
     }
 
@@ -117,13 +117,13 @@ public class RegisterProductController {
                 this.extrasContext.registerExtras(imageID, productRegistration.getProducts());
                 if (imageID == -1) {
                     message = "An error occurred while uploading the photo to the database.";
-                    attr.addFlashAttribute(attributeMessage, message);
+                    attr.addFlashAttribute(ATTRIBUTE_MESSAGE, message);
                     return "redirect:/registerproduct/page/";
                 }
             }
         } catch (SQLException | UploadException e) {
             message = e.getMessage();
-            attr.addFlashAttribute(attributeMessage, message);
+            attr.addFlashAttribute(ATTRIBUTE_MESSAGE, message);
             Logger.getLogger(RegisterProductController.class.getName()).log(Level.INFO, e.getMessage(), e);
             return "redirect:/registerproduct/page/";
         }
@@ -149,7 +149,7 @@ public class RegisterProductController {
             albumRepo.validateUploadAlbum(album, user);
         } catch (UploadException e) {
             message = e.getMessage();
-            attr.addFlashAttribute(attributeMessage, message);
+            attr.addFlashAttribute(ATTRIBUTE_MESSAGE, message);
             Logger.getLogger(RegisterProductController.class.getName()).log(Level.INFO, e.getMessage(), e);
         }
         return "redirect:/registerproduct/page/";
