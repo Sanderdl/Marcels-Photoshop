@@ -23,7 +23,7 @@
                         code="photo.madeby"/> <a>${image.id}</a></p>
                 <ul class="pager" style="margin:0px 0px 10px 0px;float:right">
                     <c:choose>
-                        <c:when test="${id > 1}">
+                        <c:when test="${image.id > 1}">
                             <li><a href="/viewphoto/page/?id=${image.id - 1}">&larr;</a></li>
                         </c:when>
                         <c:otherwise>
@@ -49,7 +49,7 @@
                         </tr>
                         <tr>
                             <td style="padding:5px;"><spring:message code="photo.price"/></td>
-                            <td style="padding:5px;">&euro; ${price}</td>
+                            <td style="padding:5px;">${price}</td>
                         </tr>
                     </table>
                 </h4>

@@ -42,7 +42,6 @@ public class ViewPhotoController {
             model.addAttribute("price", formatter.format(image.getPrice()));
         } else {
             //TODO fix nullpointer
-            setupPage(0, model, session);
         }
 
         return "viewphoto";
