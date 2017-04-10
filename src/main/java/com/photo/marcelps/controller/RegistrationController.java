@@ -25,10 +25,18 @@ public class RegistrationController {
 
     private RegisterRepo repo;
 
+    /**
+     * Constructor
+     */
     public RegistrationController() {
         repo = new RegisterRepo(new MySQLRegistrationContext());
     }
 
+    /**
+     *
+     * @param model, Mdel
+     * @return String page
+     */
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
     public String setupPage(Model model) {
         Registration registration = new Registration();
@@ -36,6 +44,13 @@ public class RegistrationController {
         return "customerregistration";
     }
 
+    /**
+     *
+     * @param registration, Registration
+     * @param attr, RedirectAttributes
+     * @param model, Model
+     * @return String page
+     */
     @RequestMapping(value = "/register/", method = RequestMethod.POST)
     public String registerUser(@ModelAttribute("newAccount") Registration registration, RedirectAttributes attr, Model model) {
         String message;
