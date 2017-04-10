@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/404")
 public class Error404Controller {
 
+    /**
+     *
+     * @return String page
+     */
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
     public String setupPage() {
         return "404";
