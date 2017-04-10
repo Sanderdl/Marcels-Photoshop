@@ -7,6 +7,7 @@
 <head>
     <title>Register Product Screen</title>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="<c:url value="/resources/js/jquery-3.1.1.min.js"/>"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -24,16 +25,15 @@
                     <div class="form-group">
                         <label for="inputPicturetitle" style="text-align: left"
                                class="col-lg-2 control-label">Title</label>
-                        <div class="col-lg-9 col-lg-offset-1">
+                        <div class="col-lg-8 col-lg-offset-1">
                             <form:input path="title" name="inputPicturetitle" type="text" class="form-control"
                                         id="inputPicturetitle" placeholder="${lb_picturetitle}"/>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <label for="inputPrijs" style="text-align: left" class="col-lg-2 control-label"><spring:message
                                 code="product.price"/></label>
-                        <div class="col-lg-9 col-lg-offset-1">
+                        <div class="col-lg-8 col-lg-offset-1">
                             <div class="input-group">
                                 <span class="input-group-addon">€</span>
                                 <form:input path="price" value="0.00" min="0"
@@ -44,14 +44,14 @@
                     <div class="form-group">
                         <label for="inputPrijs" style="text-align: left" class="col-lg-2 control-label"> <spring:message
                                 code="product.select"/></label>
-                        <div class="col-lg-9 col-lg-offset-1">
+                        <div class="col-lg-8 col-lg-offset-1">
                             <div class="input-group">
-                        <span class="input-group-btn">
-                            <span class="btn btn-primary btn-file">
-                                <spring:message code="command.browse"/>&hellip; <form:input path="picture" name="file"
-                                                                                            type="file"/>
-                            </span>
-                        </span>
+                                <span class="input-group-btn">
+                                    <span class="btn btn-primary btn-file">
+                                        <spring:message code="command.browse"/>&hellip; <form:input path="picture" name="file"
+                                                                                                    type="file"/>
+                                    </span>
+                                </span>
                                 <input type="text" class="form-control" readonly>
                             </div>
                         </div>
@@ -59,7 +59,7 @@
                     <div class="form-group">
                         <label for="album" style="text-align: left" class="col-lg-2 control-label"><spring:message
                                 code="product.album"/></label>
-                        <div class="col-lg-9 col-lg-offset-1">
+                        <div class="col-lg-8 col-lg-offset-1">
                             <div class="input-group">
                                 <form:select class="form-control" path="album" id="album">
                                     <form:option value="-1" label="--- Select album ---"/>
@@ -74,7 +74,7 @@
                     <div class="form-group">
                         <label for="public" style="text-align: left" class="col-lg-2"><spring:message
                                 code="product.shouldpublic"/></label>
-                        <div class="col-lg-9 col-lg-offset-1">
+                        <div class="col-lg-8 col-lg-offset-1">
                             <div class="check-box">
                                 <form:checkbox path="isPublic" name="public"/>
                                 <spring:message code="product.public"/>
@@ -85,7 +85,7 @@
                         <label for="product" style="text-align: left" class="col-lg-2"><spring:message
                                 code="product.whichproduct"/></label>
                         <c:if test="${not empty availableProducts}">
-                            <div class="col-lg-9 col-lg-offset-1">
+                            <div class="col-lg-8 col-lg-offset-1">
                                 <c:forEach var="product" items="${availableProducts}">
                                     <div class="check-box">
                                         <form:checkbox path="products" value="${product.id}" name="product"/>
@@ -97,7 +97,7 @@
                     </div>
                     <div class="form-group">
                         <div class="center-block" style="width:500px">
-                            <div class="col-lg-9 col-lg-offset-3">
+                            <div class="col-lg-8 col-lg-offset-3">
                                 <button type="reset" class="btn btn-default"><spring:message
                                         code="command.cancel"/></button>
                                 <button type="submit" class="btn btn-primary" class="col-lg-2 col-lg-offset-1">
@@ -182,8 +182,6 @@
             </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 </body>
 </html>

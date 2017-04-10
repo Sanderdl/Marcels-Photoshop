@@ -4,12 +4,15 @@ import data.database.interfaces.IExtrasContext;
 import models.Extra;
 import models.exceptions.ExtraException;
 import models.exceptions.UploadException;
+import sun.rmi.runtime.Log;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Tomt on 3-4-2017.
@@ -70,11 +73,12 @@ public class ExtraRepo {
             props.load(input);
             String key = "extra."+name.toLowerCase();
             props.setProperty(key, name);
-            String test = props.getProperty("extra.cap");
+            String test = props.getProperty(key);
             System.out.println(test);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Logger.getLogger(ExtraRepo.class.getName()).log(Level.INFO, e.getMessage(), e);
         } catch (IOException e) {
+            Logger.getLogger(ExtraRepo.class.getName()).log(Level.INFO, e.getMessage(), e);
             throw new ExtraException("Adding to properties failed!");
         }
     }

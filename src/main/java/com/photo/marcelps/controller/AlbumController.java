@@ -1,9 +1,10 @@
 package com.photo.marcelps.controller;
 
 import logic.AlbumRepo;
-import models.Album;
 import models.GalleryImage;
 import models.exceptions.AlbumException;
+import models.exceptions.GalleryException;
+import models.exceptions.UploadException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by sande on 10/04/2017.
@@ -25,26 +28,38 @@ public class AlbumController {
 
     private AlbumRepo repo = new AlbumRepo();
 
+    /**
+     *
+     * @param id, integer
+     * @param session, HttpSession
+     * @return model, ModelAndView
+     */
     @RequestMapping(value = "/page", method = RequestMethod.GET)
-    public ModelAndView setupPage(@RequestParam("id") int id, HttpSession session) {
+    public ModelAndView showImage(@RequestParam("id") int id, HttpSession session) {
 
         Map<Integer, GalleryImage> map = null;
-        Album album = null;
+
         try {
-            album = repo.retrieveAlbumById(id);
             map = repo.retrieveAlbumPictures(id);
-        } catch (AlbumException e) {
-            e.printStackTrace();
+        } catch (AlbumException|GalleryException|UploadException e) {
+            Logger.getLogger(AlbumController.class.getName()).log(Level.INFO, e.getMessage(), e);
         }
 
         ModelAndView model = new ModelAndView("album");
-        model.addObject("album",album);
         model.addObject("map", map);
         session.setAttribute("map",map);
 
         return model;
     }
 
+    /**
+     *
+     * @param id, integer
+     * @param response, HttpServletResponse
+     * @param session, HttpSession
+     * @throws ServletException, throws this exception
+     * @throws IOException, throws this exception
+     */
     @RequestMapping(value = "/image", method = RequestMethod.GET)
     public void showImage(@RequestParam("id") int id, HttpServletResponse response, HttpSession session)
             throws ServletException, IOException {
