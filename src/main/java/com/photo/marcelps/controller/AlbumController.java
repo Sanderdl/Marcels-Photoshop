@@ -1,8 +1,11 @@
 package com.photo.marcelps.controller;
 
 import logic.AlbumRepo;
+import logic.UploadRepo;
 import models.GalleryImage;
 import models.exceptions.AlbumException;
+import models.exceptions.GalleryException;
+import models.exceptions.UploadException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by sande on 10/04/2017.
@@ -32,7 +37,11 @@ public class AlbumController {
         try {
             map = repo.retrieveAlbumPictures(id);
         } catch (AlbumException e) {
-            e.printStackTrace();
+            Logger.getLogger(AlbumController.class.getName()).log(Level.INFO, e.getMessage(), e);
+        } catch (GalleryException e) {
+            Logger.getLogger(AlbumController.class.getName()).log(Level.INFO, e.getMessage(), e);
+        } catch (UploadException e) {
+            Logger.getLogger(AlbumController.class.getName()).log(Level.INFO, e.getMessage(), e);
         }
 
         ModelAndView model = new ModelAndView("album");

@@ -24,9 +24,9 @@ public class GalleryRepo {
         if(pageNumber <= 0){
           throw new PageOutOfBoundsException("Always be positive about your numbers") ;
         }
-        pageNumber = (pageNumber - 1) * 24;
+        int numberPage = (pageNumber - 1) * 24;
 
-        return context.allImages(pageNumber);
+        return context.allImages(numberPage);
     }
 
     public GalleryImage getImageById(int id) throws GalleryException {

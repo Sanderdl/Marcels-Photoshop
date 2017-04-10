@@ -63,14 +63,16 @@ public class AlbumRepo {
         throw new UploadException("The title of your album must be between 1 and 50 characters long.");
     }
 
-    public Map<Integer, GalleryImage> retrieveAlbumPictures(int id) throws AlbumException {
+    public Map<Integer, GalleryImage> retrieveAlbumPictures(int id) throws AlbumException, UploadException, GalleryException {
         Map<Integer,GalleryImage> map = null;
         try {
             map = context.retreiveImagesForAlbum(id);
         } catch (UploadException e) {
-            throw new AlbumException("Not all album images loaded");
+            Logger.getLogger(AlbumRepo.class.getName()).log(Level.INFO, e.getMessage(), e);
+            throw new UploadException("Not all album images loaded");
         } catch (GalleryException e) {
-            throw new AlbumException("Not all album images loaded");
+            Logger.getLogger(AlbumRepo.class.getName()).log(Level.INFO, e.getMessage(), e);
+            throw new GalleryException("Not all album images loaded");
         }
         return map;
     }
