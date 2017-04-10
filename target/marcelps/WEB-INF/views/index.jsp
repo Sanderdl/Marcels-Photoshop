@@ -21,17 +21,17 @@
         <c:forEach var="listValue" items="${lists}">
             <c:choose>
                 <c:when test="${listValue.value.album}">
-                    <a href="/album/page/?id=${listValue.key}">
-                        <img src="/gallery/image?id=${listValue.key}">
-                    </a>
-                </c:when>
-                <c:otherwise>
                     <a href="/viewphoto/page/?id=${listValue.key}">
                         <img src="/gallery/image?id=${listValue.key}" style='z-index: 2; left: 30px; border: 2px black;
                          -webkit-box-shadow: 8px 0px 6px -6px black;
 	   -moz-box-shadow: 8px 0px 6px -6px black;
 	        box-shadow: 8px 0px 6px -6px black;' alt="No image">
                         <img style='z-index: 1; width:70%; height:70%;' alt="No image">
+                    </a>
+                </c:when>
+                <c:otherwise>
+                    <a href="/album/page/?id=${listValue.key}">
+                        <img src="/gallery/image?id=${listValue.key}">
                     </a>
                     <%--<a href="/gallery/random/">--%>
                     <%--<img src="data:img/png;base64, ${listValue}" alt="No image">--%>
