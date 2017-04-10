@@ -1,7 +1,6 @@
 package com.photo.marcelps.controller;
 
 import logic.AlbumRepo;
-import models.Album;
 import models.GalleryImage;
 import models.exceptions.AlbumException;
 import models.exceptions.GalleryException;
@@ -29,6 +28,12 @@ public class AlbumController {
 
     private AlbumRepo repo = new AlbumRepo();
 
+    /**
+     *
+     * @param id, integer
+     * @param session, HttpSession
+     * @return model, ModelAndView
+     */
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public ModelAndView showImage(@RequestParam("id") int id, HttpSession session) {
 
@@ -36,11 +41,7 @@ public class AlbumController {
 
         try {
             map = repo.retrieveAlbumPictures(id);
-        } catch (AlbumException e) {
-            Logger.getLogger(AlbumController.class.getName()).log(Level.INFO, e.getMessage(), e);
-        } catch (GalleryException e) {
-            Logger.getLogger(AlbumController.class.getName()).log(Level.INFO, e.getMessage(), e);
-        } catch (UploadException e) {
+        } catch (AlbumException|GalleryException|UploadException e) {
             Logger.getLogger(AlbumController.class.getName()).log(Level.INFO, e.getMessage(), e);
         }
 
@@ -51,6 +52,14 @@ public class AlbumController {
         return model;
     }
 
+    /**
+     *
+     * @param id, integer
+     * @param response, HttpServletResponse
+     * @param session, HttpSession
+     * @throws ServletException, throws this exception
+     * @throws IOException, throws this exception
+     */
     @RequestMapping(value = "/image", method = RequestMethod.GET)
     public void showImage(@RequestParam("id") int id, HttpServletResponse response, HttpSession session)
             throws ServletException, IOException {
