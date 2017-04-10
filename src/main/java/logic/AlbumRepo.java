@@ -36,19 +36,18 @@ public class AlbumRepo {
 //            throw e;
 //        }
         catch(IOException e){
-            e.printStackTrace();
             Logger.getLogger(AlbumRepo.class.getName()).log(Level.INFO, e.getMessage(), e);
             throw new UploadException("An error occurred while retrieving the size of your picture, please try again.");
         }
     }
 
-    public Album retrieveAlbumById(int albumId) throws AlbumException{
+    public Album retrieveAlbumById(int albumId) throws UploadException{
         try {
             return context.retrieveAlbumByID(albumId);
         } catch (UploadException e) {
-            throw new AlbumException("Album not loaded");
+            Logger.getLogger(AlbumRepo.class.getName()).log(Level.INFO, e.getMessage(), e);
+            throw new UploadException("An error occurred while retrieving your picture, please try again.");
         }
-
     }
 
     private boolean validateFileSize(byte[] bytes) throws UploadException{
