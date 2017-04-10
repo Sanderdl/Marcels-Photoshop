@@ -4,6 +4,7 @@ import logic.GalleryRepo;
 import models.GalleryImage;
 import models.User;
 import models.exceptions.GalleryException;
+import models.exceptions.PageOutOfBoundsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,10 +33,14 @@ public class SharedImagesController {
             int maxPageCount = 1;
             try {
                 maxPageCount = repo.getPageCount();
-                list = repo.allSharedImages(id);
+                list = repo.allSharedImages(id, 1);
                 session.setAttribute("Gallery", list);
             } catch (GalleryException e) {
                 Logger.getLogger(ImageController.class.getName()).log(Level.SEVERE, e.getMessage(), e);
+            }
+            catch (PageOutOfBoundsException e)
+            {
+                e.printStackTrace();
             }
             int[] nums = new int[]{1, 2, 3};
 

@@ -19,5 +19,6 @@ public interface IGalleryContext {
 
     Photographer getPhotographerByImageId(int imageId);
 
-    Map<Integer, GalleryImage> allSharedImages(int sharedWithId) throws GalleryException;
+    Map<Integer, GalleryImage> allSharedImages(int sharedWithId, int pageNumber) throws GalleryException;
+    double getPrivatePageCount(int accountID);
 }
