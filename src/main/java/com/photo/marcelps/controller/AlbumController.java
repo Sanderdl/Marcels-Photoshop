@@ -1,7 +1,7 @@
 package com.photo.marcelps.controller;
 
 import logic.AlbumRepo;
-import logic.UploadRepo;
+import models.Album;
 import models.GalleryImage;
 import models.exceptions.AlbumException;
 import models.exceptions.GalleryException;

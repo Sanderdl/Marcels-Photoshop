@@ -42,8 +42,12 @@ public class AlbumRepo {
         }
     }
 
-    public Album retrieveAlbumById(int albumId) throws UploadException{
-        return context.retrieveAlbumByID(albumId);
+    public Album retrieveAlbumById(int albumId) throws AlbumException{
+        try {
+            return context.retrieveAlbumByID(albumId);
+        } catch (UploadException e) {
+            throw new AlbumException("Album not loaded");
+        }
 
     }
 
@@ -66,7 +70,7 @@ public class AlbumRepo {
     public Map<Integer, GalleryImage> retrieveAlbumPictures(int id) throws AlbumException, UploadException, GalleryException {
         Map<Integer,GalleryImage> map = null;
         try {
-            map = context.retreiveImagesForAlbum(id);
+            map = context.retrieveImagesForAlbum(id);
         } catch (UploadException e) {
             Logger.getLogger(AlbumRepo.class.getName()).log(Level.INFO, e.getMessage(), e);
             throw new UploadException("Not all album images loaded");
