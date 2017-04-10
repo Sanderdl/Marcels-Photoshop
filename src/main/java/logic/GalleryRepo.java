@@ -48,4 +48,8 @@ public class GalleryRepo {
         return this.context.getPhotographerByImageId(imageId);
     }
 
+    public Map<Integer, GalleryImage> allSharedImages(int sharedWithId) throws GalleryException {
+        return this.context.allSharedImages(sharedWithId);
+    }
+
 }

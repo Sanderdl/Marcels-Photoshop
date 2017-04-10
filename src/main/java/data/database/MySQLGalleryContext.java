@@ -115,8 +115,10 @@ public class MySQLGalleryContext implements IGalleryContext {
 
         try {
             this.con = MySQLDatabase.dbConnection.getConnection();
-            this.stm = this.con.prepareStatement("SELECT * FROM `Account` a, `Foto` f WHERE FotoID = 5 AND f.OwnerID" +
+            this.stm = this.con.prepareStatement("SELECT * FROM `Account` a, `Foto` f WHERE FotoID = ? AND f.OwnerID" +
                     " = a.AccountID");
+
+            stm.setInt(1, imageId);
 
             this.rs = this.stm.executeQuery();
             if (rs.next()) {
@@ -128,6 +130,33 @@ public class MySQLGalleryContext implements IGalleryContext {
         }
 
         return photographer;
+    }
+
+    @Override
+    public Map<Integer, GalleryImage> allSharedImages(int sharedWithId) throws GalleryException {
+
+        Map<Integer, GalleryImage> list = new TreeMap<>();
+
+        try {
+            con = MySQLDatabase.dbConnection.getConnection();
+            stm = con.prepareStatement("SELECT * FROM `Visibility` v, `Foto` f WHERE v.AccountID = ? AND v.FotoID = f.FotoID");
+            stm.setInt(1, sharedWithId);
+            rs = stm.executeQuery();
+
+            while (rs.next()) {
+                Blob b = rs.getBlob("FotoBlob");
+                byte[] bytes = b.getBytes(1L, (int) b.length());
+                list.put(rs.getInt("FotoID"), new GalleryImage(rs.getInt("FotoID"),
+                        rs.getString("Name"), bytes, rs.getInt("AlbumID")!= 0));
+
+            }
+        } catch (SQLException | NullPointerException ex) {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            throw new GalleryException(ex.getMessage());
+        } finally {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
+        return list;
     }
 
 }

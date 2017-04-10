@@ -30,7 +30,7 @@ public class ImageController {
     public void showImage(@RequestParam("id") int id, HttpServletResponse response, HttpSession session)
             throws ServletException, IOException {
 
-        Map<Integer, GalleryImage> map = (Map<Integer, GalleryImage>)session.getAttribute("Gallery");
+        Map<Integer, GalleryImage> map = (Map<Integer, GalleryImage>) session.getAttribute("Gallery");
         response.setContentType("image/jpeg, image/jpg, image/png, image/gif");
         response.getOutputStream().write(map.get(id).getImage());
         response.getOutputStream().close();
@@ -40,21 +40,17 @@ public class ImageController {
     public ModelAndView getData(@RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber, HttpSession session) {
         Map<Integer, GalleryImage> list = null;
         int maxPageCount = 1;
-        try
-        {
+        try {
             maxPageCount = repo.getPageCount();
             list = repo.allImages(pageNumber);
             session.setAttribute("Gallery", list);
-        }
-        catch (GalleryException e)
-        {
+        } catch (GalleryException e) {
             Logger.getLogger(ImageController.class.getName()).log(Level.SEVERE, e.getMessage(), e);
-        }
-        catch(PageOutOfBoundsException e){
+        } catch (PageOutOfBoundsException e) {
             Logger.getLogger(ImageController.class.getName()).log(Level.INFO, e.getMessage(), e);
             return new ModelAndView("redirect:/gallery/random/");
         }
-        int[] nums = new int[]{1,2,3};
+        int[] nums = new int[]{1, 2, 3};
 
         //return back to index.jsp
         ModelAndView model = new ModelAndView("index");
@@ -66,5 +62,4 @@ public class ImageController {
         return model;
 
     }
-
 }
