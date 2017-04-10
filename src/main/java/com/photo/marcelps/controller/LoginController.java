@@ -51,7 +51,8 @@ public class LoginController {
             if (u != null) {
                 String locale = repo.getUserLanguage(u);
                 LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(servletRequest);
-                if (!locale.equals("") || locale != null) {
+                if (locale != null) {
+                    if(!locale.equals(""))
                     localeResolver.setLocale(servletRequest, servletResponse, StringUtils.parseLocaleString(locale));
                 } else {
                     String currentLanguage = RequestContextUtils.getLocale(servletRequest).toLanguageTag().toString();
