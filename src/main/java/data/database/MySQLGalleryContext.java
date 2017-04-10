@@ -59,7 +59,7 @@ public class MySQLGalleryContext implements IGalleryContext {
                 Blob b = rs.getBlob("FotoBlob");
                 byte[] bytes = b.getBytes(1L, (int) b.length());
                     list.put(rs.getInt("FotoID"), new GalleryImage(rs.getInt("FotoID"),
-                            rs.getString("Name"), bytes, rs.getInt("AlbumID")== 0));
+                            rs.getString("Name"), bytes, rs.getInt("AlbumID")!= 0));
 
             }
         } catch (SQLException | NullPointerException ex) {
