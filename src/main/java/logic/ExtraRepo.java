@@ -70,7 +70,7 @@ public class ExtraRepo {
             props.load(input);
             String key = "extra."+name.toLowerCase();
             props.setProperty(key, name);
-            String test = props.getProperty("extra.cap");
+            String test = props.getProperty(key);
             System.out.println(test);
         } catch (FileNotFoundException e) {
             e.printStackTrace();

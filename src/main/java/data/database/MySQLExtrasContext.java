@@ -74,7 +74,7 @@ public class MySQLExtrasContext implements IExtrasContext {
         try{
             con = MySQLDatabase.dbConnection.getConnection();
             stm = con.prepareStatement("INSERT INTO Extras(ExtraName, ExtraPrice, Available) values(?, ?, ?)");
-            stm.setString(1, name);
+            stm.setString(1, "extra." + name.toLowerCase());
             stm.setDouble(2, price);
             stm.setInt(3, available? 1 : 0);
             stm.executeUpdate();
