@@ -127,7 +127,7 @@ public class MySQLAlbumContext implements IAlbumContext {
         }
     }
 
-    public Map<Integer, GalleryImage> retrieveImagesForAlbum(int albumID) throws UploadException, GalleryException
+    public Map<Integer, GalleryImage> retrieveImagesForAlbum(int albumID) throws GalleryException
     {
         Map<Integer, GalleryImage> list = new TreeMap<>();
 

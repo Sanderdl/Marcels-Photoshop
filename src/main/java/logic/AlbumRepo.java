@@ -70,9 +70,6 @@ public class AlbumRepo {
         Map<Integer,GalleryImage> map = null;
         try {
             map = context.retrieveImagesForAlbum(id);
-        } catch (UploadException e) {
-            Logger.getLogger(AlbumRepo.class.getName()).log(Level.INFO, e.getMessage(), e);
-            throw new UploadException("Not all album images loaded");
         } catch (GalleryException e) {
             Logger.getLogger(AlbumRepo.class.getName()).log(Level.INFO, e.getMessage(), e);
             throw new GalleryException("Not all album images loaded");
