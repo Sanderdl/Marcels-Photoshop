@@ -30,7 +30,7 @@
                     </a>
                 </c:when>
                 <c:otherwise>
-                    <a href="viewphoto/page/?id=${listValue.key}">
+                    <a href="/viewphoto/page/?id=${listValue.key}">
                         <img src="/gallery/image?id=${listValue.key}">
                     </a>
                     <%--<a href="/gallery/random/">--%>
