@@ -30,9 +30,9 @@ public class AlbumController {
 
     /**
      *
-     * @param id, integer
-     * @param session, HttpSession
-     * @return model, ModelAndView
+     * @param id An integer. Used to retrieve all albums
+     * @param session A HttpSession. Used to set attribute
+     * @return A ModelAndView
      */
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public ModelAndView showImage(@RequestParam("id") int id, HttpSession session) {
@@ -54,11 +54,11 @@ public class AlbumController {
 
     /**
      *
-     * @param id, integer
-     * @param response, HttpServletResponse
-     * @param session, HttpSession
-     * @throws ServletException, throws this exception
-     * @throws IOException, throws this exception
+     * @param id An integer. Used to make use of an OutputStream
+     * @param response A HttpServletResponse.
+     * @param session A HttpSession.
+     * @throws ServletException for any error encountered while retrieving values
+     * @throws IOException for any error encountered while retrieving values
      */
     @RequestMapping(value = "/image", method = RequestMethod.GET)
     public void showImage(@RequestParam("id") int id, HttpServletResponse response, HttpSession session)
