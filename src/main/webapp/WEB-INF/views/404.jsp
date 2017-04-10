@@ -22,6 +22,20 @@
     </style>
     <link rel="stylesheet" href="<c:url value="/resources/css/bootstrap.css"/>"/>
 </head>
+<style>
+    *::selection {
+        background: #B1D7FE;
+        color: #000000;
+    }
+    *::-moz-selection {
+        background: #B1D7FE;
+        color: #000000;
+    }
+    *::-webkit-selection {
+        background: #B1D7FE;
+        color: #000000;
+    }
+</style>
 <body style="">
 <div id="hallway" class="center-block" style="width: 100%;height: 350px;background: url(//s.imgur.com/images/404/hallbg.png) center #871908;outline: #2C2F34 solid 1px;border-bottom: 1px solid #121211">
     <div class="container" style="width: 1040px;margin: 10px auto 0;">

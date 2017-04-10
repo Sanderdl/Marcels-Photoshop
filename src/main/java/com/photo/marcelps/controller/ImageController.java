@@ -26,6 +26,14 @@ import java.util.logging.Logger;
 public class ImageController {
     private GalleryRepo repo = new GalleryRepo();
 
+    /**
+     *
+     * @param id, integer
+     * @param response, HttpServletResponse
+     * @param session, HttpSession
+     * @throws ServletException, servlet's operation interfered
+     * @throws IOException, invalid picture
+     */
     @RequestMapping(value = "/image", method = RequestMethod.GET)
     public void showImage(@RequestParam("id") int id, HttpServletResponse response, HttpSession session)
             throws ServletException, IOException {
@@ -36,6 +44,12 @@ public class ImageController {
         response.getOutputStream().close();
     }
 
+    /**
+     *
+     * @param pageNumber, integer
+     * @param session, HttpSession
+     * @return ModelAndView page
+     */
     @RequestMapping(value = "/random/", method = RequestMethod.GET)
     public ModelAndView getData(@RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber, HttpSession session) {
         Map<Integer, GalleryImage> list = null;
@@ -64,7 +78,5 @@ public class ImageController {
         model.addObject("loopCount", nums);
 
         return model;
-
     }
-
 }

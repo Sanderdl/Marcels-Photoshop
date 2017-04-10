@@ -21,7 +21,7 @@
         <c:forEach var="listValue" items="${lists}">
             <c:choose>
                 <c:when test="${listValue.value.album}">
-                    <a href="/viewphoto/page/?id=${listValue.key}">
+                    <a href="/album/page/?id=${listValue.key}">
                         <img src="/gallery/image?id=${listValue.key}" style='z-index: 2; left: 30px; border: 2px black;
                          -webkit-box-shadow: 8px 0px 6px -6px black;
 	   -moz-box-shadow: 8px 0px 6px -6px black;
@@ -30,7 +30,7 @@
                     </a>
                 </c:when>
                 <c:otherwise>
-                    <a href="/album/page/?id=${listValue.key}">
+                    <a href="/viewphoto/page/?id=${listValue.key}">
                         <img src="/gallery/image?id=${listValue.key}">
                     </a>
                     <%--<a href="/gallery/random/">--%>
@@ -41,54 +41,53 @@
         </c:forEach>
     </c:if>
 </section>
-<div id=pageNavigation class="col-md-2 col-md-offset-5" align="center">
-    <c:choose>
-        <c:when test="${pageNumber > 1}">
-            <ul class="pagination pagination-lg">
+<div id=pageNavigation align="center">
+    <ul class="pagination">
+        <c:choose>
+            <c:when test="${pageNumber > 1}">
                 <li><a href="/gallery/random/?pageNumber=${pageNumber - 1}">&laquo;</a></li>
-            </ul>
-        </c:when>
-        <c:otherwise>
-            <ul class="pagination pagination-lg">
+            </c:when>
+            <c:otherwise>
                 <li class="disabled"><a href="#">&laquo;</a></li>
-            </ul>
-        </c:otherwise>
-    </c:choose>
-
-    <c:forEach var="X" items="${loopCount}">
-        <c:choose>
-            <c:when test="${pageNumber - X < 1}"></c:when>
-            <c:otherwise>
-                <a href="/gallery/random/?pageNumber=${pageNumber-X}">${pageNumber-X}</a>
             </c:otherwise>
-
         </c:choose>
-    </c:forEach>
-    ${pageNumber}
+    </ul>
 
-    <c:forEach var="X" items="${loopCount}">
+    <ul class="pagination">
+
+        <c:forEach var="X" items="${loopCount}">
+            <c:choose>
+                <c:when test="${pageNumber - X < 1}"></c:when>
+                <c:otherwise>
+                    <li><a href="/gallery/random/?pageNumber=${pageNumber-X}">${pageNumber-X}</a></li>
+                </c:otherwise>
+
+            </c:choose>
+        </c:forEach>
+        <li class="disabled"><a href="#">${pageNumber}</a></li>
+
+        <c:forEach var="X" items="${loopCount}">
+            <c:choose>
+                <c:when test="${pageNumber + X > pageCount}"></c:when>
+                <c:otherwise>
+                    <li><a href="/gallery/random/?pageNumber=${pageNumber+X}">${pageNumber+X}</a></li>
+                </c:otherwise>
+
+            </c:choose>
+        </c:forEach>
+    </ul>
+
+
+    <ul class="pagination">
         <c:choose>
-            <c:when test="${pageNumber + X > pageCount}"></c:when>
-            <c:otherwise>
-                <a href="/gallery/random/?pageNumber=${pageNumber+X}">${pageNumber+X}</a>
-            </c:otherwise>
-
-        </c:choose>
-    </c:forEach>
-
-
-    <c:choose>
-        <c:when test="${pageNumber < pageCount}">
-            <ul class="pagination pagination-lg">
+            <c:when test="${pageNumber < pageCount}">
                 <li><a href="/gallery/random/?pageNumber=${pageNumber + 1}">&raquo;</a></li>
-            </ul>
-        </c:when>
-        <c:otherwise>
-            <ul class="pagination pagination-lg">
+            </c:when>
+            <c:otherwise>
                 <li class="disabled"><a href="#">&raquo;</a></li>
-            </ul>
-        </c:otherwise>
-    </c:choose>
+            </c:otherwise>
+        </c:choose>
+    </ul>
 </div>
 </body>
 <script src="<c:url value="/resources/js/jquery.justifiedGallery.min.js"/>"></script>

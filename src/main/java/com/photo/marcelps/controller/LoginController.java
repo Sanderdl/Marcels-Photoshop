@@ -5,7 +5,6 @@ import logic.UploadRepo;
 import models.Login;
 import models.User;
 import models.exceptions.LoginException;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -22,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,6 +33,11 @@ import java.util.logging.Logger;
 public class LoginController {
     private LoginRepo repo = new LoginRepo();
 
+    /**
+     *
+     * @param model, Model
+     * @return String page
+     */
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
     public String setupPage(Model model) {
         Login login = new Login();
@@ -42,6 +45,16 @@ public class LoginController {
         return "login";
     }
 
+    /**
+     *
+     * @param login, Login
+     * @param servletRequest, HttpServletRequest
+     * @param servletResponse, HttpServletResponse
+     * @param attr, RedirectAttributes
+     * @param session, HttpSession
+     * @param model, Model
+     * @return String page
+     */
     @RequestMapping(value = "/submit/", method = RequestMethod.POST)
     public String loginUser(@ModelAttribute("newLogin") Login login, HttpServletRequest servletRequest,
                             HttpServletResponse servletResponse, RedirectAttributes attr, HttpSession session, Model model) {
@@ -72,6 +85,11 @@ public class LoginController {
         return "login";
     }
 
+    /**
+     *
+     * @param session, HttpSession
+     * @return String page
+     */
     @RequestMapping(value = "/logout/", method = RequestMethod.GET)
     public String logoutUser(HttpSession session) {
         if (session != null) {
@@ -80,6 +98,14 @@ public class LoginController {
         return "redirect:/login/page/";
     }
 
+    /**
+     *
+     * @param lang, String
+     * @param servletRequest, HttoServletRequest
+     * @param servletResponse, HttpServletResponse
+     * @param session, HttpSession
+     * @throws IOException, invalid response
+     */
     @RequestMapping(value = "/language/", method = RequestMethod.GET)
     public void language(@RequestParam("lang") String lang, HttpServletRequest servletRequest, HttpServletResponse servletResponse, HttpSession session) throws IOException {
         String referer = servletRequest.getHeader("Referer");
@@ -91,9 +117,7 @@ public class LoginController {
         if (u != null) {
             try {
                 repo.setUserLanguage(lang, u);
-            } catch (SQLException e) {
-                Logger.getLogger(UploadRepo.class.getName()).log(Level.INFO, e.getMessage(), e);
-            } catch (LoginException e) {
+            } catch (SQLException|LoginException e) {
                 Logger.getLogger(UploadRepo.class.getName()).log(Level.INFO, e.getMessage(), e);
             }
         }
