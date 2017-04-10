@@ -17,6 +17,7 @@
 <body>
 <%@ include file="header.jsp" %>
 <section id="photos" class="justified-gallery shadow-m">
+    <h1>${album.name}</h1>
     <c:if test="${not empty map}">
         <c:forEach var="listValue" items="${map}">
             <a href="/viewphoto/page/?id=${listValue.key}">

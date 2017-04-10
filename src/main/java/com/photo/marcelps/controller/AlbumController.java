@@ -1,6 +1,7 @@
 package com.photo.marcelps.controller;
 
 import logic.AlbumRepo;
+import models.Album;
 import models.GalleryImage;
 import models.exceptions.AlbumException;
 import org.springframework.stereotype.Controller;
@@ -25,17 +26,19 @@ public class AlbumController {
     private AlbumRepo repo = new AlbumRepo();
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
-    public ModelAndView showImage(@RequestParam("id") int id, HttpSession session) {
+    public ModelAndView setupPage(@RequestParam("id") int id, HttpSession session) {
 
         Map<Integer, GalleryImage> map = null;
-
+        Album album = null;
         try {
+            album = repo.retrieveAlbumById(id);
             map = repo.retrieveAlbumPictures(id);
         } catch (AlbumException e) {
             e.printStackTrace();
         }
 
         ModelAndView model = new ModelAndView("album");
+        model.addObject("album",album);
         model.addObject("map", map);
         session.setAttribute("map",map);
 

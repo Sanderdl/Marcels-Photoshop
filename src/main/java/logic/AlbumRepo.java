@@ -42,8 +42,12 @@ public class AlbumRepo {
         }
     }
 
-    public Album retrieveAlbumById(int albumId) throws UploadException{
-        return context.retrieveAlbumByID(albumId);
+    public Album retrieveAlbumById(int albumId) throws AlbumException{
+        try {
+            return context.retrieveAlbumByID(albumId);
+        } catch (UploadException e) {
+            throw new AlbumException("Album not loaded");
+        }
 
     }
 
