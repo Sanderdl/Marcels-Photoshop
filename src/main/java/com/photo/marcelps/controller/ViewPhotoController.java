@@ -45,7 +45,7 @@ public class ViewPhotoController {
             NumberFormat formatter = NumberFormat.getCurrencyInstance();
             model.addAttribute("price", formatter.format(image.getPrice()));
         } else {
-            //TODO fix nullpointer
+            return "redirect:/404/page";
         }
 
         return "viewphoto";

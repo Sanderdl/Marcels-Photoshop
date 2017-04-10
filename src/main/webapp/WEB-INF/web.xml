@@ -32,4 +32,9 @@
         <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
         <param-value>values</param-value>
     </context-param>
+
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404/page/</location>
+    </error-page>
 </web-app>
