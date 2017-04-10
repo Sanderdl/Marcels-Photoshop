@@ -52,7 +52,7 @@
     <ul class="pagination">
         <c:choose>
             <c:when test="${pageNumber > 1}">
-                <li><a href="/gallery/random/?pageNumber=${pageNumber - 1}">&laquo;</a></li>
+                <li><a href="/shared/page/?id=${sessionScope.User.id}&pageNumber=${pageNumber - 1}">&laquo;</a></li>
             </c:when>
             <c:otherwise>
                 <li class="disabled"><a href="#">&laquo;</a></li>
@@ -66,7 +66,7 @@
             <c:choose>
                 <c:when test="${pageNumber - X < 1}"></c:when>
                 <c:otherwise>
-                    <li><a href="/gallery/random/?pageNumber=${pageNumber-X}">${pageNumber-X}</a></li>
+                    <li><a href="/shared/page/?id=${sessionScope.User.id}&pageNumber=${pageNumber-X}">${pageNumber-X}</a></li>
                 </c:otherwise>
 
             </c:choose>
@@ -77,7 +77,7 @@
             <c:choose>
                 <c:when test="${pageNumber + X > pageCount}"></c:when>
                 <c:otherwise>
-                    <li><a href="/gallery/random/?pageNumber=${pageNumber+X}">${pageNumber+X}</a></li>
+                    <li><a href="/shared/page/?id=${sessionScope.User.id}&pageNumber=${pageNumber+X}">${pageNumber+X}</a></li>
                 </c:otherwise>
 
             </c:choose>
@@ -88,7 +88,7 @@
     <ul class="pagination">
         <c:choose>
             <c:when test="${pageNumber < pageCount}">
-                <li><a href="/gallery/random/?pageNumber=${pageNumber + 1}">&raquo;</a></li>
+                <li><a href="/shared/page/?id=${sessionScope.User.id}&pageNumber=${pageNumber + 1}">&raquo;</a></li>
             </c:when>
             <c:otherwise>
                 <li class="disabled"><a href="#">&raquo;</a></li>

@@ -26,28 +26,27 @@ public class SharedImagesController {
     private GalleryRepo repo = new GalleryRepo();
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
-    public ModelAndView setupPage(@RequestParam("id") int id, HttpSession session) {
+    public ModelAndView setupPage(@RequestParam("id") int id, @RequestParam("pageNumber") int pageNumber, HttpSession session) {
 
         if (((User) session.getAttribute("User")).getId() == id) {
             Map<Integer, GalleryImage> list = null;
             int maxPageCount = 1;
             try {
-                maxPageCount = repo.getPageCount();
-                list = repo.allSharedImages(id, 1);
+                maxPageCount = repo.getPrivatePageCount(id);
+                System.out.println(maxPageCount);
+                list = repo.allSharedImages(id, pageNumber);
                 session.setAttribute("Gallery", list);
             } catch (GalleryException e) {
                 Logger.getLogger(ImageController.class.getName()).log(Level.SEVERE, e.getMessage(), e);
-            }
-            catch (PageOutOfBoundsException e)
-            {
+            } catch (PageOutOfBoundsException e) {
                 e.printStackTrace();
             }
             int[] nums = new int[]{1, 2, 3};
 
             //return back to index.jsp
-            ModelAndView model = new ModelAndView("index");
+            ModelAndView model = new ModelAndView("shared");
             model.addObject("lists", list);
-            model.addObject("pageNumber", 1);
+            model.addObject("pageNumber", pageNumber);
             model.addObject("pageCount", maxPageCount);
             model.addObject("loopCount", nums);
 
