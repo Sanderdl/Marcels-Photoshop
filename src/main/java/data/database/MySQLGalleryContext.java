@@ -35,7 +35,7 @@ public class MySQLGalleryContext implements IGalleryContext {
             if (rs.next()) {
                 Blob b = rs.getBlob("FotoBlob");
                 byte[] bytes = b.getBytes(1L, (int) b.length());
-                gi = new GalleryImage(id, rs.getString("Name"), bytes, rs.getDouble("Price"));
+                gi = new GalleryImage(id, rs.getString("Name"), bytes, rs.getDouble("Price"), rs.getBoolean("IsPublic"));
             }
 
         } catch (SQLException ex) {

@@ -9,6 +9,16 @@ public class GalleryImage {
     private byte[] image;
     private double price;
     private boolean isAlbum;
+    private boolean isPublic;
+
+    public GalleryImage(int id, String name, byte[] image, double price, boolean isPublic){
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.price = price;
+        this.isAlbum = false;
+        this.isPublic = isPublic;
+    }
 
     public GalleryImage(int id, String name, byte[] image, double price){
         this.id = id;
@@ -48,5 +58,9 @@ public class GalleryImage {
 
     public boolean isAlbum() {
         return isAlbum;
+    }
+
+    public boolean isPublic() {
+        return isPublic;
     }
 }

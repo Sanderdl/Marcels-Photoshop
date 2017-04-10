@@ -46,13 +46,17 @@ public class ViewPhotoController {
         Photographer photographer = this.imageRepo.getPhotographerByImageId(id);
         model.addAttribute("photographer", photographer);
 
+        if(!image.isPublic()){
+            return "redirect:/404/page/";
+        }
+
         if (image != null) {
             model.addAttribute("image", image);
             model.addAttribute("imageBytes", DatatypeConverter.printBase64Binary(image.getImage()));
             NumberFormat formatter = NumberFormat.getCurrencyInstance();
             model.addAttribute("price", formatter.format(image.getPrice()));
         } else {
-            return "redirect:/404/page";
+            return "redirect:/404/page/";
         }
 
         return "viewphoto";
