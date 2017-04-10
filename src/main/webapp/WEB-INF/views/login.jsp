@@ -24,27 +24,27 @@
                     <legend>Login</legend>
                     <div class="form-group">
                         <label for="inputUsername" class="col-lg-3 control-label" style="text-align:left"><spring:message code="account.username"/></label>
-                        <div class="col-lg-9">
+                        <div class="col-lg-8">
                             <form:input path="username" name="inputUsername" type="text" class="form-control"
                                         id="username" placeholder="${lb_username}"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputPassword" class="col-lg-3 control-label" style="text-align:left"><spring:message code="account.password" /></label>
-                        <div class="col-lg-9">
+                        <div class="col-lg-8">
                             <form:input path="password" name="inputPassword" type="password" class="form-control"
                                         id="inputPassword" placeholder="${lb_password}"/>
                         </div>
 
                     </div>
                     <div class="form-group">
-                        <div class="col-lg-9 col-lg-offset-3">
+                        <div class="col-lg-8 col-lg-offset-3">
                             <button type="reset" class="btn btn-default"><spring:message code="command.cancel" /></button>
                             <button type="submit" class="btn btn-primary"><spring:message code="command.login" /></button>
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-lg-9 col-lg-offset-3">
+                        <div class="col-lg-8 col-lg-offset-3">
                             <spring:message code="account.needaccount"/> <a href="/registration/page/"><spring:message code="command.registerhere"/></a>
                         </div>
                     </div>

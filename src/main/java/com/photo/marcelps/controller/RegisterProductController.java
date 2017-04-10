@@ -41,10 +41,18 @@ public class RegisterProductController {
     private UploadRepo uploadRepo = new UploadRepo();
     private AlbumRepo albumRepo = new AlbumRepo();
     private CategoryRepo categoryRepo = new CategoryRepo();
+    private static final String ATTRIBUTE_MESSAGE = "message";
 
     @Autowired
     ServletContext context;
 
+    /**
+     *
+     * @param model, Model
+     * @param session, HttpSession
+     * @param attr, RedirectAttributes
+     * @return String page
+     */
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
     public String setupPage(Model model, HttpSession session, RedirectAttributes attr) {
         if (session.getAttribute("User") instanceof Photographer) {
@@ -82,10 +90,20 @@ public class RegisterProductController {
         }
 
         String message = "You need to be logged in as a verified photographer to register products.";
-        attr.addFlashAttribute("message", message);
+        attr.addFlashAttribute(ATTRIBUTE_MESSAGE, message);
         return "redirect:/login/page/";
     }
 
+    /**
+     *
+     * @param productRegistration, ProductRegistration
+     * @param result, BindingResult
+     * @param model, ModelMap
+     * @param session, HttpSession
+     * @param attr, RedirectAttribute
+     * @return String page
+     * @throws IOException, invalid picture
+     */
     @RequestMapping(value = "/submit/", method = RequestMethod.POST)
     public String fileUpload(@ModelAttribute("productregistration") ProductRegistration productRegistration,
                              BindingResult result, ModelMap model, HttpSession session,
@@ -99,19 +117,28 @@ public class RegisterProductController {
                 this.extrasContext.registerExtras(imageID, productRegistration.getProducts());
                 if (imageID == -1) {
                     message = "An error occurred while uploading the photo to the database.";
-                    attr.addFlashAttribute("message", message);
+                    attr.addFlashAttribute(ATTRIBUTE_MESSAGE, message);
                     return "redirect:/registerproduct/page/";
                 }
             }
         } catch (SQLException | UploadException e) {
             message = e.getMessage();
-            attr.addFlashAttribute("message", message);
+            attr.addFlashAttribute(ATTRIBUTE_MESSAGE, message);
             Logger.getLogger(RegisterProductController.class.getName()).log(Level.INFO, e.getMessage(), e);
             return "redirect:/registerproduct/page/";
         }
         return "redirect:/gallery/random/";
     }
 
+    /**
+     *
+     * @param album, Album
+     * @param session, HttpSession
+     * @param result, BindingResult
+     * @param attr, RedirectAttribute
+     * @return String page
+     * @throws IOException, invalid picture
+     */
     @RequestMapping(value = "/modal/", method = RequestMethod.POST)
     public String fileUpload(@ModelAttribute("album") Album album, HttpSession session,
                              BindingResult result, RedirectAttributes attr) throws IOException {
@@ -122,7 +149,7 @@ public class RegisterProductController {
             albumRepo.validateUploadAlbum(album, user);
         } catch (UploadException e) {
             message = e.getMessage();
-            attr.addFlashAttribute("message", message);
+            attr.addFlashAttribute(ATTRIBUTE_MESSAGE, message);
             Logger.getLogger(RegisterProductController.class.getName()).log(Level.INFO, e.getMessage(), e);
         }
         return "redirect:/registerproduct/page/";

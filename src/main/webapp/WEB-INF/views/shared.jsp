@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: lucreinink
+  Date: 10/04/2017
+  Time: 13:22
+  To change this template use File | Settings | File Templates.
+--%>
 <!DOCTYPE HTML>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -21,7 +28,7 @@
         <c:forEach var="listValue" items="${lists}">
             <c:choose>
                 <c:when test="${listValue.value.album}">
-                    <a href="/album/page/?id=${listValue.key}">
+                    <a href="/viewphoto/page/?id=${listValue.key}">
                         <img src="/gallery/image?id=${listValue.key}" style='z-index: 2; left: 30px; border: 2px black;
                          -webkit-box-shadow: 8px 0px 6px -6px black;
 	   -moz-box-shadow: 8px 0px 6px -6px black;
@@ -30,7 +37,7 @@
                     </a>
                 </c:when>
                 <c:otherwise>
-                    <a href="/viewphoto/page/?id=${listValue.key}">
+                    <a href="/album/page/?id=${listValue.key}">
                         <img src="/gallery/image?id=${listValue.key}">
                     </a>
                     <%--<a href="/gallery/random/">--%>
@@ -102,3 +109,4 @@
     });
 </script>
 </html>
+

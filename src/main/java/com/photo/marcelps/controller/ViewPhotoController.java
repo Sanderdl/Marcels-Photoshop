@@ -25,6 +25,13 @@ public class ViewPhotoController {
 
     private GalleryRepo imageRepo = new GalleryRepo();
 
+    /**
+     *
+     * @param id, integer
+     * @param model, Model
+     * @param session, HttpSession
+     * @return String page
+     */
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
     public String setupPage(@RequestParam("id") int id, Model model, HttpSession session) {
 
@@ -45,10 +52,9 @@ public class ViewPhotoController {
             NumberFormat formatter = NumberFormat.getCurrencyInstance();
             model.addAttribute("price", formatter.format(image.getPrice()));
         } else {
-            //TODO fix nullpointer
+            return "redirect:/404/page";
         }
 
         return "viewphoto";
     }
-
 }

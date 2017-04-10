@@ -24,9 +24,9 @@ public class GalleryRepo {
         if(pageNumber <= 0){
           throw new PageOutOfBoundsException("Always be positive about your numbers") ;
         }
-        pageNumber = (pageNumber - 1) * 24;
+        int numberPage = (pageNumber - 1) * 24;
 
-        return context.allImages(pageNumber);
+        return context.allImages(numberPage);
     }
 
     public GalleryImage getImageById(int id) throws GalleryException {
@@ -46,6 +46,24 @@ public class GalleryRepo {
 
     public Photographer getPhotographerByImageId(int imageId) {
         return this.context.getPhotographerByImageId(imageId);
+    }
+
+    public Map<Integer, GalleryImage> allSharedImages(int sharedWithId,  int pageNumber)
+            throws GalleryException, PageOutOfBoundsException
+    {
+        if(pageNumber <= 0){
+            throw new PageOutOfBoundsException("Always be positive about your numbers") ;
+        }
+        int numberPage = (pageNumber - 1) * 24;
+
+        return this.context.allSharedImages(sharedWithId, numberPage);
+    }
+
+    public double getPrivatePageCount(int accountID)
+    {
+        double result = context.getPrivatePageCount(accountID);
+        int pageCount = (int)java.lang.Math.ceil(result);
+        return pageCount;
     }
 
 }

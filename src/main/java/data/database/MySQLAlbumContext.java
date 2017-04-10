@@ -127,7 +127,7 @@ public class MySQLAlbumContext implements IAlbumContext {
         }
     }
 
-    public Map<Integer, GalleryImage> retreiveImagesForAlbum (int albumID) throws UploadException, GalleryException
+    public Map<Integer, GalleryImage> retrieveImagesForAlbum(int albumID) throws GalleryException
     {
         Map<Integer, GalleryImage> list = new TreeMap<>();
 
@@ -140,7 +140,7 @@ public class MySQLAlbumContext implements IAlbumContext {
                 Blob b = rs.getBlob("FotoBlob");
                 byte[] bytes = b.getBytes(1L, (int) b.length());
                 list.put(rs.getInt("FotoID"), new GalleryImage(rs.getInt("FotoID"),
-                        rs.getString("Name"), bytes, rs.getInt("AlbumID")!= 0));
+                        rs.getString("Name"), bytes, rs.getInt("AlbumID")== 0));
 
             }
         } catch (SQLException | NullPointerException ex) {
