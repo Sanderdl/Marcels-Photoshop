@@ -8,18 +8,28 @@ public class GalleryImage {
     private String name;
     private byte[] image;
     private double price;
+    private boolean isAlbum;
 
     public GalleryImage(int id, String name, byte[] image, double price){
         this.id = id;
         this.name = name;
         this.image = image;
         this.price = price;
+        this.isAlbum = false;
+    }
+
+    public GalleryImage(int id, String name, byte[] image, boolean isAlbum){
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.isAlbum = isAlbum;
     }
 
     public GalleryImage(int id, String name, byte[] image){
         this.id = id;
         this.name = name;
         this.image = image;
+        this.isAlbum = false;
     }
 
     public int getId() {
@@ -34,5 +44,9 @@ public class GalleryImage {
 
     public double getPrice() {
         return price;
+    }
+
+    public boolean isAlbum() {
+        return isAlbum;
     }
 }

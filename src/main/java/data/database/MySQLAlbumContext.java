@@ -126,4 +126,29 @@ public class MySQLAlbumContext implements IAlbumContext {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
     }
+
+    public Map<Integer, GalleryImage> retreiveImagesForAlbum (int albumID) throws UploadException, GalleryException
+    {
+        Map<Integer, GalleryImage> list = new TreeMap<>();
+
+        try {
+            con = MySQLDatabase.dbConnection.getConnection();
+            stm = con.prepareStatement("SELECT  * FROM Foto WHERE AlbumID = ?");
+            stm.setInt(1, albumID);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                Blob b = rs.getBlob("FotoBlob");
+                byte[] bytes = b.getBytes(1L, (int) b.length());
+                list.put(rs.getInt("FotoID"), new GalleryImage(rs.getInt("FotoID"),
+                        rs.getString("Name"), bytes, rs.getInt("AlbumID")!= 0));
+
+            }
+        } catch (SQLException | NullPointerException ex) {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+            throw new GalleryException(ex.getMessage());
+        } finally {
+            MySQLDatabase.dbConnection.closeConnection(con, stm);
+        }
+        return list;
+    }
 }
