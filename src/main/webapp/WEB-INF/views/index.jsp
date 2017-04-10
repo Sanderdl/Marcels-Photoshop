@@ -21,7 +21,7 @@
         <c:forEach var="listValue" items="${lists}">
             <c:choose>
                 <c:when test="${listValue.value.album}">
-                    <a href="/viewphoto/page/?id=${listValue.key}">
+                    <a href="/album/page/?id=${listValue.key}">
                         <img src="/gallery/image?id=${listValue.key}" style='z-index: 2; left: 30px; border: 2px black;
                          -webkit-box-shadow: 8px 0px 6px -6px black;
 	   -moz-box-shadow: 8px 0px 6px -6px black;
@@ -30,7 +30,7 @@
                     </a>
                 </c:when>
                 <c:otherwise>
-                    <a href="/album/page/?id=${listValue.key}">
+                    <a href="viewphoto/page/?id=${listValue.key}">
                         <img src="/gallery/image?id=${listValue.key}">
                     </a>
                     <%--<a href="/gallery/random/">--%>

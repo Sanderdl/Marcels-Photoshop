@@ -70,7 +70,7 @@ public class AlbumRepo {
     public Map<Integer, GalleryImage> retrieveAlbumPictures(int id) throws AlbumException {
         Map<Integer,GalleryImage> map = null;
         try {
-            map = context.retreiveImagesForAlbum(id);
+            map = context.retrieveImagesForAlbum(id);
         } catch (UploadException e) {
             throw new AlbumException("Not all album images loaded");
         } catch (GalleryException e) {
