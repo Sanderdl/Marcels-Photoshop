@@ -139,7 +139,7 @@ public class MySQLGalleryContext implements IGalleryContext {
 
         try {
             con = MySQLDatabase.dbConnection.getConnection();
-            stm = con.prepareStatement("SELECT * FROM `Visibility` v, `Foto` f WHERE v.AccountID = ? AND v.FotoID = f.FotoID");
+            stm = con.prepareStatement("SELECT * FROM Visibility v JOIN Foto f ON v.FotoID = f.FotoID WHERE v.AccountID = ?");
             stm.setInt(1, sharedWithId);
             rs = stm.executeQuery();
 
