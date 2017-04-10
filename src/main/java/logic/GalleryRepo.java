@@ -16,13 +16,13 @@ public class GalleryRepo {
 
     private IGalleryContext context;
 
-    public GalleryRepo(){
+    public GalleryRepo() {
         this.context = new MySQLGalleryContext();
     }
 
-    public Map<Integer, GalleryImage> allImages( int pageNumber) throws GalleryException, PageOutOfBoundsException{
-        if(pageNumber <= 0){
-          throw new PageOutOfBoundsException("Always be positive about your numbers") ;
+    public Map<Integer, GalleryImage> allImages(int pageNumber) throws GalleryException, PageOutOfBoundsException {
+        if (pageNumber <= 0) {
+            throw new PageOutOfBoundsException("Always be positive about your numbers");
         }
         int numberPage = (pageNumber - 1) * 24;
 
@@ -38,9 +38,9 @@ public class GalleryRepo {
         return null;
     }
 
-    public int getPageCount(){
+    public int getPageCount() {
         double result = context.getHomePageCount();
-        int pageCount = (int)java.lang.Math.ceil(result);
+        int pageCount = (int) java.lang.Math.ceil(result);
         return pageCount;
     }
 
@@ -48,21 +48,19 @@ public class GalleryRepo {
         return this.context.getPhotographerByImageId(imageId);
     }
 
-    public Map<Integer, GalleryImage> allSharedImages(int sharedWithId,  int pageNumber)
-            throws GalleryException, PageOutOfBoundsException
-    {
-        if(pageNumber <= 0){
-            throw new PageOutOfBoundsException("Always be positive about your numbers") ;
+    public Map<Integer, GalleryImage> allSharedImages(int sharedWithId, int pageNumber)
+            throws GalleryException, PageOutOfBoundsException {
+        if (pageNumber <= 0) {
+            throw new PageOutOfBoundsException("Always be positive about your numbers");
         }
         int numberPage = (pageNumber - 1) * 24;
 
         return this.context.allSharedImages(sharedWithId, numberPage);
     }
 
-    public double getPrivatePageCount(int accountID)
-    {
+    public int getPrivatePageCount(int accountID) {
         double result = context.getPrivatePageCount(accountID);
-        int pageCount = (int)java.lang.Math.ceil(result);
+        int pageCount = (int) java.lang.Math.ceil(result);
         return pageCount;
     }
 

@@ -24,7 +24,7 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="/shared/page/?id=${sessionScope.User.id}"><spring:message
+                                <li><a href="/shared/page/?id=${sessionScope.User.id}&pageNumber=1"><spring:message
                                         code="nav.shared"/></a></li>
                                 <li><a href="<c:url value="/login/logout/" />"><spring:message
                                         code="command.logout"/></a></li>
