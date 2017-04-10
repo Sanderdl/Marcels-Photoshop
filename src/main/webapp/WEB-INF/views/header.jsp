@@ -12,21 +12,22 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="/createalbum/page/"><spring:message code="command.createalbum"/> <span class="sr-only">(current)</span></a>
-                </li>
                 <li><a href="/registerproduct/page/"><spring:message code="command.upload"/></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <c:choose>
                     <c:when test="${not empty sessionScope.User}">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false">
                                 <c:out value="${sessionScope.User.userName}"/>
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="/shared/page/?id=${sessionScope.User.id}"><spring:message code="nav.shared"/></a></li>
-                                <li><a href="<c:url value="/login/logout/" />"><spring:message code="command.logout"/></a></li>
+                                <li><a href="/shared/page/?id=${sessionScope.User.id}"><spring:message
+                                        code="nav.shared"/></a></li>
+                                <li><a href="<c:url value="/login/logout/" />"><spring:message
+                                        code="command.logout"/></a></li>
                             </ul>
                         </li>
                     </c:when>
@@ -49,3 +50,18 @@
         </div>
     </div>
 </nav>
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <span class="navbar-text" style="margin-left:100px">
+      Copyright &#169; 2017 Fred Inc. All rights reserved.
+    </span>
+    <div style="float:right;margin-right:100px;padding-top:13px;text-decoration:underline">
+        <span>
+            <a style="color:white;" href="<c:url value="/login/language/?lang=nl"/>">Nederlands</a>
+        </span>
+        <span>
+            <a style="color:white;" href="<c:url value="/login/language/?lang=en"/>">English</a>
+        </span>
+    </div>
+</div>
+
+
