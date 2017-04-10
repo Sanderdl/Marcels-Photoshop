@@ -27,7 +27,7 @@ public class CreateAlbumController {
     private AlbumRepo albumRepo;
     private static final String ATTRIBUTE_MESSAGE = "Message";
     /**
-     * Constructor
+     * Constructor of this class
      */
     public CreateAlbumController() {
         albumRepo = new AlbumRepo();
@@ -35,9 +35,9 @@ public class CreateAlbumController {
 
     /**
      *
-     * @param model, Model
-     * @param session, HttpSession
-     * @param attr, RedirectAttributes
+     * @param model A Model
+     * @param session A HttpSession
+     * @param attr RedirectAttributes. Used to redirect to the desired page
      * @return String page
      */
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
@@ -54,9 +54,9 @@ public class CreateAlbumController {
 
     /**
      *
-     * @param album, Album
-     * @param attr, RedirectAttributes
-     * @param session, HttpSession
+     * @param album An album. Used to upload an new album
+     * @param attr RedirectAttributes. Used to redirect to the desired page
+     * @param session A HttpSession. Used to retrieve the logged in user
      * @return String page
      */
     @RequestMapping(value = "/submit/", method = RequestMethod.POST)
@@ -81,5 +81,4 @@ public class CreateAlbumController {
 
         return "redirect:/createalbum/page/";
     }
-
 }

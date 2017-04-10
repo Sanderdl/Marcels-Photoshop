@@ -28,11 +28,11 @@ public class ImageController {
 
     /**
      *
-     * @param id, integer
-     * @param response, HttpServletResponse
-     * @param session, HttpSession
-     * @throws ServletException, servlet's operation interfered
-     * @throws IOException, invalid picture
+     * @param id An integer. Used to make use of the OutputStream
+     * @param response A HttpServletResponse
+     * @param session A HttpSession. Used to get an attribute
+     * @throws ServletException for any error encountered interfering with the servlet's operation
+     * @throws IOException for any error encountered while retrieving values
      */
     @RequestMapping(value = "/image", method = RequestMethod.GET)
     public void showImage(@RequestParam("id") int id, HttpServletResponse response, HttpSession session)
@@ -46,8 +46,8 @@ public class ImageController {
 
     /**
      *
-     * @param pageNumber, integer
-     * @param session, HttpSession
+     * @param pageNumber An integer. Used to specify the user's page number
+     * @param session A HttpSession. Used to add values to the session
      * @return ModelAndView page
      */
     @RequestMapping(value = "/random/", method = RequestMethod.GET)
