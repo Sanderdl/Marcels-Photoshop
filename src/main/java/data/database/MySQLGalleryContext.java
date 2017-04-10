@@ -2,6 +2,8 @@ package data.database;
 
 import data.database.interfaces.IGalleryContext;
 import models.GalleryImage;
+import models.Photographer;
+import models.User;
 import models.exceptions.GalleryException;
 
 import java.sql.*;
@@ -105,6 +107,27 @@ public class MySQLGalleryContext implements IGalleryContext {
         }
 
         return num;
+    }
+
+    public Photographer getPhotographerByImageId(int imageId) {
+
+        Photographer photographer = null;
+
+        try {
+            this.con = MySQLDatabase.dbConnection.getConnection();
+            this.stm = this.con.prepareStatement("SELECT * FROM `Account` a, `Foto` f WHERE FotoID = 5 AND f.OwnerID" +
+                    " = a.AccountID");
+
+            this.rs = this.stm.executeQuery();
+            if (rs.next()) {
+                photographer = (Photographer) User.generateUser(this.rs, User.UserRoles.Photographer);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
+        }
+
+        return photographer;
     }
 
 }

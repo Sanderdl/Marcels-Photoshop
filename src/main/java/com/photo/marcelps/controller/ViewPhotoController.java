@@ -2,6 +2,7 @@ package com.photo.marcelps.controller;
 
 import logic.GalleryRepo;
 import models.GalleryImage;
+import models.Photographer;
 import models.exceptions.GalleryException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,9 @@ public class ViewPhotoController {
         } catch (GalleryException ex) {
             Logger.getLogger(ViewPhotoController.class.getName()).log(Level.INFO, ex.getMessage(), ex);
         }
+
+        Photographer photographer = this.imageRepo.getPhotographerByImageId(id);
+        model.addAttribute("photographer", photographer);
 
         if (image != null) {
             model.addAttribute("image", image);

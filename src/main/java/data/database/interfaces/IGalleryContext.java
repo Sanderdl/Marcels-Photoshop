@@ -1,6 +1,7 @@
 package data.database.interfaces;
 
 import models.GalleryImage;
+import models.Photographer;
 import models.exceptions.GalleryException;
 
 import java.util.Map;
@@ -15,4 +16,6 @@ public interface IGalleryContext {
     int getImageCount();
 
     double getHomePageCount();
+
+    public Photographer getPhotographerByImageId(int imageId);
 }

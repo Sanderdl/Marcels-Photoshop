@@ -3,6 +3,7 @@ package logic;
 import data.database.MySQLGalleryContext;
 import data.database.interfaces.IGalleryContext;
 import models.GalleryImage;
+import models.Photographer;
 import models.exceptions.GalleryException;
 import models.exceptions.PageOutOfBoundsException;
 
@@ -41,6 +42,10 @@ public class GalleryRepo {
         double result = context.getHomePageCount();
         int pageCount = (int)java.lang.Math.ceil(result);
         return pageCount;
+    }
+
+    public Photographer getPhotographerByImageId(int imageId) {
+        return this.context.getPhotographerByImageId(imageId);
     }
 
 }

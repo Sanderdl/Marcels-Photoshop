@@ -20,7 +20,7 @@
             <div class="col-md-8">
                 <h1 style="margin-bottom:0px;">${image.name}</h1>
                 <p style="float:left;margin-top:0px;margin-bottom:0px"><spring:message
-                        code="photo.madeby"/> <a>${image.id}</a></p>
+                        code="photo.madeby"/> <a>${photographer.name}</a></p>
                 <ul class="pager" style="margin:0px 0px 10px 0px;float:right">
                     <c:choose>
                         <c:when test="${image.id > 1}">
@@ -45,7 +45,7 @@
                         </tr>
                         <tr>
                             <td style="padding:5px;"><spring:message code="photo.photographer"/></td>
-                            <td style="padding:5px;">${image.id}</td>
+                            <td style="padding:5px;">${photographer.name}</td>
                         </tr>
                         <tr>
                             <td style="padding:5px;"><spring:message code="photo.price"/></td>
