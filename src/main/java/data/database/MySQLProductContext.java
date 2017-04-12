@@ -95,7 +95,7 @@ public class MySQLProductContext implements IProductContext {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, e.getMessage(), e);
         }
 
         return users;

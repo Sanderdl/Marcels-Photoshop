@@ -92,6 +92,6 @@ public abstract class User implements Serializable {
 
     @Override
     public String toString() {
-        return this.getName() + " " + this.getClass().getName().toString();
+        return this.getName() + " " + this.getClass().getName();
     }
 }
