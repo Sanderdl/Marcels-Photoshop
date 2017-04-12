@@ -37,9 +37,9 @@ public class SharedImagesController {
                 list = repo.allSharedImages(id, pageNumber);
                 session.setAttribute("Gallery", list);
             } catch (GalleryException e) {
-                Logger.getLogger(ImageController.class.getName()).log(Level.SEVERE, e.getMessage(), e);
+                Logger.getLogger(SharedImagesController.class.getName()).log(Level.SEVERE, e.getMessage(), e);
             } catch (PageOutOfBoundsException e) {
-                e.printStackTrace();
+                Logger.getLogger(SharedImagesController.class.getName()).log(Level.SEVERE, e.getMessage(), e);
             }
             int[] nums = new int[]{1, 2, 3};
 
