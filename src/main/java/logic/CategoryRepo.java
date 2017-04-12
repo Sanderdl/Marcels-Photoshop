@@ -36,14 +36,15 @@ public class CategoryRepo {
         // retrieve existing categories
         if(isPositive(albumId)){
             context.deleteCategoryFromAlbum(albumId);
-            if(!catList.isEmpty()) context.addCategoryToAlbum(catList, albumId);
+            if(!catList.isEmpty())
+                context.addCategoryToAlbum(catList, albumId);
             return;
         }
         throw new AlbumException("ERROR: The requested album does not exist.");
     }
 
-    private boolean isPositive(int Id){
-        if(Id >= 0){
+    private boolean isPositive(int id){
+        if(id >= 0){
             return true;
         }
         return false;
