@@ -4,7 +4,6 @@ import data.database.interfaces.IExtrasContext;
 import models.Extra;
 import models.exceptions.ExtraException;
 import models.exceptions.UploadException;
-import sun.rmi.runtime.Log;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -36,9 +35,7 @@ public class ExtraRepo {
     }
 
     private void validatePrice(final double hex) throws ExtraException {
-        if (hex<0) {
-            throw new ExtraException("Please enter a valid price.");
-        } else if (hex>1000) {
+        if (hex < 0 || hex > 1000) {
             throw new ExtraException("Please enter a valid price.");
         }
     }

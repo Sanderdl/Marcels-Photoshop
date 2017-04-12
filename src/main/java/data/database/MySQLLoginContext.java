@@ -21,6 +21,7 @@ public class MySQLLoginContext implements ILoginContext {
     private PreparedStatement stm;
     private ResultSet rs;
     private static final Logger LOGGER = Logger.getLogger(MySQLLoginContext.class.getName());
+    private static final String STATUS = "Status";
 
     public User userLogin(String username, String password) throws LoginException, SQLException {
         try {
@@ -42,15 +43,15 @@ public class MySQLLoginContext implements ILoginContext {
             rs = stm.executeQuery();
             if (rs.next()) {
                 User foundUser = null;
-                System.out.println(rs.getString("Status"));
-                if (rs.getString("Status").equals(User.UserStatus.verified.toString())) {
+                System.out.println(rs.getString(STATUS));
+                if (rs.getString(STATUS).equals(User.UserStatus.verified.toString())) {
 
                     User.UserRoles role = User.UserRoles.valueOf(rs.getString("Role"));
                     if (role == User.UserRoles.Customer || role == User.UserRoles.Photographer || role == User.UserRoles.Admin) {
                         // Is a customer
                         foundUser = User.generateUser(rs, role);
                     }
-                } else if (rs.getString("Status").equals(User.UserStatus.not_verified.toString())) {
+                } else if (rs.getString(STATUS).equals(User.UserStatus.not_verified.toString())) {
                     foundUser = User.generateUser(rs, User.UserRoles.Customer);
                 }
                 rs.close();

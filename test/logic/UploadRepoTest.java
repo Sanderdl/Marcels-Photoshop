@@ -1,12 +1,12 @@
 package logic;
 
-import data.database.MySQLProductContext;
 import models.Photographer;
 import models.ProductRegistration;
 import models.User;
 import models.exceptions.UploadException;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -14,8 +14,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
-
-import org.springframework.mock.web.MockMultipartFile;
 
 import static org.junit.Assert.assertEquals;
 
@@ -47,15 +45,15 @@ public class UploadRepoTest {
                 originalFileName, contentType, content);
 
         this.productRegistration = new ProductRegistration("Title", 0.99, multipartFile, new int[]{1, 2}, true);
+        this.productRegistration.setPicture(multipartFile);
     }
 
     @Test
     public void uploadInvalidPictureTest() throws UploadException, SQLException {
         try {
-            this.productRegistration.setPicture(null);
             uploadRepo.validateUpload(productRegistration, user);
         } catch (final UploadException e) {
-            final String msg = "Invalid photo";
+            final String msg = "The uploaded picture is empty, please select a picture.";
             assertEquals(msg, e.getMessage());
         }
     }
@@ -66,7 +64,7 @@ public class UploadRepoTest {
             this.productRegistration.setPrice(9999.00);
             uploadRepo.validateUpload(productRegistration, user);
         } catch (final UploadException e) {
-            final String msg = "Price must be between €0.00 and €1000.00";
+            final String msg = "The price of your picture must be at least €0.00 and not above €1000.00";
             assertEquals(msg, e.getMessage());
         }
     }
@@ -77,7 +75,7 @@ public class UploadRepoTest {
             this.productRegistration.setPrice(0.00);
             uploadRepo.validateUpload(productRegistration, user);
         } catch (final UploadException e) {
-            final String msg = "Price must be between €0.00 and €1000.00";
+            final String msg = "The price of your picture must be at least €0.00 and not above €1000.00";
             assertEquals(msg, e.getMessage());
         }
     }
@@ -88,8 +86,9 @@ public class UploadRepoTest {
             this.productRegistration.setTitle("");
             uploadRepo.validateUpload(productRegistration, user);
         } catch (final UploadException e) {
-            final String msg = "Invalid name length";
+            final String msg = "The title of your picture must be between 1 and 50 characters long.";
             assertEquals(msg, e.getMessage());
         }
     }
+
 }
