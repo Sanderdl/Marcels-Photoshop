@@ -33,7 +33,6 @@ public class SharedImagesController {
             int maxPageCount = 1;
             try {
                 maxPageCount = repo.getPrivatePageCount(id);
-                System.out.println(maxPageCount);
                 list = repo.allSharedImages(id, pageNumber);
                 session.setAttribute("Gallery", list);
             } catch (GalleryException e) {

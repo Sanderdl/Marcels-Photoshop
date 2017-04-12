@@ -35,7 +35,7 @@ public class LoginController {
 
     /**
      *
-     * @param model, Model
+     * @param model A Model
      * @return String page
      */
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
@@ -47,12 +47,12 @@ public class LoginController {
 
     /**
      *
-     * @param login, Login
-     * @param servletRequest, HttpServletRequest
-     * @param servletResponse, HttpServletResponse
-     * @param attr, RedirectAttributes
-     * @param session, HttpSession
-     * @param model, Model
+     * @param login Instantiated Login. Used to log in the user.
+     * @param servletRequest A HttpServletRequest
+     * @param servletResponse A HttpServletResponse
+     * @param attr RedirectAttributes
+     * @param session A HttpSession. Used to set an attribute.
+     * @param model A Model
      * @return String page
      */
     @RequestMapping(value = "/submit/", method = RequestMethod.POST)
@@ -64,8 +64,7 @@ public class LoginController {
             if (u != null) {
                 String locale = repo.getUserLanguage(u);
                 LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(servletRequest);
-                if (locale != null) {
-                    if(!"".equals(locale))
+                if (locale != null && !"".equals(locale)) {
                     localeResolver.setLocale(servletRequest, servletResponse, StringUtils.parseLocaleString(locale));
                 } else {
                     String currentLanguage = RequestContextUtils.getLocale(servletRequest).toLanguageTag().toString();
@@ -87,7 +86,7 @@ public class LoginController {
 
     /**
      *
-     * @param session, HttpSession
+     * @param session A HttpSession. Used to log the user out by invalidating the session.
      * @return String page
      */
     @RequestMapping(value = "/logout/", method = RequestMethod.GET)
@@ -100,11 +99,11 @@ public class LoginController {
 
     /**
      *
-     * @param lang, String
-     * @param servletRequest, HttoServletRequest
-     * @param servletResponse, HttpServletResponse
-     * @param session, HttpSession
-     * @throws IOException, invalid response
+     * @param lang A String. Used to determine the user's language.
+     * @param servletRequest A HttpServletRequest
+     * @param servletResponse A HttpServletResponse
+     * @param session A HttpSession. Used to get the user.
+     * @throws IOException for any error encountered while retrieving values
      */
     @RequestMapping(value = "/language/", method = RequestMethod.GET)
     public void language(@RequestParam("lang") String lang, HttpServletRequest servletRequest, HttpServletResponse servletResponse, HttpSession session) throws IOException {

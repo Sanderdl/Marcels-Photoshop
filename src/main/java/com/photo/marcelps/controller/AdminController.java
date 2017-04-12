@@ -29,7 +29,14 @@ import java.util.logging.Logger;
 public class AdminController {
     private IExtrasContext extrasContext = new MySQLExtrasContext();
     private ExtraRepo repo = new ExtraRepo(extrasContext);
+    private static final String ADMIN_PAGE = "redirect:/admin/page/";
 
+    /**
+     *
+     * @param model A model
+     * @param session A HttpSession. Used to get attributes.
+     * @return String page
+     */
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
     public String setupPage(Model model, HttpSession session) {
         if (session.getAttribute("User") instanceof Admin) {
@@ -49,6 +56,11 @@ public class AdminController {
         return "redirect:/login/page/";
     }
 
+    /**
+     *
+     * @param extras Instantiated AdminExtra. Used to add extra's to the database.
+     * @return String page
+     */
     @RequestMapping(value = "/add/", method = RequestMethod.POST)
     public String addExtra(@ModelAttribute("Extras") AdminExtra extras){
         try {
@@ -58,9 +70,14 @@ public class AdminController {
             Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, e.getMessage(), e);
         }
 
-        return "redirect:/admin/page/";
+        return ADMIN_PAGE;
     }
 
+    /**
+     *
+     * @param extras Instantiated AdminExtra. Used to delete an extra.
+     * @return String page
+     */
     @RequestMapping(value = "/delete/", method = RequestMethod.POST)
     public String deleteExtra(@ModelAttribute("Extras") AdminExtra extras) {
         int[] extraIds = extras.getExtras();
@@ -71,18 +88,25 @@ public class AdminController {
                 Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, e.getMessage(), e);
             }
         }
-        return "redirect:/admin/page/";
+        return ADMIN_PAGE;
     }
 
+    /**
+     *
+     * @param ID An integer. Used to update the extra's price by ID.
+     * @param price A double. Used to update the extra's price by ID.
+     * @param avail A boolean. Used to check if an extra is available.
+     * @return String page
+     */
     @RequestMapping(value = "/edit/")
-    public String adjustExtra(@RequestParam("id") int ID, @RequestParam("price") double prize, @RequestParam("avail") boolean avail ) {
+    public String adjustExtra(@RequestParam("id") int ID, @RequestParam("price") double price, @RequestParam("avail") boolean avail ) {
         try {
-            repo.updateExtraPrice(ID, prize);
+            repo.updateExtraPrice(ID, price);
             repo.updateExtraAvailable(ID, avail);
         }catch (UploadException | ExtraException e){
             Logger.getLogger(AdminController.class.getName()).log(Level.INFO, e.getMessage(), e);
         }
-        return "redirect:/admin/page/";
+        return ADMIN_PAGE;
     }
 
 
