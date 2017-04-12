@@ -15,13 +15,12 @@ public abstract class User implements Serializable {
     private String email;
     private UserStatus status;
 
-    public enum UserStatus{
+    public enum UserStatus {
         verified, not_verified, blocked, deleted, ERROR
     }
 
 
-
-    public User(int id, String userName, String name, String email, UserStatus status){
+    public User(int id, String userName, String name, String email, UserStatus status) {
         this.id = id;
         this.userName = userName;
         this.name = name;
@@ -65,8 +64,7 @@ public abstract class User implements Serializable {
         Customer, Photographer, Admin, ERROR
     }
 
-    public static User generateUser(ResultSet rs, User.UserRoles role) throws SQLException
-    {
+    public static User generateUser(ResultSet rs, User.UserRoles role) throws SQLException {
         // NOTE: there is currently no difference between customers and photographers in this phase
         // if a more specific implementation is required, all generate methods must be refactored
 
@@ -77,8 +75,7 @@ public abstract class User implements Serializable {
         String name = rs.getString("Name");
         String eMail = rs.getString("Email");
         User.UserStatus status = User.UserStatus.valueOf(rs.getString("Status"));
-        switch (role)
-        {
+        switch (role) {
             case Customer:
                 Customer c = new Customer(id, uName, name, eMail, status);
                 return c;
@@ -93,4 +90,8 @@ public abstract class User implements Serializable {
         }
     }
 
+    @Override
+    public String toString() {
+        return this.getName() + " " + this.getClass().getName().toString();
+    }
 }
