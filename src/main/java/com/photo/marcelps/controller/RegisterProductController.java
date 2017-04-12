@@ -47,10 +47,9 @@ public class RegisterProductController {
     ServletContext context;
 
     /**
-     *
-     * @param model, Model
+     * @param model,   Model
      * @param session, HttpSession
-     * @param attr, RedirectAttributes
+     * @param attr,    RedirectAttributes
      * @return String page
      */
     @RequestMapping(value = "/page/", method = RequestMethod.GET)
@@ -60,7 +59,7 @@ public class RegisterProductController {
             ProductRegistration newProduct = new ProductRegistration();
             model.addAttribute("productregistration", newProduct);
             Album newAlbum = new Album();
-            model.addAttribute("album", newAlbum    );
+            model.addAttribute("album", newAlbum);
 
             Photographer photographer = (Photographer) session.getAttribute("User");
             try {
@@ -76,12 +75,22 @@ public class RegisterProductController {
                 model.addAttribute("albums", album);
 
                 Collection<AlbumCategory> categories = categoryRepo.getAllCategories();
-                Map<Integer, String> categorie = new LinkedHashMap<>();
+                Map<Integer, String> category = new LinkedHashMap<>();
+
+                Collection<User> users = this.uploadRepo.getAllUsers();
+                Map<Integer, String> user = new LinkedHashMap<>();
 
                 for (AlbumCategory a : categories) {
-                    categorie.put(a.getCategoryId(), a.getCategoryName());
+                    category.put(a.getCategoryId(), a.getCategoryName());
                 }
-                model.addAttribute("categories", categorie);
+
+                for (User u : users) {
+                    user.put(u.getId(), u.getName());
+                }
+
+                model.addAttribute("categories", category);
+                model.addAttribute("users", user);
+
             } catch (UploadException | AlbumException ex) {
                 Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
@@ -95,12 +104,11 @@ public class RegisterProductController {
     }
 
     /**
-     *
      * @param productRegistration, ProductRegistration
-     * @param result, BindingResult
-     * @param model, ModelMap
-     * @param session, HttpSession
-     * @param attr, RedirectAttribute
+     * @param result,              BindingResult
+     * @param model,               ModelMap
+     * @param session,             HttpSession
+     * @param attr,                RedirectAttribute
      * @return String page
      * @throws IOException, invalid picture
      */
@@ -115,6 +123,7 @@ public class RegisterProductController {
                 User user = (User) session.getAttribute("User");
                 int imageID = this.uploadRepo.validateUpload(productRegistration, user);
                 this.extrasContext.registerExtras(imageID, productRegistration.getProducts());
+                this.uploadRepo.addSharedWith(imageID, productRegistration.getSharedWith());
                 if (imageID == -1) {
                     message = "An error occurred while uploading the photo to the database.";
                     attr.addFlashAttribute(ATTRIBUTE_MESSAGE, message);
@@ -131,11 +140,10 @@ public class RegisterProductController {
     }
 
     /**
-     *
-     * @param album, Album
+     * @param album,   Album
      * @param session, HttpSession
-     * @param result, BindingResult
-     * @param attr, RedirectAttribute
+     * @param result,  BindingResult
+     * @param attr,    RedirectAttribute
      * @return String page
      * @throws IOException, invalid picture
      */

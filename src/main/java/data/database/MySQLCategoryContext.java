@@ -25,7 +25,7 @@ public class MySQLCategoryContext implements ICategoryContext {
 
     @Override
     public Collection<AlbumCategory> getAllCategories() throws AlbumException{
-        List<AlbumCategory> catList = new ArrayList<AlbumCategory>();
+        List<AlbumCategory> catList = new ArrayList<>();
         try{
             con = MySQLDatabase.dbConnection.getConnection();
             stm = con.prepareStatement("SELECT * FROM Categories");
@@ -51,7 +51,7 @@ public class MySQLCategoryContext implements ICategoryContext {
 
     @Override
     public Collection<AlbumCategory> getCategoryForAlbum(int albumId) throws AlbumException {
-        List<AlbumCategory> catList = new ArrayList<AlbumCategory>();
+        List<AlbumCategory> catList = new ArrayList<>();
         try{
             con = MySQLDatabase.dbConnection.getConnection();
             stm = con.prepareStatement(

@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -91,6 +92,17 @@ public class UploadRepo {
             throw new UploadException("The chosen picture is too large. The maximum permitted size is 64kb");
         }
         return true;
+    }
+
+    public Collection<User> getAllUsers() {
+        return this.context.getAllUsers();
+    }
+
+    public void addSharedWith(int photoId, int[] userIds) {
+
+        if (userIds.length > 0) {
+            this.context.addSharedWith(photoId, userIds);
+        }
     }
 
 }

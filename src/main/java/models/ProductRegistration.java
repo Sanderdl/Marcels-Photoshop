@@ -17,6 +17,7 @@ public class ProductRegistration {
     private int album;
     private boolean isPublic;
     private Date date;
+    private int[] sharedWith;
 
     public ProductRegistration(){}
 
@@ -94,5 +95,13 @@ public class ProductRegistration {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public int[] getSharedWith() {
+        return sharedWith;
+    }
+
+    public void setSharedWith(int[] sharedWith) {
+        this.sharedWith = sharedWith;
     }
 }
