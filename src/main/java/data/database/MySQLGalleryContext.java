@@ -20,6 +20,8 @@ public class MySQLGalleryContext implements IGalleryContext {
     private Connection con;
     private PreparedStatement stm;
     private ResultSet rs;
+    private static final String PHOTO_BLOB = "FotoBlob";
+    private static final String PHOTO_ID = "FotoID";
 
     public GalleryImage getImageById(int id) throws GalleryException {
 
@@ -33,7 +35,7 @@ public class MySQLGalleryContext implements IGalleryContext {
             rs = stm.executeQuery();
 
             if (rs.next()) {
-                Blob b = rs.getBlob("FotoBlob");
+                Blob b = rs.getBlob(PHOTO_BLOB);
                 byte[] bytes = b.getBytes(1L, (int) b.length());
                 gi = new GalleryImage(id, rs.getString("Name"), bytes, rs.getDouble("Price"), rs.getBoolean("IsPublic"));
             }
@@ -56,9 +58,9 @@ public class MySQLGalleryContext implements IGalleryContext {
             rs = stm.executeQuery();
 
             while (rs.next()) {
-                Blob b = rs.getBlob("FotoBlob");
+                Blob b = rs.getBlob(PHOTO_BLOB);
                 byte[] bytes = b.getBytes(1L, (int) b.length());
-                    list.put(rs.getInt("FotoID"), new GalleryImage(rs.getInt("FotoID"),
+                    list.put(rs.getInt(PHOTO_ID), new GalleryImage(rs.getInt(PHOTO_ID),
                             rs.getString("Name"), bytes, rs.getInt("AlbumID")!= 0));
 
             }
@@ -145,9 +147,9 @@ public class MySQLGalleryContext implements IGalleryContext {
             rs = stm.executeQuery();
 
             while (rs.next()) {
-                Blob b = rs.getBlob("FotoBlob");
+                Blob b = rs.getBlob(PHOTO_BLOB);
                 byte[] bytes = b.getBytes(1L, (int) b.length());
-                list.put(rs.getInt("FotoID"), new GalleryImage(rs.getInt("FotoID"),
+                list.put(rs.getInt(PHOTO_ID), new GalleryImage(rs.getInt(PHOTO_ID),
                         rs.getString("Name"), bytes, rs.getInt("AlbumID")!= 0));
 
             }

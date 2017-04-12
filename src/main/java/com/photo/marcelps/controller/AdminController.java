@@ -49,10 +49,8 @@ public class AdminController {
             } catch (UploadException ex) {
                 Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
             }
-
             return "admin";
         }
-
         return "redirect:/login/page/";
     }
 
@@ -108,8 +106,4 @@ public class AdminController {
         }
         return ADMIN_PAGE;
     }
-
-
-
-
 }

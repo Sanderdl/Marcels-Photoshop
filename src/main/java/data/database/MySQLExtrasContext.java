@@ -24,6 +24,7 @@ public class MySQLExtrasContext implements IExtrasContext {
     private ResultSet rs;
 
     private static final Logger LOGGER = Logger.getLogger(MySQLExtrasContext.class.getName());
+    private static final String EXCEPTION_MESSAGE = "Extra wasn't added properly";
 
     @Override
     public List<Extra> getAvailableExtras() throws UploadException {
@@ -80,7 +81,7 @@ public class MySQLExtrasContext implements IExtrasContext {
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-            throw  new UploadException("Extra wasn't added properly");
+            throw  new UploadException(EXCEPTION_MESSAGE);
         } finally {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
@@ -97,7 +98,7 @@ public class MySQLExtrasContext implements IExtrasContext {
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-            throw  new UploadException("Extra wasn't added properly");
+            throw  new UploadException(EXCEPTION_MESSAGE);
         } finally {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
@@ -113,7 +114,7 @@ public class MySQLExtrasContext implements IExtrasContext {
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-            throw  new UploadException("Extra wasn't added properly");
+            throw  new UploadException(EXCEPTION_MESSAGE);
         } finally {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
@@ -127,7 +128,7 @@ public class MySQLExtrasContext implements IExtrasContext {
             stm.executeQuery();
         } catch (SQLException ex) {
             Logger.getLogger(MySQLExtrasContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
-            throw new ExtraException("Extra wasn't deleted properly");
+            throw new ExtraException(EXCEPTION_MESSAGE);
         } finally {
             MySQLDatabase.dbConnection.closeConnection(con, stm);
         }
