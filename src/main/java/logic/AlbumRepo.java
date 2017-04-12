@@ -26,16 +26,15 @@ public class AlbumRepo {
         {
             byte[] bytes = album.getThumbnail().getBytes();
             validateFileSize(bytes);
-            if(validateName(album.getName())){
-                this.context.createAlbum(u.getId(), album.getName(), album.getCategories(), bytes);
-            }
+            validateName(album.getName());
+
+            context.createAlbum(u.getId(), album.getName(), album.getCategories(), bytes);
+
         }
-//        catch (UploadException e)
-//        {
-//            e.printStackTrace();
-//            Logger.getLogger(AlbumRepo.class.getName()).log(Level.INFO, e.getMessage(), e);
-//            throw e;
-//        }
+        catch(UploadException e){
+            Logger.getLogger(AlbumRepo.class.getName()).log(Level.INFO, e.getMessage(), e);
+            throw new UploadException(e.getMessage());
+        }
         catch(IOException e){
             Logger.getLogger(AlbumRepo.class.getName()).log(Level.INFO, e.getMessage(), e);
             throw new UploadException("An error occurred while retrieving the size of your picture, please try again.");
@@ -57,12 +56,11 @@ public class AlbumRepo {
             throw new UploadException("The chosen picture is too large. The maximum permitted size is 64kb");
     }
 
-    private boolean validateName(final String hex) throws UploadException
+    private void validateName(final String hex) throws UploadException
     {
         boolean success = (hex.length()>0&&hex.length()<50);
-        if (success) return success;
-
-        throw new UploadException("The title of your album must be between 1 and 50 characters long.");
+        if (!success)
+            throw new UploadException("The title of your album must be between 1 and 50 characters long.");
     }
 
     public Map<Integer, GalleryImage> retrieveAlbumPictures(int id) throws AlbumException, UploadException, GalleryException {
