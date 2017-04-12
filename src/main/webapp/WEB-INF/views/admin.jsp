@@ -62,24 +62,22 @@
                     <div class="form-group">
                         <div class="col-lg-10">
                             <c:if test="${not empty availableProducts}">
-
                                 <c:forEach var="product" items="${availableProducts}">
-
                                     <div class="table-responsive">
-                                        <table class="table">
-                                            <td class=" col-lg-2">
-                                                <div class="checkbox">
+                                        <table class="table" style="margin:0;">
+                                            <td class=" col-lg-3" style="vertical-align: middle;">
+                                                <div class="checkbox" style="padding-top: 5px;">
                                                     <label>
                                                         <form:checkbox path="extras" value="${product.id}"/>
                                                         <spring:message code="${product.name}"/>
                                                     </label>
                                                 </div>
                                             </td>
-                                            <td>€<input id="prod${product.id}" value="${product.price}" min="0"></td>
-                                            <td><input id="avail${product.id}" value="${product.available}" min="0">
-                                            </td>
-                                            <td><a href="" onclick="updateLink(this, ${product.id})"
-                                                   class="btn btn-primary" role="button">Edit</a></td>
+                                            <td style="vertical-align: middle;"><div class="input-group"><span class="input-group-addon">€</span><input class="form-control" id="prod${product.id}" value="${product.price}" min="0"></div></td>
+                                            <td style="vertical-align: middle;"><div class="input-group"><input class="form-control" id="avail${product.id}" value="${product.available}" min="0">  <span class="input-group-btn">
+                                                <a href="" onclick="updateLink(this, ${product.id})"
+                                                   class="btn btn-primary" role="button">Edit</a></span></div>
+                                            </td >
                                         </table>
                                     </div>
                                 </c:forEach>
@@ -87,7 +85,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-lg-10 col-lg-offset-2">
+                        <div class="col-lg-10">
                             <button type="submit" class="btn btn-primary"><spring:message code="admin.delete"/></button>
                         </div>
                     </div>
