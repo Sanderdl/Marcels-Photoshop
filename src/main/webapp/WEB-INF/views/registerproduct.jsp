@@ -99,13 +99,14 @@
                         </c:if>
                     </div>
                     <div class="form-group">
-                        <div class="center-block" style="width:500px">
-                            <div class="col-lg-8 col-lg-offset-3">
-                                <button type="reset" class="btn btn-default"><spring:message
-                                        code="command.cancel"/></button>
-                                <button type="submit" class="btn btn-primary" class="col-lg-2 col-lg-offset-1">
-                                    <spring:message
-                                            code="command.upload"/></button>
+                        <label for="product" style="text-align: left" class="col-lg-3"><spring:message
+                                code="product.sharewith"/></label>
+                        <div class="col-lg-8">
+                            <div class="input-group">
+                                <form:select class="js-example-basic-multiple form-control" multiple="multiple"
+                                             path="sharedWith">
+                                    <form:options items="${users}"/>
+                                </form:select>
                             </div>
                         </div>
                     </div>
