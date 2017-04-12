@@ -35,9 +35,7 @@ public class SharedImagesController {
                 maxPageCount = repo.getPrivatePageCount(id);
                 list = repo.allSharedImages(id, pageNumber);
                 session.setAttribute("Gallery", list);
-            } catch (GalleryException e) {
-                Logger.getLogger(SharedImagesController.class.getName()).log(Level.SEVERE, e.getMessage(), e);
-            } catch (PageOutOfBoundsException e) {
+            } catch (GalleryException|PageOutOfBoundsException e) {
                 Logger.getLogger(SharedImagesController.class.getName()).log(Level.SEVERE, e.getMessage(), e);
             }
             int[] nums = new int[]{1, 2, 3};

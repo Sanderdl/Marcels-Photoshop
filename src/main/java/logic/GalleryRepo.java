@@ -40,8 +40,7 @@ public class GalleryRepo {
 
     public int getPageCount() {
         double result = context.getHomePageCount();
-        int pageCount = (int) java.lang.Math.ceil(result);
-        return pageCount;
+        return (int) java.lang.Math.ceil(result);
     }
 
     public Photographer getPhotographerByImageId(int imageId) {
@@ -60,8 +59,6 @@ public class GalleryRepo {
 
     public int getPrivatePageCount(int accountID) {
         double result = context.getPrivatePageCount(accountID);
-        int pageCount = (int) java.lang.Math.ceil(result);
-        return pageCount;
+        return (int) java.lang.Math.ceil(result);
     }
-
 }
