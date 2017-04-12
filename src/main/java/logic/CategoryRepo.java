@@ -5,7 +5,6 @@ import data.database.interfaces.ICategoryContext;
 import models.AlbumCategory;
 import models.exceptions.AlbumException;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -37,7 +36,7 @@ public class CategoryRepo {
         // retrieve existing categories
         if(isPositive(albumId)){
             context.deleteCategoryFromAlbum(albumId);
-            if(catList.size() > 0) context.addCategoryToAlbum(catList, albumId);
+            if(!catList.isEmpty()) context.addCategoryToAlbum(catList, albumId);
             return;
         }
         throw new AlbumException("ERROR: The requested album does not exist.");
