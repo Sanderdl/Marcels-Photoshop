@@ -22,14 +22,14 @@ public class RegisterRepo {
         this.context = context;
     }
 
-    private final String EMAIL_PATTERN = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"" +
+    private static final String EMAIL_PATTERN = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"" +
             "(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])" +
             "*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]" +
             "|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:" +
             "(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
-    private final String hexPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$";
-    private final String CUSTOMERROLE = "customer";
-    private final String PHOTOGRAPHERROLE = "photographer";
+    private static final String HEX_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$";
+    private static final String CUSTOMER_ROLE = "customer";
+    private static final String PHOTOGRAPHER_ROLE = "photographer";
 
     private void validateEmail(final String hex) throws InvalidRegisterException {
         pattern = Pattern.compile(EMAIL_PATTERN, Pattern.CASE_INSENSITIVE);
@@ -43,7 +43,7 @@ public class RegisterRepo {
     }
 
     private void validatePassword(final String hex) throws InvalidRegisterException {
-        pattern = Pattern.compile(hexPattern);
+        pattern = Pattern.compile(HEX_PATTERN);
         matcher = pattern.matcher(hex);
 
         boolean success = matcher.matches();
@@ -71,9 +71,9 @@ public class RegisterRepo {
         this.validateName(registration.getUserName());
 
         String verified = "";
-        if (registration.getRole().equalsIgnoreCase(this.CUSTOMERROLE)) {
+        if (registration.getRole().equalsIgnoreCase(this.CUSTOMER_ROLE)) {
             verified = User.UserStatus.verified.toString();
-        } else if (registration.getRole().equalsIgnoreCase(this.PHOTOGRAPHERROLE)) {
+        } else if (registration.getRole().equalsIgnoreCase(this.PHOTOGRAPHER_ROLE)) {
             verified = User.UserStatus.not_verified.toString();
         }
 

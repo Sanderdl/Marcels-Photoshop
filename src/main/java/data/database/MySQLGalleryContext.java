@@ -168,9 +168,9 @@ public class MySQLGalleryContext implements IGalleryContext {
             con = MySQLDatabase.dbConnection.getConnection();
             stm = con.prepareStatement("SELECT COUNT(FotoID)/ 24 AS PageCount FROM Visibility WHERE AccountID = ?");
             stm.setInt(1, accountID);
-            ResultSet rs = stm.executeQuery();
-            if (rs.next()) {
-                num = rs.getDouble("PageCount");
+            ResultSet set = stm.executeQuery();
+            if (set.next()) {
+                num = set.getDouble("PageCount");
             }
         } catch (SQLException | NullPointerException ex) {
             Logger.getLogger(MySQLAlbumContext.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
