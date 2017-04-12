@@ -25,7 +25,8 @@ public class AlbumRepo {
         try
         {
             byte[] bytes = album.getThumbnail().getBytes();
-            if(validateFileSize(bytes) && validateName(album.getName())){
+            validateFileSize(bytes);
+            if(validateName(album.getName())){
                 this.context.createAlbum(u.getId(), album.getName(), album.getCategories(), bytes);
             }
         }
@@ -50,12 +51,10 @@ public class AlbumRepo {
         }
     }
 
-    private boolean validateFileSize(byte[] bytes) throws UploadException{
+    private void validateFileSize(byte[] bytes) throws UploadException{
+
         if (bytes.length > 64000)
-        {
             throw new UploadException("The chosen picture is too large. The maximum permitted size is 64kb");
-        }
-        return true;
     }
 
     private boolean validateName(final String hex) throws UploadException

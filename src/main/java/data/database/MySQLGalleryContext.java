@@ -114,8 +114,8 @@ public class MySQLGalleryContext implements IGalleryContext {
         Photographer photographer = null;
 
         try {
-            this.con = MySQLDatabase.dbConnection.getConnection();
-            this.stm = this.con.prepareStatement("SELECT * FROM `Account` a, `Foto` f WHERE FotoID = ? AND f.OwnerID" +
+            con = MySQLDatabase.dbConnection.getConnection();
+            stm = con.prepareStatement("SELECT * FROM `Account` a, `Foto` f WHERE FotoID = ? AND f.OwnerID" +
                     " = a.AccountID");
 
             stm.setInt(1, imageId);

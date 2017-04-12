@@ -26,9 +26,8 @@ public class ViewPhotoController {
     private GalleryRepo imageRepo = new GalleryRepo();
 
     /**
-     *
-     * @param id, integer
-     * @param model, Model
+     * @param id,      integer
+     * @param model,   Model
      * @param session, HttpSession
      * @return String page
      */
@@ -46,18 +45,15 @@ public class ViewPhotoController {
         Photographer photographer = this.imageRepo.getPhotographerByImageId(id);
         model.addAttribute("photographer", photographer);
 
-        if(!image.isPublic()){
+        if (image == null || !image.isPublic()) {
             return "redirect:/404/page/";
         }
 
-        if (image != null) {
-            model.addAttribute("image", image);
-            model.addAttribute("imageBytes", DatatypeConverter.printBase64Binary(image.getImage()));
-            NumberFormat formatter = NumberFormat.getCurrencyInstance();
-            model.addAttribute("price", formatter.format(image.getPrice()));
-        } else {
-            return "redirect:/404/page/";
-        }
+        model.addAttribute("image", image);
+        model.addAttribute("imageBytes", DatatypeConverter.printBase64Binary(image.getImage()));
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        model.addAttribute("price", formatter.format(image.getPrice()));
+
 
         return "viewphoto";
     }
