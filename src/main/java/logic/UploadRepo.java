@@ -80,7 +80,7 @@ public class UploadRepo {
     private void validateBlob(final MultipartFile hex) throws UploadException {
         boolean success = (hex != null);
 
-        if (success)
+        if (!success)
         {
             throw new UploadException("The uploaded picture is empty, please select a picture.");
         }
