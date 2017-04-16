@@ -5,25 +5,25 @@ import models.Extra;
 import models.exceptions.ExtraException;
 import models.exceptions.UploadException;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by Tomt on 3-4-2017.
  */
+
 public class ExtraRepo {
     private IExtrasContext context;
-    private Properties props;
     private InputStream input;
 
-    public ExtraRepo(IExtrasContext context){
-        this.context= context;
-        this.props = new Properties();
+    @Resource(name = "myProperties")
+    private Properties props;
+
+    public ExtraRepo(IExtrasContext context) {
+        this.context = context;
+        input = getClass().getResourceAsStream("values.properties");
     }
 
     private void validateName(final String hex) throws ExtraException {
@@ -39,17 +39,17 @@ public class ExtraRepo {
             throw new ExtraException("Please enter a valid price.");
         }
     }
-    
+
     public void deleteExtra(int id) throws ExtraException {
 
         this.context.deleteExtra(id);
     }
 
     public void addExtra(Extra extra) throws ExtraException, UploadException {
-        this.validateName(extra.getName());
-        this.validatePrice(extra.getPrice());
+        //this.validateName(extra.getName());
+        //this.validatePrice(extra.getPrice());
 
-        this.context.addNewExtraProduct(extra.getName(), extra.getPrice(), extra.getAvailable());
+       // this.context.addNewExtraProduct(extra.getName(), extra.getPrice(), extra.getAvailable());
         this.addExtrasToProperties(extra.getName());
     }
 
@@ -65,18 +65,16 @@ public class ExtraRepo {
     }
 
     private void addExtrasToProperties(String name) throws ExtraException {
+
+        String key = "extra." + name.toLowerCase();
         try {
-            input = new FileInputStream("values.properties");
             props.load(input);
-            String key = "extra."+name.toLowerCase();
-            props.setProperty(key, name);
-            String test = props.getProperty(key);
-            System.out.println(test);
-        } catch (FileNotFoundException e) {
-            Logger.getLogger(ExtraRepo.class.getName()).log(Level.INFO, e.getMessage(), e);
         } catch (IOException e) {
-            Logger.getLogger(ExtraRepo.class.getName()).log(Level.INFO, e.getMessage(), e);
-            throw new ExtraException("Adding to properties failed!");
+            e.printStackTrace();
         }
+        props.setProperty(key, name);
+        String test = props.getProperty(key);
+        System.out.println(test);
+
     }
 }
